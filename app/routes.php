@@ -13,5 +13,7 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+
+    return Boo::print_boo();
+    return View::make('hello');
 });
