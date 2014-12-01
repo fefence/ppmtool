@@ -5,7 +5,7 @@ class Updater
 
     public static function update($league_id)
     {
-        $m = self::getMatchesToUpdate($league_id);
+        $m = self::getNextMatches($league_id);
         $matches = Parser::updateMatchesResult($m);
         if (Match::updated($matches)) {
             for ($i = 1; $i < 11; $i++) {
@@ -53,8 +53,6 @@ class Updater
     }
 
     public static function getMatchesToUpdate($league_id) {
-        $matches = Match::where('league_id', $league_id)
-            ->where('short_result', '-')->get();
-        return $matches;
+
     }
 } 

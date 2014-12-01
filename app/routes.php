@@ -13,5 +13,6 @@
 
 Route::get('/{id}/{season}', function($id, $season)
 {
+//    return Updater::update(3);
     return Series::calculateSeries($id, $season);
 });
