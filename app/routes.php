@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function()
+Route::get('/{id}/{season}', function($id, $season)
 {
-
-//    return Boo::print_boo();
-    return View::make('hello');
+    return Series::calculateSeries($id, $season);
 });

@@ -3,6 +3,8 @@
 class Parser
 {
 
+    private static $current_season = '2014-2015';
+
     /*
      * betexplorer parsing
      */
@@ -47,19 +49,65 @@ class Parser
 
                         $match->home = $tarr[0];
                         $match->away = $tarr[1];
-                        $match->resultShort = '-';
-                        $match->league_details_id = $league_details_id;
+                        $match->short_result = '-';
+                        $match->league_id = $league_id;
                         $datearr = explode('.', $date);
-                        $match->matchDate = $datearr[2] . '-' . $datearr[1] . '-' . $datearr[0];
-                        $match->matchTime = $time;
-//                        array_push($ids, $match);
+                        $match->date_time = $datearr[2] . '-' . $datearr[1] . '-' . $datearr[0] . " " . $time;
+                        $match->season = self::$current_season;
                         $match->save();
                     }
                 }
 
-
-                // return $match;
             }
         }
+    }
+
+    public static function updateMatchesResult($matches)
+    {
+        foreach ($matches as $match) {
+            $url = "http://www.livescore.in/match/" . $match->id . "/#match-summary";
+            if (self::get_http_response_code($url) != "200") {
+                return "Wrong match details url! --> $url";
+
+            }
+            $data = file_get_contents($url);
+
+            $dom = new domDocument;
+
+            @$dom->loadHTML($data);
+            $dom->preserveWhiteSpace = false;
+
+            $table = $dom->getElementById("flashscore");
+            $rows = $table->getElementsByTagName("tr");
+
+            $finished = trim($rows->item(2)->getElementsByTagName('td')->item(0)->nodeValue);
+            if ($finished == null || trim($finished) == '') {
+                $finished = trim($rows->item(3)->getElementsByTagName('td')->item(0)->nodeValue);
+            }
+            if ($finished == "Finished") {
+                $res = explode('-', $rows->item(0)->getElementsByTagName('td')->item(2)->nodeValue);
+                if (count($res) < 2) {
+                    $res = explode('-', $rows->item(1)->getElementsByTagName('td')->item(1)->nodeValue);
+                }
+                if ($res[0] > $res[1]) {
+                    $resultShort = 'H';
+                } else if ($res[0] < $res[1]) {
+                    $resultShort = 'A';
+                } else {
+                    $resultShort = 'D';
+                }
+                $match->home_goals = $res[0];
+                $match->away_goals = $res[1];
+                $match->short_result = $resultShort;
+            }
+
+        }
+        return $matches;
+    }
+
+    private static function get_http_response_code($url)
+    {
+        $headers = get_headers($url);
+        return substr($headers[0], 9, 3);
     }
 }
