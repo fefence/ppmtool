@@ -11,8 +11,13 @@
 |
 */
 
-Route::get('/{id}/{season}', function($id, $season)
+Route::get('boo/', function()
 {
-//    return Updater::update(3);
-    return Series::calculateSeries($id, $season);
+//    Updater::update(2);
+    $matches = Match::where('id', '2Vs6PNaA')->get();
+    $next =  Updater::getNextMatches($matches);
+    return $next->last();
+//    return Parser::updateMatchesResult($matches);
 });
+
+Route::get('/ppm', 'PPMController@displaySeries');

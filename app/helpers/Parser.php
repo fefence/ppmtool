@@ -84,7 +84,7 @@ class Parser
             if ($finished == null || trim($finished) == '') {
                 $finished = trim($rows->item(3)->getElementsByTagName('td')->item(0)->nodeValue);
             }
-            if ($finished == "Finished") {
+            if ($finished == "Finished" || $finished == 'Awarded') {
                 $res = explode('-', $rows->item(0)->getElementsByTagName('td')->item(2)->nodeValue);
                 if (count($res) < 2) {
                     $res = explode('-', $rows->item(1)->getElementsByTagName('td')->item(1)->nodeValue);
@@ -99,6 +99,9 @@ class Parser
                 $match->home_goals = $res[0];
                 $match->away_goals = $res[1];
                 $match->short_result = $resultShort;
+                if ($finished == 'Awarded') {
+                    $match->state = 'Awarded';
+                }
             }
 
         }
