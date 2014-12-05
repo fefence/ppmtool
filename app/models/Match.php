@@ -5,6 +5,7 @@ class Match extends Eloquent
 {
     protected $table = 'matches';
     public $timestamps = false;
+    public static $unguarded = true;
 
 //    public static $unguarded = true;
 

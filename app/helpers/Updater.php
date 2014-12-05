@@ -8,6 +8,7 @@ class Updater
         $m = self::getMatchesToUpdate($league_id);
         $matches = Parser::updateMatchesResult($m);
         if (Match::updated($matches)) {
+            Parser::parseNextMatches($league_id);
             for ($i = 1; $i < 11; $i++) {
                 $series = Series::where('league_id', $league_id)
                     ->where('active', 1)
