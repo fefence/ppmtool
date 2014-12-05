@@ -11,12 +11,21 @@
 |
 */
 
-Route::get('boo/', function()
+Route::get('boo/{i}/{season}', function($i, $season)
 {
+//    $ids = [];
+//    for($i = 1; $i < 10; $i ++) {
+        Series::calculateSeries($i, $season);
+        $seris = Series::where('active', 1)->get();
+        foreach($seris as $s){
+            $s->active = 0;
+            $s->save();
+        }
+//    }
 //    Updater::update(2);
-    $matches = Match::where('id', '2Vs6PNaA')->get();
-    $next =  Updater::getNextMatches($matches);
-    return $next->last();
+//    $matches = Match::where('id', '2Vs6PNaA')->get();
+//    $next =  Updater::getNextMatches($matches);
+//    return $next->last();
 //    return Parser::updateMatchesResult($matches);
 });
 
