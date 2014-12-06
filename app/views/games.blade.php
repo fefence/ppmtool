@@ -33,7 +33,7 @@
             </td>
             <td>{{$game['match']['away']}}</td>
             <td>{{$game['current_length']}}</td>
-            <td><span class="editable" id="bsf_{{$game['id']}}">{{$game['bsf']}}</span></td>
+            <td class="editable" id="bsf_{{$game['id']}}">{{$game['bsf']}}</td>
             <td class="editable" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
             <td class="editable" id="odds_{{$game['id']}}">{{$game['odds']}}</td>
             <td id="income_{{$game['id']}}">{{$game['income']}}</td>
@@ -53,9 +53,6 @@
 @endforeach
 <script>
     $(document).ready(function(){
-        $('table').on('click', function(){
-
-        });
         $(".editable").editable("/play/save", {
             callback : function(value) {
                 var arr = value.split('*');
