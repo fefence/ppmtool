@@ -9,7 +9,7 @@ class Setting extends Eloquent{
     }
 
     public static function enableSeries($league_id, $user_id, $game_type_id) {
-        $settings = Setting::firstOrNew(['user_id' => $user_id, 'league_id' => $league_id, 'game_type_id' => $game_type_id]);
+        $settings = Setting::create(['user_id' => $user_id, 'league_id' => $league_id, 'game_type_id' => $game_type_id]);
         $settings->save();
         $matches = Updater::getMatchesToUpdate($league_id);
         $series = Series::where('league_id', $league_id)
@@ -17,12 +17,8 @@ class Setting extends Eloquent{
             ->where('active', 1)
             ->first();
         foreach ($matches as $m) {
-            $game = new Game;
-            $game->user_id = $user_id;
-            $game->match_id = $m->id;
-            $game->game_type_id = $game_type_id;
-            $game->series_id = $series->id;
-            $game->current_length = $series->length;
+            $game = Game::firstOrCreate(['user_id' => $user_id, 'match_id' => $m->id, 'game_type_id' => $game_type_id, 'series_id' => $series->id, 'current_length' => $series->length]);
+            $game->odds = Parser::getOdds($m->id)[$game_type_id];
             $game->save();
         }
         ActionLog::create(['user_id' => $user_id, 'league_id' => $league_id, 'type' => 'settings', 'action' => 'enable', 'description' => 'Enable settings and create games']);

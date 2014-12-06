@@ -83,7 +83,7 @@ class Updater
 
             foreach ($matches as $match) {
                 $confirmed = Game::where('confirmed', 1)
-                    ->where('league_id', $league_id)
+//                    ->where('league_id', $league_id)
                     ->where('game_type_id', $game_type_id)
                     ->where('user_id', $user->id)
                     ->where('match_id', $match->id)
@@ -112,13 +112,13 @@ class Updater
             $bsf = 0;
             foreach ($matches as $match) {
                 $confirmed = Game::where('confirmed', 1)
-                    ->where('league_id', $league_id)
+//                    ->where('league_id', $league_id)
                     ->where('game_type_id', $game_type_id)
                     ->where('user_id', $settings->user_id)
                     ->where('match_id', $match->id)
                     ->get();
                 $not_confirmed = Game::where('confirmed', 0)
-                    ->where('league_id', $league_id)
+//                    ->where('league_id', $league_id)
                     ->where('game_type_id', $game_type_id)
                     ->where('user_id', $settings->user_id)
                     ->where('match_id', $match->id)
@@ -137,10 +137,11 @@ class Updater
                 $game = new Game;
                 $game->bsf = $bsfpm;
                 $game->match_id = $next_match->id;
-                $game->user_id = $user_settings->user_id;
+                $game->user_id = $settings->user_id;
                 $game->game_type_id = $game_type_id;
                 $game->current_length = $series->length;
                 $game->series_id = $series->id;
+                $game->odds = Parser::getOdds($next_match->id)[$game_type_id];
                 $game->save();
             }
         }

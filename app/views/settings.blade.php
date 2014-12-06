@@ -15,7 +15,7 @@
             <td><img src="/images/{{strtoupper($league->country)}}.png"> {{$league->country}}</td>
         @foreach($game_types as $game_type)
             <td>
-                @if(array_key_exists($league->id, $data) && $data[$league->id] == $game_type->id)
+                @if(array_key_exists($league->id, $data) && in_array($game_type->id, $data[$league->id]))
                 <a href="/settings/disable/{{$league->id}}/{{$game_type->id}}" role="button" class="btn btn-danger btn-xs">disable</a>
                 @else
                 <a href="/settings/enable/{{$league->id}}/{{$game_type->id}}" role="button" class="btn btn-success btn-xs">enable</a>

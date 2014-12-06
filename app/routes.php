@@ -11,22 +11,10 @@
 |
 */
 
-Route::get('boo/{i}/{season}', function($i, $season)
+Route::get('/boo/{id}', function($id)
 {
-//    $ids = [];
-//    for($i = 1; $i < 10; $i ++) {
-        Series::calculateSeries($i, $season);
-        $seris = Series::where('active', 1)->get();
-        foreach($seris as $s){
-            $s->active = 0;
-            $s->save();
-        }
-//    }
-//    Updater::update(2);
-//    $matches = Match::where('id', '2Vs6PNaA')->get();
-//    $next =  Updater::getNextMatches($matches);
-//    return $next->last();
-//    return Parser::updateMatchesResult($matches);
+    return Updater::update($id);
+//    return OddsUpdater::getOdds(10);
 });
 
 Route::get('/play', 'GamesController@displayGames');

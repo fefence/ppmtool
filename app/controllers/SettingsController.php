@@ -5,8 +5,16 @@ class SettingsController extends BaseController{
     public static function displaySettings()
     {
         $user_id = Auth::user()->id;
-        $data = Setting::where('user_id', $user_id)
-            ->lists('game_type_id', 'league_id');
+        $res = Setting::where('user_id', $user_id)->get();
+        $data = array();
+        foreach($res as $d) {
+            if (!array_key_exists($d->league_id, $data)) {
+                $data[$d->league_id] = array();
+            }
+            array_push($data[$d->league_id], $d->game_type_id);
+        }
+//            ->lists('game_type_id', 'league_id');
+//        return $data;
         $leagues = League::all();
         $game_types = GameType::all();
         return View::make('settings')->with(['data' => $data, 'leagues' => $leagues, 'game_types' => $game_types]);
