@@ -47,9 +47,6 @@
 @endforeach
 <script>
     $(document).ready(function(){
-        $('table').on('click', function(){
-
-        });
         $(".editable").editable("/play/save", {
             height : '20',
             width : '100%',
