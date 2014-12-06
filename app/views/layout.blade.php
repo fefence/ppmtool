@@ -47,7 +47,7 @@
                         </ul>
                     </li>
                 </ul>
-                <p class="navbar-text navbar-right">5434 €</p>
+                <p class="navbar-text navbar-right">{{$global}} €</p>
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
     </nav>

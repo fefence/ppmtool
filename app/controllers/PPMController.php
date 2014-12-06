@@ -17,4 +17,17 @@ class PPMController extends \BaseController{
 //        return $data;
         return View::make('ppm')->with(['data' => $data, 'games' => $games]);
     }
+
+    public static function displaySeriesGames($series_id) {
+        $user_id = Auth::user()->id;
+        $games = Game::where('user_id', $user_id)
+            ->join('matches', 'matches.id', '=', 'games.match_id')
+            ->where('series_id', $series_id)
+            ->where('confirmed', 1)
+            ->with('game_type')
+            ->select(DB::raw('games.*, matches.home, matches.away, matches.date_time, matches.home_goals, matches.away_goals, matches.short_result'))
+            ->orderBy('current_length')
+            ->get();
+        return View::make('seriesdetails')->with(['games' => $games]);
+    }
 }

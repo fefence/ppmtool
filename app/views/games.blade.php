@@ -22,7 +22,7 @@
         @foreach($games as $game)
         <tr>
             <td>{{date('d M, H:i', strtotime($game['match']['date_time']))}}</td>
-            <td>{{$game['game_type']['name']}}</td>
+            <td><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}</a></td>
             <td>{{$game['match']['home']}}</td>
             <td class="success">
                 @if ($game['match']['short_result'] != '-')
@@ -45,7 +45,6 @@
                 @else
                 <a role="button" class="btn btn-default btn-xs" style="width: 50px" disabled href="/play/confirm/{{$game['id']}}">+&nbsp({{ $count[$game['id']] }})</a>
                 @endif
-                <a role="button" class="btn btn-danger btn-xs" style="width: 50px" href="/play/delete/{{$game['id']}}" style="font-size: 130%;">-</a>
             </td>
         </tr>
         @endforeach

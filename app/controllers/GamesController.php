@@ -38,7 +38,12 @@ class GamesController extends BaseController
     }
 
     public static function confirmGame($game_id) {
-        Game::confirm($game_id);
+        Game::confirmGame($game_id);
+        return Redirect::back()->with('message', 'Game confirmed');
+    }
+
+    public static function deleteGame($game_id) {
+        Game::deleteGame($game_id);
         return Redirect::back()->with('message', 'Game confirmed');
     }
 
