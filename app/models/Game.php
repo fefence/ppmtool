@@ -11,4 +11,8 @@ class Game extends Eloquent{
     public function game_type() {
         return $this->belongsTo('GameType');
     }
+
+    public function getDates() {
+        return ['date_time'];
+    }
 }

@@ -4,6 +4,10 @@ class Setting extends Eloquent{
     protected $table = 'settings';
     public static $unguarded = true;
 
+    public function league() {
+        return $this->belongsTo('League');
+    }
+
     public static function enableSeries($league_id, $user_id, $game_type_id) {
         $settings = Setting::firstOrNew(['user_id' => $user_id, 'league_id' => $league_id, 'game_type_id' => $game_type_id]);
         $settings->save();
