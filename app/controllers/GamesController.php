@@ -21,6 +21,7 @@ class GamesController extends BaseController
                 ->where('confirmed', 0)
                 ->with('game_type')
                 ->select(DB::raw('games.*, matches.home, matches.away, matches.date_time, matches.home_goals, matches.away_goals, matches.short_result'))
+                ->orderBy('date_time')
                 ->orderBy('game_type_id')
                 ->get();
 //            return $games;
