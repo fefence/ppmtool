@@ -32,9 +32,9 @@
             </td>
             <td>{{$game['match']['away']}}</td>
             <td>{{$game['current_length']}}</td>
-            <td class="editable" id="bsf">{{$game['bsf']}}</div></td>
-            <td>{{$game['bet']}}</td>
-            <td>{{$game['odds']}}</td>
+            <td class="editable" id="bsf#{{$game['id']}}">{{$game['bsf']}}</div></td>
+            <td class="editable" id="bsf">{{$game['bet']}}</td>
+            <td class="editable" id="bsf">{{$game['odds']}}</td>
             <td>{{$game['income']}}</td>
             <td>{{$game['profit']}}</td>
         </tr>

@@ -30,7 +30,7 @@ Route::get('boo/{i}/{season}', function($i, $season)
 });
 
 Route::get('/play', 'GamesController@displayGames');
-Route::get('/ppm', 'PPMController@displaySeries');
+Route::get('/series', 'PPMController@displaySeries');
 
 Route::get('/settings', 'SettingsController@displaySettings');
 Route::get('/settings/disable/{league_id}/{game_type_id}', 'SettingsController@disableSettings');

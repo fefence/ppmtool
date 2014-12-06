@@ -29,13 +29,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/play"><span style="font-weight: bold;">Play</span></a>
+                <a class="navbar-brand" href="/play"><span class="{{Request::path() == 'play' ? 'text-danger' : '';}}">Play</span></a>
+                <a class="navbar-brand" href="/series"><span class="{{Request::path() == 'series' ? 'text-danger' : '';}}">Series</span></a>
+                <a class="navbar-brand" href="#"><span class="{{Request::path() == 'live' ? 'text-danger' : '';}}">Live</span></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-<!--                    <li class="active"><a href="/play">Play</a></li>-->
-                    <li><a href="/ppm">Series</a></li>
-                    <li><a href="#">Live</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
