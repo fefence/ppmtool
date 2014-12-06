@@ -16,6 +16,7 @@
             <th>odds</th>
             <th>income</th>
             <th>profit</th>
+            <th></th>
         </thead>
         <tbody>
         @foreach($games as $game)
@@ -32,11 +33,19 @@
             </td>
             <td>{{$game['match']['away']}}</td>
             <td>{{$game['current_length']}}</td>
-            <td class="editable" id="bsf#{{$game['id']}}">{{$game['bsf']}}</div></td>
-            <td class="editable" id="bsf">{{$game['bet']}}</td>
-            <td class="editable" id="bsf">{{$game['odds']}}</td>
-            <td>{{$game['income']}}</td>
-            <td>{{$game['profit']}}</td>
+            <td><span class="editable" id="bsf_{{$game['id']}}">{{$game['bsf']}}</span></td>
+            <td class="editable" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
+            <td class="editable" id="odds_{{$game['id']}}">{{$game['odds']}}</td>
+            <td id="income_{{$game['id']}}">{{$game['income']}}</td>
+            <td id="profit_{{$game['id']}}">{{$game['profit']}}</td>
+            <td>@if($game['short_result'] == '-')
+                <a role="button" @if ($count[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 50px" href="/play/confirm/{{$game['id']}}" style="font-size: 130%;">+&nbsp({{ $count[$game['id']] }})</a>
+                @elseif ($d->resultShort == 'D')
+                <a role="button" class="btn btn-success btn-xs" style="width: 50px" disabled href="/play/confirm/{{$game['id']}}">+&nbsp({{ $count[$game['id']] }})</a>
+                @else
+                <a role="button" class="btn btn-default btn-xs" style="width: 50px" disabled href="/play/confirm/{{$game['id']}}">+&nbsp({{ $count[$game['id']] }})</a>
+                @endif
+            </td>
         </tr>
         @endforeach
         </tbody>
@@ -44,8 +53,19 @@
 @endforeach
 <script>
     $(document).ready(function(){
-        $(".editable").editable("#", {
+        $('table').on('click', function(){
 
+        });
+        $(".editable").editable("/play/save", {
+            callback : function(value) {
+                var arr = value.split('*');
+//                alert(value);
+                $('#bsf_'+arr[0]).text(arr[1]);
+                $('#bet_'+arr[0]).text(arr[2]);
+                $('#odds_'+arr[0]).text(arr[3]);
+                $('#income_'+arr[0]).text(arr[4]);
+                $('#profit_'+arr[0]).text(arr[5]);
+            }
         });
     });
 </script>

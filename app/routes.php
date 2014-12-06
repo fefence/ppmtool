@@ -30,6 +30,8 @@ Route::get('boo/{i}/{season}', function($i, $season)
 });
 
 Route::get('/play', 'GamesController@displayGames');
+Route::post('/play/save', 'GamesController@saveTable');
+Route::get('/play/confirm/{game_id}', 'GamesController@confirmGame');
 Route::get('/series', 'PPMController@displaySeries');
 
 Route::get('/settings', 'SettingsController@displaySettings');
