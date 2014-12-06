@@ -29,4 +29,13 @@ Route::get('boo/{i}/{season}', function($i, $season)
 //    return Parser::updateMatchesResult($matches);
 });
 
+Route::get('/games', 'GamesController@displayGames');
 Route::get('/ppm', 'PPMController@displaySeries');
+
+Route::get('/settings', 'SettingsController@displaySettings');
+Route::get('/settings/disable/{league_id}/{game_type_id}', 'SettingsController@disableSettings');
+Route::get('/settings/enable/{league_id}/{game_type_id}', 'SettingsController@enableSettings');
+
+Route::get('/login', 'SessionsController@create');
+Route::get('/logout', 'SessionsController@destroy');
+Route::resource('sessions', 'SessionsController', ['only'  => ['create', 'store', 'destroy']]);

@@ -8,9 +8,9 @@ class PPMController extends \BaseController{
         $games = GameType::all();
         $data = array();
         foreach($countries as $country) {
-            $data[$country] = Series::where('active', 1)
+            $data[$country] = League::where('active', 1)
                 ->where('country', $country)
-                ->join('leagues', 'leagues.id', '=', 'series.league_id')
+                ->join('series', 'leagues.id', '=', 'series.league_id')
                 ->orderBy('game_type_id')
                 ->get();
         }

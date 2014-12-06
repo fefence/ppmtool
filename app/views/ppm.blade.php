@@ -12,7 +12,9 @@
     <tbody>
     @foreach($data as $c => $d)
     <tr>
-        <td>{{$c}}</td>
+        <td>
+            <img src="/images/{{strtoupper($c)}}.png"> {{$c}}
+        </td>
         @foreach($d as $series)
         <td>{{$series['length']}}</td>
         @endforeach

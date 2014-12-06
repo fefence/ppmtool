@@ -7,6 +7,9 @@ class Match extends Eloquent
     public $timestamps = false;
     public static $unguarded = true;
 
+    public function league() {
+        return $this->belongsTo('League');
+    }
 //    public static $unguarded = true;
 
     public static function endSeries($matches, $game) {

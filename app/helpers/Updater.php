@@ -25,10 +25,12 @@ class Updater
                     $newSeries->end_match_id = $nextMatches->last()->id;
                     $newSeries->game_type_id = $i;
                     $newSeries->active = 1;
+                    self::updateGamesEndSeries($league_id, $i, $matches);
                 } else {
                     $series->length = $series->length + 1;
                     $series->end_match_id = $nextMatches->last()->id;
                     $newSeries = $series;
+                    self::updateGamesNotEndSeries($league_id, $i, $matches, $nextMatches, $series);
                 }
                 try {
                     $newSeries->save();
@@ -42,7 +44,8 @@ class Updater
         }
     }
 
-    public static function getNextMatches($matches) {
+    public static function getNextMatches($matches)
+    {
         $time = $matches->last()->date_time;
         $next_time = Match::where('league_id', $matches->last()->league_id)
             ->where('date_time', '>', $time)
@@ -55,7 +58,8 @@ class Updater
         return $next_matches;
     }
 
-    public static function getMatchesToUpdate($league_id) {
+    public static function getMatchesToUpdate($league_id)
+    {
         $end_match_id = Series::where('active', 1)
             ->where('league_id', $league_id)
             ->first()
@@ -66,5 +70,79 @@ class Updater
             ->where('date_time', $next_time)
             ->get();
         return $next_matches;
+    }
+
+    public static function updateGamesEndSeries($league_id, $game_type_id, $matches)
+    {
+        $user_settings = Setting::where('league_id', $league_id)
+            ->where('game_type_id', $game_type_id)
+            ->get();
+        foreach ($user_settings as $settings) {
+            $user = User::find($settings->user_id);
+
+
+            foreach ($matches as $match) {
+                $confirmed = Game::where('confirmed', 1)
+                    ->where('league_id', $league_id)
+                    ->where('game_type_id', $game_type_id)
+                    ->where('user_id', $user->id)
+                    ->where('match_id', $match->id)
+                    ->get();
+                if (Match::endSeries([$match], $game_type_id)) {
+                    if (count($confirmed) > 0) {
+                        foreach ($confirmed as $conf) {
+                            $user->acount = $user->account + $conf->bet * $conf->odds;
+                            $user->save();
+                        }
+                    }
+                }
+            }
+        }
+        foreach ($user_settings as $user_setting) {
+            $user_setting->delete();
+        }
+    }
+
+    public static function updateGamesNotEndSeries($league_id, $game_type_id, $matches, $next_matches, $series)
+    {
+        $user_settings = Setting::where('league_id', $league_id)
+            ->where('game_type_id', $game_type_id)
+            ->get();
+        foreach ($user_settings as $settings) {
+            $bsf = 0;
+            foreach ($matches as $match) {
+                $confirmed = Game::where('confirmed', 1)
+                    ->where('league_id', $league_id)
+                    ->where('game_type_id', $game_type_id)
+                    ->where('user_id', $settings->user_id)
+                    ->where('match_id', $match->id)
+                    ->get();
+                $not_confirmed = Game::where('confirmed', 0)
+                    ->where('league_id', $league_id)
+                    ->where('game_type_id', $game_type_id)
+                    ->where('user_id', $settings->user_id)
+                    ->where('match_id', $match->id)
+                    ->first();
+                $bsf = 0;
+                if (count($confirmed) == 0) {
+                    $bsf = $not_confirmed->bsf;
+                } else {
+                    foreach ($confirmed as $conf) {
+                        $bsf = $bsf + $conf->bet + $conf->bsf;
+                    }
+                }
+            }
+            $bsfpm = $bsf / count($next_matches);
+            foreach ($next_matches as $next_match) {
+                $game = new Game;
+                $game->bsf = $bsfpm;
+                $game->match_id = $next_match->id;
+                $game->user_id = $user_settings->user_id;
+                $game->game_type_id = $game_type_id;
+                $game->current_length = $series->length;
+                $game->series_id = $series->id;
+                $game->save();
+            }
+        }
     }
 } 

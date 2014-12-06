@@ -114,4 +114,6 @@ class Parser
         $headers = get_headers($url);
         return substr($headers[0], 9, 3);
     }
+
+
 }
