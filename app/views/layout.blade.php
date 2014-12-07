@@ -31,7 +31,7 @@
                 </button>
                 <a class="navbar-brand" href="/play"><span class="{{Request::path() == 'play' ? 'text-danger' : '';}}">Play</span></a>
                 <a class="navbar-brand" href="/series"><span class="{{Request::path() == 'series' ? 'text-danger' : '';}}">Series</span></a>
-                <a class="navbar-brand" href="/live"><span class="{{Request::path() == 'live' ? 'text-danger' : '';}}">Live</span></a>
+<!--                <a class="navbar-brand" href="/live"><span class="{{Request::path() == 'live' ? 'text-danger' : '';}}">Live</span></a>-->
 <!--                <a class="navbar-brand" href="/settings"><span class="{{Request::path() == 'settings' ? 'text-danger' : '';}}">Settings</span></a>-->
                 <a class="navbar-brand" href="#"><span class="{{Request::path() == 'odds' ? 'text-danger' : '';}}">Odds</span></a>
             </div>
@@ -42,6 +42,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">Action log</a></li>
                             <li><a href="#">Statistics</a></li>
+                            <li><a href="/live">Livescore</a></li>
                             <li class="divider"></li>
 <!--                            <li class="dropdown-header">Nav header</li>-->
                             <li><a href="/settings">Settings</a></li>
