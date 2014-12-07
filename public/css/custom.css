@@ -1,11 +1,16 @@
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .navbar {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.celledit {
+.table {
+    border: 1px solid #dddddd;
+}
+
+th, td {
+    vertical-align: middle !important;
 }

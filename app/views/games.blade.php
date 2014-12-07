@@ -3,37 +3,40 @@
 @section('content')
 @foreach($data as $c => $games)
 
-    <table class="table table-bordered">
+    <table class="table sortable">
         <thead>
-            <th style="width: 110px;"><img src="/images/{{$c}}.png"></th>
-            <th>game</th>
-            <th>home</th>
-            <th>res</th>
-            <th>away</th>
-            <th style="width: 80px">bsf</th>
-            <th style="width: 80px;">bet</th>
-            <th style="width: 60px;">odds</th>
-            <th style="width: 120px;">income</th>
-            <th></th>
+            <tr>
+                <th><img src="/images/{{$c}}.png"></th>
+                <th>game</th>
+                <th>home</th>
+                <th>away</th>
+                <th>r</th>
+                <th>bsf</th>
+                <th>bet</th>
+                <th>odds</th>
+                <th>income</th>
+                <th style="width: 20px;"></th>
+            </tr>
         </thead>
         <tbody>
         @foreach($games as $game)
         <tr>
             <td>{{date('d M, H:i', strtotime($game['match']['date_time']))}}</td>
-            <td><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}} [{{$game['current_length']}}]</a></td>
+            <td><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}&nbsp;[{{$game['current_length']}}]</a></td>
             <td>{{$game['match']['home']}}</td>
-            <td class="success">
+            <td>{{$game['match']['away']}}</td>
+            {{--<td class="success">--}}
+            <td>
                 @if ($game['match']['short_result'] != '-')
                 {{$game['match']['home_goals']}}:{{$game['match']['away_goals']}}
                 @else
                 -
                 @endif
             </td>
-            <td>{{$game['match']['away']}}</td>
             <td class="editable" id="bsf_{{$game['id']}}">{{$game['bsf']}}</td>
-            <td class="editable" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
+            <td class="warning editable" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
             <td class="editable" id="odds_{{$game['id']}}">{{$game['odds']}}</td>
-            <td><span id="income_{{$game['id']}}">{{$game['income']}}</span> <span id="profit_{{$game['id']}}">[{{$game['profit']}}]</span></td>
+            <td><span id="income_{{$game['id']}}">{{$game['income']}}</span> [<span id="profit_{{$game['id']}}">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
                 <a role="button" @if ($count[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/play/confirm/{{$game['id']}}" style="font-size: 130%;">+&nbsp({{ $count[$game['id']] }})</a>
                 @else
