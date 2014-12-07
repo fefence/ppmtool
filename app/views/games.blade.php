@@ -20,16 +20,27 @@
         </thead>
         <tbody>
         @foreach($games as $game)
-        <tr>
+        <tr id="{{$game['match']['id']}}">
             <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
             <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}&nbsp;[{{$game['current_length']}}]</a></td>
             <td style="text-align: right;">{{$game['match']['home']}}</td>
-            <td class="text-center">
+            <?php
+            if($game['match']['short_result'] == '-' && $game['match']['date_time'] <= date('Y-m-d H:i:s', time())) {
+                $active_livescore = true;
+            } else {
+                $active_livescore = false;
+            }
+            ?>
+            <td @if($active_livescore) class="livescoreResultTdActive" @else class="livescoreResultTdInactive" @endif>
+            <div>
+                <span @if($active_livescore) class="livescoreResultText" @endif>
                 @if ($game['match']['short_result'] != '-')
-                {{$game['match']['home_goals']}}:{{$game['match']['away_goals']}}
+                {{$game['match']['home_goals']}} : {{$game['match']['away_goals']}}
                 @else
                 -
                 @endif
+                </span>
+            </div>
             </td>
             <td>{{$game['match']['away']}}</td>
             <td class="editable text-center" id="bsf_{{$game['id']}}">{{$game['bsf']}}</td>
@@ -48,6 +59,8 @@
     </table>
 @endforeach
 <script>
+    var asInitVals = new Array();
+
     $(document).ready(function(){
         $(".editable").editable("/play/save", {
             height : '20',
@@ -63,6 +76,28 @@
                 $('#profit_'+arr[0]).text(arr[5]);
             }
         });
+        $("table tr .livescoreResultTdActive div .livescoreResultText").each(function() {
+            var id =$(this).closest('tr').prop('id');
+            var td = $(this);
+            $.post( "/getres/" + id, function( data ) {
+                td.html(data);
+            });
+        });
+        setInterval(function() {
+            $("table tr .livescoreResultTdActive div .livescoreResultText").each(function() {
+                var id =$(this).closest('tr').prop('id');
+                var td = $(this);
+                $.post( "/getres/" + id, function( data ) {
+                    td.html(data);
+                });
+            })
+
+        }, 30000);
+        setInterval(function() {
+            $("table tr .livescoreResultTdActive div span span").each(function() {
+                $(this).toggleClass('livescoreIndicator');
+            })
+        }, 1000);
     });
 </script>
 @stop
