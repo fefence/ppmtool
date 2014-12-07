@@ -6,7 +6,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="text-center" style="width: 10%;"><img src="/images/{{$c}}.png"></th>
+                <th class="text-center" style="width: 10%;"><img src="/images/32/{{$c}}.png"></th>
                 <th class="text-center" style="width: 10%;">game</th>
                 <th style="text-align: right;">home</th>
                 <th style="width: 5%; text-align: center">r</th>
