@@ -6,37 +6,36 @@
     <table class="table sortable">
         <thead>
             <tr>
-                <th><img src="/images/{{$c}}.png"></th>
-                <th>game</th>
-                <th>home</th>
+                <th class="text-center" style="width: 10%;"><img src="/images/{{$c}}.png"></th>
+                <th class="text-center" style="width: 10%;">game</th>
+                <th style="text-align: right;">home</th>
+                <th style="width: 5%; text-align: center">r</th>
                 <th>away</th>
-                <th>r</th>
-                <th>bsf</th>
-                <th>bet</th>
-                <th>odds</th>
-                <th>income</th>
-                <th style="width: 20px;"></th>
+                <th class="text-center" style="width: 10%;">bsf</th>
+                <th class="text-center" style="width: 10%;">bet</th>
+                <th class="text-center" style="width: 10%;">odds</th>
+                <th class="text-center" style="width: 10%;">income</th>
+                <th class="text-center" style="width: 10%;"></th>
             </tr>
         </thead>
         <tbody>
         @foreach($games as $game)
         <tr>
             <td>{{date('d M, H:i', strtotime($game['match']['date_time']))}}</td>
-            <td><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}&nbsp;[{{$game['current_length']}}]</a></td>
-            <td>{{$game['match']['home']}}</td>
-            <td>{{$game['match']['away']}}</td>
-            {{--<td class="success">--}}
-            <td>
+            <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}&nbsp;[{{$game['current_length']}}]</a></td>
+            <td style="text-align: right;">{{$game['match']['home']}}</td>
+            <td class="text-center">
                 @if ($game['match']['short_result'] != '-')
                 {{$game['match']['home_goals']}}:{{$game['match']['away_goals']}}
                 @else
                 -
                 @endif
             </td>
-            <td class="editable" id="bsf_{{$game['id']}}">{{$game['bsf']}}</td>
-            <td class="warning editable" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
-            <td class="editable" id="odds_{{$game['id']}}">{{$game['odds']}}</td>
-            <td><span id="income_{{$game['id']}}">{{$game['income']}}</span> [<span id="profit_{{$game['id']}}">{{$game['profit']}}</span>]</td>
+            <td>{{$game['match']['away']}}</td>
+            <td class="editable text-center" id="bsf_{{$game['id']}}">{{$game['bsf']}}</td>
+            <td class="warning editable text-center" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
+            <td class="editable text-center" id="odds_{{$game['id']}}">{{$game['odds']}}</td>
+            <td class="text-center"><span id="income_{{$game['id']}}">{{$game['income']}}</span> [<span id="profit_{{$game['id']}}">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
                 <a role="button" @if ($count[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/play/confirm/{{$game['id']}}" style="font-size: 130%;">+&nbsp({{ $count[$game['id']] }})</a>
                 @else

@@ -9,8 +9,10 @@ body {
 
 .table {
     border: 1px solid #dddddd;
+    table-layout: fixed;
 }
 
 th, td {
     vertical-align: middle !important;
+    overflow: hidden;
 }
