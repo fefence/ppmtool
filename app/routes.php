@@ -13,12 +13,10 @@
 
 Route::get('/boo/{id}', function($id)
 {
-//    return Parser::parseNextMatches($id);
-    return Updater::update($id);
-//    return OddsUpdater::getOdds(10);
+    Series::calculateSeries($id, '2014-2015');
 });
 
-Route::get('/play', 'GamesController@displayGames');
+Route::get('/play', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
 Route::post('/play/save', 'GamesController@saveTable');
 Route::get('/play/confirm/{game_id}', 'GamesController@confirmGame');
 Route::get('/play/delete/{game_id}', 'GamesController@deleteGame');
@@ -34,8 +32,8 @@ Route::get('/logout', 'SessionsController@destroy');
 Route::resource('sessions', 'SessionsController', ['only'  => ['create', 'store', 'destroy']]);
 
 Route::get('/', function(){
-    return Redirect::intended('/play');
+    return Redirect::route('home');
 });
 Route::get('/home', function(){
-    return Redirect::intended('/play');
+    return Redirect::route('home');
 });
