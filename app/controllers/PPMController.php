@@ -9,14 +9,13 @@ class PPMController extends \BaseController{
         $data = array();
         foreach($countries as $country) {
             for($i = 1; $i < 11; $i ++) {
-                $data[$country][$i] = League::where('active', 1)
+                $data[$country][$i] = Series::where('active', 1)
                     ->where('country_alias', $country)
-                    ->join('series', 'leagues.id', '=', 'series.league_id')
+                    ->join('leagues', 'leagues.id', '=', 'series.league_id')
                     ->where('game_type_id', $i)
-                    ->orderBy('game_type_id')
-                    ->get();
+                    ->first();
                 if (count($data[$country][$i]) == 0) {
-                    $data[$country][$i] = [];
+                    $data[$country][$i]['length'] = 0;
                 }
             }
         }

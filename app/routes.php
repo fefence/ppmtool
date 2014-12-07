@@ -13,7 +13,7 @@
 
 Route::get('/boo/{id}', function($id)
 {
-    Series::calculateSeries($id, '2014-2015');
+   return Series::calculateSeries($id, '2014-2015');
 });
 
 Route::get('/play', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
