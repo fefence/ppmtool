@@ -18,7 +18,7 @@ class Setting extends Eloquent{
             ->first();
         foreach ($matches as $m) {
             $game = Game::firstOrCreate(['user_id' => $user_id, 'match_id' => $m->id, 'game_type_id' => $game_type_id, 'series_id' => $series->id, 'current_length' => $series->length]);
-            $game->odds = Parser::getOdds($m->id)[$game_type_id];
+//            $game->odds = Parser::getOdds($m->id)[$game_type_id];
             $game->save();
         }
         ActionLog::create(['user_id' => $user_id, 'league_id' => $league_id, 'type' => 'settings', 'action' => 'enable', 'description' => 'Enable settings and create games']);
