@@ -45,6 +45,9 @@ class Series extends Eloquent
                 $series->save();
             }
 
+            if ($match->short_result == '-') {
+                return;
+            }
         }
 //        }
     }
