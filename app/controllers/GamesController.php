@@ -8,7 +8,8 @@ class GamesController extends BaseController
         $user_id = Auth::user()->id;
         $league_ids = Setting::where('user_id', $user_id)
             ->distinct('league_id')
-            ->with('league')
+            ->join('leagues', 'leagues.id', '=', 'settings.league_id')
+            ->orderBy('country')
             ->lists('league_id');
         $data = array();
         $count = array();
