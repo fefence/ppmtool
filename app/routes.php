@@ -13,8 +13,9 @@
 
 Route::get('/boo/{id}', function($id)
 {
-   return Series::calculateSeries($id, '2014-2015');
+    Updater::update($id);
 });
+Route::get('/live', 'LivescoreController@livescore');
 
 Route::get('/play', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
 Route::post('/play/save', 'GamesController@saveTable');

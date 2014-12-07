@@ -39,22 +39,23 @@ class Parser
                     if (count($arr) > 2) {
                         $id = $arr[count($arr) - 2];
                         $match = Match::firstOrCreate(['id' => $id]);
-
                         $dt = $cols->item(8)->nodeValue;
                         $dtarr = explode(' ', $dt);
                         $date = $dtarr[0];
-                        $time = $dtarr[1];
                         $ha = $cols->item(1)->nodeValue;
                         $tarr = explode(' - ', $ha);
-
                         $match->home = $tarr[0];
                         $match->away = $tarr[1];
                         $match->short_result = '-';
                         $match->league_id = $league_id;
                         $datearr = explode('.', $date);
+                        $time = date('H:i:s', strtotime($dtarr[1]));
+                        $timestamp = strtotime($datearr[2] . '-' . $datearr[1] . '-' . $datearr[0] . " " . $time) + 60 * 60;
+                        $time = date('H:i:s', $timestamp);
                         $match->date_time = $datearr[2] . '-' . $datearr[1] . '-' . $datearr[0] . " " . $time;
                         $match->season = self::$current_season;
                         $match->save();
+                        echo $match->id."<br>";
                     }
                 }
 
