@@ -55,7 +55,6 @@ class Parser
                         $match->date_time = $datearr[2] . '-' . $datearr[1] . '-' . $datearr[0] . " " . $time;
                         $match->season = self::$current_season;
                         $match->save();
-//                        echo $match->id."<br>";
                     }
                 }
 

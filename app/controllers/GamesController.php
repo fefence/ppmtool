@@ -70,6 +70,8 @@ class GamesController extends BaseController
         $game->income = $game->bet * $game->odds;
         $game->profit = $game->bet * $game->odds - $game->bet - $game->bsf;
         $game->save();
-        return $game_id."*".$game->bsf."*".$game->bet."*".$game->odds."*".$game->income."*".$game->profit;
+
+        $tmp = Game::find($game->id);
+        return $game_id."*".$tmp->bsf."*".$tmp->bet."*".$tmp->odds."*".$tmp->income."*".$tmp->profit;
     }
 } 

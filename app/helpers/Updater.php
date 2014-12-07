@@ -6,8 +6,10 @@ class Updater
     public static function update($league_id)
     {
         $m = self::getMatchesToUpdate($league_id);
+
         $matches = Parser::updateMatchesResult($m);
         if (Match::updated($matches)) {
+            Parser::parseNextMatches($league_id);
             Parser::parseNextMatches($league_id);
             for ($i = 1; $i < 11; $i++) {
                 $series = Series::where('league_id', $league_id)
@@ -47,6 +49,7 @@ class Updater
     public static function getNextMatches($matches)
     {
         $time = $matches->last()->date_time;
+
         $next_time = Match::where('league_id', $matches->last()->league_id)
             ->where('date_time', '>', $time)
             ->orderBy('date_time')
@@ -80,7 +83,6 @@ class Updater
         foreach ($user_settings as $settings) {
             $user = User::find($settings->user_id);
 
-
             foreach ($matches as $match) {
                 $confirmed = Game::where('confirmed', 1)
 //                    ->where('league_id', $league_id)
@@ -91,7 +93,7 @@ class Updater
                 if (Match::endSeries([$match], $game_type_id)) {
                     if (count($confirmed) > 0) {
                         foreach ($confirmed as $conf) {
-                            $user->acount = $user->account + $conf->bet * $conf->odds;
+                            $user->account = $user->account + $conf->bet * $conf->odds;
                             $user->save();
                         }
                     }
@@ -112,17 +114,16 @@ class Updater
             $bsf = 0;
             foreach ($matches as $match) {
                 $confirmed = Game::where('confirmed', 1)
-//                    ->where('league_id', $league_id)
                     ->where('game_type_id', $game_type_id)
                     ->where('user_id', $settings->user_id)
                     ->where('match_id', $match->id)
                     ->get();
                 $not_confirmed = Game::where('confirmed', 0)
-//                    ->where('league_id', $league_id)
                     ->where('game_type_id', $game_type_id)
                     ->where('user_id', $settings->user_id)
                     ->where('match_id', $match->id)
                     ->first();
+//                return $not_confirmed;
                 $bsf = 0;
                 if (count($confirmed) == 0) {
                     $bsf = $not_confirmed->bsf;
@@ -141,7 +142,10 @@ class Updater
                 $game->game_type_id = $game_type_id;
                 $game->current_length = $series->length;
                 $game->series_id = $series->id;
-                $game->odds = Parser::getOdds($next_match->id)[$game_type_id];
+                $odds = Parser::getOdds($next_match->id)[$game_type_id];
+                if ($odds != null && $odds != -1) {
+                    $game->odds = $odds;
+                }
                 $game->save();
             }
         }
