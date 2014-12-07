@@ -9,13 +9,13 @@
                 <th class="text-center" style="width: 65px;"><img src="/images/32/{{$c}}.png"></th>
                 <th class="text-center" style="width: 10%;">game</th>
                 <th style="text-align: right;">home</th>
-                <th style="width: 5%; text-align: center">r</th>
+                <th style="width: 50px; text-align: center">r</th>
                 <th>away</th>
-                <th class="text-center" style="width: 10%;">bsf</th>
-                <th class="text-center" style="width: 10%;">bet</th>
-                <th class="text-center" style="width: 10%;"><a href="/getodds/{{$c}}">odds</a></th>
+                <th class="text-center" style="width: 8%;">bsf</th>
+                <th class="text-center" style="width: 8%;">bet</th>
+                <th class="text-center" style="width: 8%;"><a href="/getodds/{{$c}}">odds</a></th>
                 <th class="text-center" style="width: 10%;">income</th>
-                <th class="text-center" style="width: 10%;"></th>
+                <th class="text-center" style="width: 8%;"></th>
             </tr>
         </thead>
         <tbody>
@@ -33,9 +33,9 @@
             ?>
             <td @if($active_livescore) class="livescoreResultTdActive" @else class="livescoreResultTdInactive" @endif>
             <div>
-                <span @if($active_livescore) class="livescoreResultText" @endif>
+            <span @if($active_livescore) class="livescoreResultText" @endif>
                 @if ($game['match']['short_result'] != '-')
-                {{$game['match']['home_goals']}} : {{$game['match']['away_goals']}}
+                {{$game['match']['home_goals']}}&nbsp;:&nbsp;{{$game['match']['away_goals']}}
                 @else
                 -
                 @endif

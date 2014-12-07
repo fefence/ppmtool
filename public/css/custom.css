@@ -21,16 +21,16 @@ th, td {
 .livescoreIndicator {
     visibility: hidden;
 }
-.livescoreResultTdInactive {
+.livescoreResultTdInactive1 {
     text-align: center;
     padding: 0px;
 }
-.livescoreResultTdActive {
+.livescoreResultTdActive1 {
     background-color: #FA6900;
     text-align: center;
     padding: 0px;
 }
-.livescoreResultText {
+.livescoreResultText1 {
     color: #E0E4CC;
     font-weight: bold;
 }
