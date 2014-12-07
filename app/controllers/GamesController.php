@@ -51,6 +51,25 @@ class GamesController extends BaseController
         return Redirect::back()->with('message', 'Game confirmed');
     }
 
+    public static function getOddsAll()
+    {
+        $matches = Game::where('user_id', Auth::user()->id)
+            ->join('matches', 'matches.id', '=', 'games.match_id')
+            ->where('short_result', '-')
+            ->select('matches.id')
+            ->lists('id');
+        foreach ($matches as $match) {
+            $odds = Parser::getOdds($match);
+            $games = Game::where('match_id', $match)
+                ->where('user_id', Auth::user()->id)
+                ->get();
+            foreach ($games as $game) {
+                $game->odds = $odds[$game->game_type_id];
+                $game->save();
+            }
+        }
+        return Redirect::back()->with('message', 'Odds refreshed');
+    }
     public static function getOdds($country_alias)
     {
         $l = League::where('country_alias', $country_alias)->first();

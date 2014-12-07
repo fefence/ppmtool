@@ -22,6 +22,7 @@ Route::get('/play', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
 Route::post('/play/save', 'GamesController@saveTable');
 Route::get('/play/confirm/{game_id}', 'GamesController@confirmGame');
 Route::get('/play/delete/{game_id}', 'GamesController@deleteGame');
+Route::get('/play/odds/all', 'GamesController@getOddsAll');
 Route::get('/play/odds/{country_alias}', 'GamesController@getOdds');
 Route::get('/play/confirm/all/{country_alias}', 'GamesController@confirmAll');
 
