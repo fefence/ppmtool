@@ -13,11 +13,10 @@
 
 Route::get('/boo/{id}', function($id)
 {
-    return Series::calculateSeries($id, '2014-2015');
-    return Updater::getMatchesToUpdate($id);
-    Updater::update($id);
+    return date('Y-m-d H:i:s', time());
 });
 Route::get('/live', 'LivescoreController@livescore');
+Route::post('/getres/{id}', "LivescoreController@getMatchCurrentRes");
 
 Route::get('/play', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
 Route::post('/play/save', 'GamesController@saveTable');

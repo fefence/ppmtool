@@ -11,8 +11,7 @@ class LivescoreController extends \BaseController
 
             $ms = Match::where('date_time', '>=', $fromdate)
                 ->where('date_time', '<=', $todate)
-                ->join('leagues', 'leagues.id', '=', 'matches.league_id')
-                ->select('matches.id as id')
+                ->orderBy('date_time')
                 ->lists('matches.id');
 
 //        $matches = Match::getAllMatchesForDates($fromdate, $todate, $todate2, $all_ids);
@@ -21,9 +20,9 @@ class LivescoreController extends \BaseController
             $match = Match::find($match_id);
             $res[$match->id] = array();
             $res[$match->id]['match'] = $match;
-
+            $res[$match->id]['league'] = League::find($match->league_id);
         }
-        return $res;
+//        return $res;
         return View::make('livescore')->with(['matches' => $res]);
     }
 

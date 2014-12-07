@@ -17,3 +17,20 @@ th, td {
     overflow: hidden;
     border-bottom: none !important;
 }
+
+.livescoreIndicator {
+    visibility: hidden;
+}
+.livescoreResultTdInactive {
+    text-align: center;
+    padding: 0px;
+}
+.livescoreResultTdActive {
+    background-color: #FA6900;
+    text-align: center;
+    padding: 0px;
+}
+.livescoreResultText {
+    color: #E0E4CC;
+    font-weight: bold;
+}
