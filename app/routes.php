@@ -23,6 +23,7 @@ Route::post('/play/save', 'GamesController@saveTable');
 Route::get('/play/confirm/{game_id}', 'GamesController@confirmGame');
 Route::get('/play/delete/{game_id}', 'GamesController@deleteGame');
 Route::get('/play/odds/{country_alias}', 'GamesController@getOdds');
+Route::get('/play/confirm/all/{country_alias}', 'GamesController@confirmAll');
 
 Route::get('/series', 'PPMController@displaySeries');
 Route::get('/series/{id}', 'PPMController@displaySeriesGames');
