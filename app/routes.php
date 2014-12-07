@@ -13,6 +13,7 @@
 
 Route::get('/boo/{id}', function($id)
 {
+//    return Parser::parseNextMatches($id);
     return Updater::update($id);
 //    return OddsUpdater::getOdds(10);
 });

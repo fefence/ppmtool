@@ -26,7 +26,7 @@ class PPMController extends \BaseController{
             ->where('confirmed', 1)
             ->with('game_type')
             ->select(DB::raw('games.*, matches.home, matches.away, matches.date_time, matches.home_goals, matches.away_goals, matches.short_result'))
-            ->orderBy('current_length')
+            ->orderBy('current_length', "desc")
             ->get();
         return View::make('seriesdetails')->with(['games' => $games]);
     }
