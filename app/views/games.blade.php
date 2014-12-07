@@ -13,7 +13,7 @@
                 <th>away</th>
                 <th class="text-center" style="width: 8%;">bsf</th>
                 <th class="text-center" style="width: 8%;">bet</th>
-                <th class="text-center" style="width: 8%;"><a href="/getodds/{{$c}}">odds</a></th>
+                <th class="text-center" style="width: 8%;"><a href="/play/odds/{{$c}}">odds</a></th>
                 <th class="text-center" style="width: 10%;">income</th>
                 <th class="text-center" style="width: 8%;"><a href="/play/confirm/all/{{$c}}" role="button" class="btn btn-xs btn-warning" style="width: 100%">all</a></th>
             </tr>
