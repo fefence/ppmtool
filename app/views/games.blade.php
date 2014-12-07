@@ -9,13 +9,13 @@
                 <th class="text-center" style="width: 65px;"><img src="/images/32/{{$c}}.png"></th>
                 <th class="text-center" style="width: 10%;">game</th>
                 <th style="text-align: right;">home</th>
-                <th style="width: 50px; text-align: center">r</th>
+                <th style="width: 50px; text-align: center"></th>
                 <th>away</th>
                 <th class="text-center" style="width: 8%;">bsf</th>
                 <th class="text-center" style="width: 8%;">bet</th>
                 <th class="text-center" style="width: 8%;"><a href="/getodds/{{$c}}">odds</a></th>
                 <th class="text-center" style="width: 10%;">income</th>
-                <th class="text-center" style="width: 8%;"><a href="/play/confirm/all/{{$c}}" role="button" class="btn btn-xs btn-warning" style="width: 100%">confirm all</a></th>
+                <th class="text-center" style="width: 8%;"><a href="/play/confirm/all/{{$c}}" role="button" class="btn btn-xs btn-warning" style="width: 100%">all</a></th>
             </tr>
         </thead>
         <tbody>
