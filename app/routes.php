@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/boo/{id}', function($id)
+Route::get('/boo', function()
 {
     return date('Y-m-d H:i:s', time());
 });
