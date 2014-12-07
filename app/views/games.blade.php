@@ -6,7 +6,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="text-center" style="width: 10%;"><img src="/images/32/{{$c}}.png"></th>
+                <th class="text-center" style="width: 65px;"><img src="/images/32/{{$c}}.png"></th>
                 <th class="text-center" style="width: 10%;">game</th>
                 <th style="text-align: right;">home</th>
                 <th style="width: 5%; text-align: center">r</th>
@@ -21,7 +21,7 @@
         <tbody>
         @foreach($games as $game)
         <tr>
-            <td>{{date('d M, H:i', strtotime($game['match']['date_time']))}}</td>
+            <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
             <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}&nbsp;[{{$game['current_length']}}]</a></td>
             <td style="text-align: right;">{{$game['match']['home']}}</td>
             <td class="text-center">
@@ -35,7 +35,7 @@
             <td class="editable text-center" id="bsf_{{$game['id']}}">{{$game['bsf']}}</td>
             <td class="warning editable text-center" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
             <td class="editable text-center" id="odds_{{$game['id']}}">{{$game['odds']}}</td>
-            <td class="text-center"><span id="income_{{$game['id']}}">{{$game['income']}}</span> [<span id="profit_{{$game['id']}}">{{$game['profit']}}</span>]</td>
+            <td class="text-center"><span id="income_{{$game['id']}}">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
                 <a role="button" @if ($count[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/play/confirm/{{$game['id']}}" style="font-size: 130%;">+&nbsp({{ $count[$game['id']] }})</a>
                 @else

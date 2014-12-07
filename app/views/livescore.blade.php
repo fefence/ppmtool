@@ -4,8 +4,8 @@
 <table class="table">
     <thead>
     <tr>
+        <th></th>
         <th>date</th>
-        <th>league</th>
         <th>home</th>
         <th>away</th>
         <th>res</th>
@@ -14,8 +14,8 @@
     <tbody>
     @foreach($matches as $d)
     <tr id="{{$d['match']->id}}">
-        <td>{{date('d M, H:i', strtotime($d['match']->date_time))}}</td>
         <td><img src="/images/16/{{$d['league']->country_alias}}.png">&nbsp;{{$d['league']->country_alias}}</td>
+        <td>{{date('d M, H:i', strtotime($d['match']->date_time))}}</td>
         <td>{{$d['match']->home}}</td>
         <td>{{$d['match']->away}}</td>
         <?php

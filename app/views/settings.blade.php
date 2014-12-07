@@ -16,9 +16,9 @@
         @foreach($game_types as $game_type)
             <td class="text-center">
                 @if(array_key_exists($league->id, $data) && in_array($game_type->id, $data[$league->id]))
-                <a href="/settings/disable/{{$league->id}}/{{$game_type->id}}" role="button" class="btn btn-danger btn-xs">off</a>
+                <a href="/settings/disable/{{$league->id}}/{{$game_type->id}}" role="button" class="btn btn-danger btn-xs">{{$game_type->name}}</a>
                 @else
-                <a href="/settings/enable/{{$league->id}}/{{$game_type->id}}" role="button" class="btn btn-success btn-xs">on</a>
+                <a href="/settings/enable/{{$league->id}}/{{$game_type->id}}" role="button" class="btn btn-success btn-xs">{{$game_type->name}}</a>
                 @endif
             </td>
         @endforeach
