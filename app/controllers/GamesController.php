@@ -26,7 +26,7 @@ class GamesController extends BaseController
                 ->get();
 //            return $games;
             $data[$league->country_alias] = $games;
-            foreach($games as $g) {
+            foreach ($games as $g) {
                 $c = Game::where('user_id', $user_id)
                     ->where('match_id', $g->match_id)
                     ->where('confirmed', 1)
@@ -38,27 +38,64 @@ class GamesController extends BaseController
         return View::make('games')->with(['data' => $data, 'count' => $count]);
     }
 
-    public static function confirmGame($game_id) {
+    public static function confirmGame($game_id)
+    {
         Game::confirmGame($game_id);
         return Redirect::back()->with('message', 'Game confirmed');
     }
 
-    public static function deleteGame($game_id) {
+    public static function deleteGame($game_id)
+    {
         Game::deleteGame($game_id);
         return Redirect::back()->with('message', 'Game confirmed');
     }
 
-    public static function getOdds($country_alias) {
-        $l = League::where('country_alias', $country_alias)->firts();
-        $matches = Match::where('league_id', $l->id)
+    public static function getOdds($country_alias)
+    {
+        $l = League::where('country_alias', $country_alias)->first();
+//        $matches = Match::where('league_id', $l->id)
+//            ->where('short_result', '-')
+//            ->lists('id');
+        $matches = Game::where('user_id', Auth::user()->id)
+            ->join('matches', 'matches.id', '=', 'games.match_id')
+            ->where('league_id', $l->id)
             ->where('short_result', '-')
+//            ->whereIn('match_id', $matches)
+            ->select('matches.id')
             ->lists('id');
+        foreach ($matches as $match) {
+            $odds = Parser::getOdds($match);
+            $games = Game::where('match_id', $match)
+                ->where('user_id', Auth::user()->id)
+                ->get();
+            foreach ($games as $game) {
+                $game->odds = $odds[$game->game_type_id];
+                $game->save();
+            }
+        }
+        return Redirect::back()->with('message', 'Odds refreshed');
+    }
+
+    public static function confirmAll($country_alias) {
+        $l = League::where('country_alias', $country_alias)->first();
         $games = Game::where('user_id', Auth::user()->id)
-            ->whereIn('match_id', $matches)
+            ->join('matches', 'matches.id', '=', 'games.match_id')
+            ->where('league_id', $l->id)
+            ->where('short_result', '-')
+            ->where('confirmed', 0)
+            ->select('games.*')
             ->get();
         foreach ($games as $game) {
-//            $odds = Parser::getOdds($game->odds);
+            $conf = Game::where('user_id', Auth::user()->id)
+                ->where('confirmed', 1)
+                ->where('match_id', $game->match_id)
+                ->where('game_type_id', $game->game_type_id)
+                ->get();
+            if ($game->bet > 0 && count($conf) == 0) {
+                GamesController::confirmGame($game->id);
+            }
         }
+        return Redirect::back()->with('message', 'Odds refreshed');
     }
 
     public static function saveTable()
@@ -85,6 +122,6 @@ class GamesController extends BaseController
         $game->save();
 
         $tmp = Game::find($game->id);
-        return $game_id."*".$tmp->bsf."*".$tmp->bet."*".$tmp->odds."*".$tmp->income."*".$tmp->profit;
+        return $game_id . "*" . $tmp->bsf . "*" . $tmp->bet . "*" . $tmp->odds . "*" . $tmp->income . "*" . $tmp->profit;
     }
 } 
