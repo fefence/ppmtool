@@ -8,11 +8,17 @@ class PPMController extends \BaseController{
         $games = GameType::all();
         $data = array();
         foreach($countries as $country) {
-            $data[$country] = League::where('active', 1)
-                ->where('country_alias', $country)
-                ->join('series', 'leagues.id', '=', 'series.league_id')
-                ->orderBy('game_type_id')
-                ->get();
+            for($i = 1; $i < 11; $i ++) {
+                $data[$country][$i] = League::where('active', 1)
+                    ->where('country_alias', $country)
+                    ->join('series', 'leagues.id', '=', 'series.league_id')
+                    ->where('game_type_id', $i)
+                    ->orderBy('game_type_id')
+                    ->get();
+                if (count($data[$country][$i]) == 0) {
+                    $data[$country][$i] = [];
+                }
+            }
         }
 //        return $data;
         return View::make('ppm')->with(['data' => $data, 'games' => $games]);

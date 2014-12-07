@@ -15,8 +15,6 @@ class Series extends Eloquent
             ->orderBy('date_time', 'asc')
             ->get(array('id', 'short_result', 'home', 'away', 'date_time', 'home_goals', 'away_goals'));
         foreach ($matches as $match) {
-            if ($match->short_result == '-' || $match->short_result == '')
-                break 1;
             for ($i = 1; $i < 11; $i++) {
                 $series = Series::where('league_id', '=', $league_id)->where('active', '=', 1)->where('game_type_id', '=', $i)->first();
                 if ($series == NULL) {

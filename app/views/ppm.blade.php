@@ -14,7 +14,9 @@
     <tr>
         <td><img src="/images/32/{{$c}}.png">&nbsp;{{$c}}</td>
         @foreach($d as $series)
-        <td class="text-center">{{$series['length']}}</td>
+            @for($i = 1; $i < 11; $i ++)
+                <td class="text-center">{{$series[$i]['length']}}</td>
+            @endfor
         @endforeach
     </tr>
     @endforeach
