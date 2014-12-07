@@ -2,21 +2,19 @@
 
 @section('content')
 
-<table class="table table-bordered">
+<table class="table">
     <thead>
-        <th>country/game</th>
+        <th></th>
         @foreach($games as $game)
-            <th>{{$game->name}}</th>
+            <th class="text-center">{{$game->name}}</th>
         @endforeach
     </thead>
     <tbody>
     @foreach($data as $c => $d)
     <tr>
-        <td>
-            <img src="/images/{{strtoupper($c)}}.png"> {{$c}}
-        </td>
+        <td><img src="/images/{{$c}}.png"></td>
         @foreach($d as $series)
-        <td>{{$series['length']}}</td>
+        <td class="text-center">{{$series['length']}}</td>
         @endforeach
     </tr>
     @endforeach

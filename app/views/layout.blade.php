@@ -45,7 +45,7 @@
                             <li class="divider"></li>
 <!--                            <li class="dropdown-header">Nav header</li>-->
                             <li><a href="/settings">Settings</a></li>
-                            <li><a href="#">Log out</a></li>
+                            <li><a href="/logout">Log out</a></li>
                         </ul>
                     </li>
                 </ul>

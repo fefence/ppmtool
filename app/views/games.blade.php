@@ -3,7 +3,7 @@
 @section('content')
 @foreach($data as $c => $games)
 
-    <table class="table sortable">
+    <table class="table">
         <thead>
             <tr>
                 <th class="text-center" style="width: 10%;"><img src="/images/{{$c}}.png"></th>

@@ -32,3 +32,10 @@ Route::get('/settings/enable/{league_id}/{game_type_id}', 'SettingsController@en
 Route::get('/login', 'SessionsController@create');
 Route::get('/logout', 'SessionsController@destroy');
 Route::resource('sessions', 'SessionsController', ['only'  => ['create', 'store', 'destroy']]);
+
+Route::get('/', function(){
+    return Redirect::intended('/play');
+});
+Route::get('/home', function(){
+    return Redirect::intended('/play');
+});

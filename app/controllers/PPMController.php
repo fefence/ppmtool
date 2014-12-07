@@ -4,12 +4,12 @@
 class PPMController extends \BaseController{
 
     public static function displaySeries() {
-        $countries = League::all()->lists('country');
+        $countries = League::all()->lists('country_alias');
         $games = GameType::all();
         $data = array();
         foreach($countries as $country) {
             $data[$country] = League::where('active', 1)
-                ->where('country', $country)
+                ->where('country_alias', $country)
                 ->join('series', 'leagues.id', '=', 'series.league_id')
                 ->orderBy('game_type_id')
                 ->get();

@@ -24,7 +24,7 @@ class SessionsController extends \BaseController {
 
         $attempt = Auth::attempt(['username' => $input['name'], 'password' => $input['password']], true);
         if ($attempt) {
-            return Redirect::intended('/home')->with('flash_message', 'You are logged in');
+            return Redirect::intended('/play')->with('flash_message', 'You are logged in');
         }
 
         return Redirect::back()->with("flash_message", "wrong credentials")->withInput();
