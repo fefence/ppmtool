@@ -29,7 +29,7 @@ class Updater
                     $newSeries->active = 1;
                     self::updateGamesEndSeries($league_id, $i, $matches);
                 } else {
-                    $series->length = $series->length + 1;
+                    $series->length = $series->length + count($matches);
                     $series->end_match_id = $nextMatches->last()->id;
                     $newSeries = $series;
                     self::updateGamesNotEndSeries($league_id, $i, $matches, $nextMatches, $series);
