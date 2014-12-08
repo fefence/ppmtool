@@ -4,7 +4,7 @@
 
 <table class="table">
     <thead>
-        <th style="width: 7%;"><a href="/settings" role="button" class="btn btn-default btn-xs">settings</a></th>
+        <th style="width: 12%;"><a href="/settings" role="button" class="btn btn-default btn-xs">settings</a></th>
         @foreach($games as $game)
             <th class="text-center">{{$game->name}}</th>
         @endforeach
