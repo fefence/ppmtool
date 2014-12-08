@@ -18,19 +18,25 @@ th, td {
     border-bottom: none !important;
 }
 
-.livescoreIndicator {
-    visibility: hidden;
-}
-.livescoreResultTdInactive1 {
+.score {
+    font: Arial, Helvetica, sans-serif;
+    font-size: 16px;
     text-align: center;
-    padding: 0px;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 4px;
 }
-.livescoreResultTdActive1 {
-    background-color: #FA6900;
-    text-align: center;
-    padding: 0px;
+.scoreRunning {
+    background-color: #ce0e0e;
 }
-.livescoreResultText1 {
-    color: #E0E4CC;
+.scoreFinished {
+    background-color: #373737;
+}
+.scoreSeparator {
+    color: #000000;
+    font-size: 120%;
     font-weight: bold;
+}
+.scoreSeparatorToggle {
+    visibility: hidden;
 }

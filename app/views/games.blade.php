@@ -31,17 +31,21 @@
                 $active_livescore = false;
             }
             ?>
-            <td @if($active_livescore) class="livescoreResultTdActive" @else class="livescoreResultTdInactive" @endif>
-            <div>
-            <span @if($active_livescore) class="livescoreResultText" @endif>
-                @if ($game['match']['short_result'] != '-')
-                {{$game['match']['home_goals']}}&nbsp;:&nbsp;{{$game['match']['away_goals']}}
-                @else
-                -
-                @endif
-                </span>
-            </div>
+            <td class="livescoreResultTdActive">
+                    <span class="score scoreRunning" id="home_goals">0</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">2</span>
+                    {{--<span class="score scoreFinished rightScore" id="home_goals">0</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished leftScore">2</span>--}}
+                    {{--<span class="score rightScore" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score leftScore">&nbsp;</span>--}}
             </td>
+                        {{--<td @if($active_livescore) class="livescoreResultTdActive score" @else class="livescoreResultTdInactive score" @endif>--}}
+                            {{--<span @if($active_livescore) class="livescoreResultText" @endif>--}}
+                                {{--@if ($game['match']['short_result'] != '-')--}}
+                                {{--<span class="scoreRunning" id="home_goals">{{$game['match']['home_goals']}}</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="scoreRunning">{{$game['match']['away_goals']}}</span>--}}
+                                {{--@else--}}
+                                {{--<span class="scoreFinished" id="home_goals">-</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="scoreFinished">-</span>--}}
+                                {{--@endif--}}
+                            {{--</span>--}}
+                        {{--</td>--}}
+
             <td>{{$game['match']['away']}}</td>
             <td class="editable text-center" id="bsf_{{$game['id']}}">{{$game['bsf']}}</td>
             <td class="warning editable text-center" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
@@ -76,26 +80,30 @@
                 $('#profit_'+arr[0]).text(arr[5]);
             }
         });
-        $("table tr .livescoreResultTdActive div .livescoreResultText").each(function() {
+        $("table tr .livescoreResultTdActive .livescoreResultText").each(function() {
             var id =$(this).closest('tr').prop('id');
-            var td = $(this);
+            var td_span1 = $(this).find("#home_goals");
+            var td_span2 = $(this).find("#away_goals");
             $.post( "/getres/" + id, function( data ) {
-                td.html(data);
+                td_span1.html(data[0]+"");
+                td_span2.html(data[1]+"");
             });
         });
         setInterval(function() {
-            $("table tr .livescoreResultTdActive div .livescoreResultText").each(function() {
+            $("table tr .livescoreResultTdActive .livescoreResultText").each(function() {
                 var id =$(this).closest('tr').prop('id');
-                var td = $(this);
+                var td_span1 = $(this).find("#home_goals");
+                var td_span2 = $(this).find("#away_goals");
                 $.post( "/getres/" + id, function( data ) {
-                    td.html(data);
+                    td_span1.html(data[0]+"");
+                    td_span2.html(data[1]+"");
                 });
             })
 
         }, 30000);
         setInterval(function() {
-            $("table tr .livescoreResultTdActive div span span").each(function() {
-                $(this).toggleClass('livescoreIndicator');
+            $("table tr .livescoreResultTdActive #scoreSeparator").each(function() {
+                $(this).toggleClass('scoreSeparatorToggle');
             })
         }, 1000);
     });
