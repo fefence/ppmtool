@@ -32,6 +32,9 @@ th, td {
 .scoreFinished {
     background-color: #373737;
 }
+.scoreNotStarted {
+    background-color: #ffffff;
+}
 .scoreSeparator {
     color: #000000;
     font-size: 120%;

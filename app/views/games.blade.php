@@ -42,7 +42,7 @@
             </td>
             @else
             <td>
-                <span class="score" id="home_goals">&nbsp;</span><span class="scoreSeparator">:</span><span id='away_goals' class="score">&nbsp;</span>
+                <span class="score scoreNotStarted" id="home_goals">&nbsp;</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">&nbsp;</span>
             </td>
             @endif
 
