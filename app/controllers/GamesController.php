@@ -5,7 +5,7 @@ class GamesController extends BaseController
 
     public static function displayGames($fromdate = '', $todate = '')
     {
-
+        \Carbon\Carbon::now()->toDateString();
         list($fromdate, $todate) = Utils::calcDates($fromdate, $todate);
         $user_id = Auth::user()->id;
         $league_ids = League::all();

@@ -67,6 +67,7 @@
                     </li>
                 </ul>
                 <p class="navbar-text navbar-right">{{$global}} €</p>
+                <p class="navbar-text navbar-right">{{\Carbon\Carbon::now()->format("D, d M, H:i")}}</p>
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
     </nav>
