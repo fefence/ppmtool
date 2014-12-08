@@ -8,35 +8,38 @@ class GamesController extends BaseController
 
         list($fromdate, $todate) = Utils::calcDates($fromdate, $todate);
         $user_id = Auth::user()->id;
-        $league_ids = Setting::where('user_id', $user_id)
-            ->distinct('league_id')
-            ->join('leagues', 'leagues.id', '=', 'settings.league_id')
-            ->orderBy('country')
-            ->lists('league_id');
+        $league_ids = League::all();
+//            Setting::where('user_id', $user_id)
+//            ->distinct('league_id')
+//            ->join('leagues', 'leagues.id', '=', 'settings.league_id')
+//            ->orderBy('country')
+//            ->lists('league_id');
         $data = array();
         $count = array();
-        foreach ($league_ids as $l) {
-            $league = League::find($l);
+        foreach ($league_ids as $league) {
+//            $league = League::find($l);
             $games = null;
             $games = Game::where('user_id', $user_id)
                 ->join('matches', 'matches.id', '=', 'games.match_id')
                 ->where('date_time', '>=', $fromdate)
                 ->where('date_time', '<=', $todate)
-                ->where('league_id', $l)
+                ->where('league_id', $league->id)
                 ->where('confirmed', 0)
                 ->with('game_type')
                 ->select(DB::raw('games.*, matches.home, matches.away, matches.date_time, matches.home_goals, matches.away_goals, matches.short_result'))
                 ->orderBy('date_time')
                 ->orderBy('game_type_id')
                 ->get();
-            $data[$league->country_alias] = $games;
-            foreach ($games as $g) {
-                $c = Game::where('user_id', $user_id)
-                    ->where('match_id', $g->match_id)
-                    ->where('confirmed', 1)
-                    ->where('game_type_id', $g->game_type_id)
-                    ->count();
-                $count[$g->id] = $c;
+            if (count($games) > 0) {
+                $data[$league->country_alias] = $games;
+                foreach ($games as $g) {
+                    $c = Game::where('user_id', $user_id)
+                        ->where('match_id', $g->match_id)
+                        ->where('confirmed', 1)
+                        ->where('game_type_id', $g->game_type_id)
+                        ->count();
+                    $count[$g->id] = $c;
+                }
             }
         }
         return View::make('games')->with(['data' => $data, 'count' => $count, 'fromdate' => $fromdate, 'todate' => $todate]);
@@ -73,6 +76,7 @@ class GamesController extends BaseController
         }
         return Redirect::back()->with('message', 'Odds refreshed');
     }
+
     public static function getOdds($country_alias)
     {
         $l = League::where('country_alias', $country_alias)->first();
@@ -95,7 +99,8 @@ class GamesController extends BaseController
         return Redirect::back()->with('message', 'Odds refreshed');
     }
 
-    public static function confirmAll($country_alias) {
+    public static function confirmAll($country_alias)
+    {
         $l = League::where('country_alias', $country_alias)->first();
         $games = Game::where('user_id', Auth::user()->id)
             ->join('matches', 'matches.id', '=', 'games.match_id')

@@ -34,9 +34,7 @@
                 @if (isset($fromdate))
                 <?php
                     $from = $fromdate->subDay()->toDateString();
-//                    $to = $fromdate->subDay()->toDateString();
                     $from1 = $fromdate->addDay()->addDay()->toDateString();
-//                    $to1 = $todate->addDay()->toDateString();
                 ?>
                 <a class="navbar-brand" href="/play/{{$from}}/{{$from}}"><span><</span></a>
                 <a class="navbar-brand" href="/play/{{$from1}}/{{$from1}}"><span>></span></a>
