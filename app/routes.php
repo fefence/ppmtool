@@ -18,7 +18,7 @@ Route::get('/boo', function()
 Route::get('/live', 'LivescoreController@livescore');
 Route::post('/getres/{id}', "LivescoreController@getMatchCurrentRes");
 
-Route::get('/play', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
+Route::get('/play/{fromdate?}/{todate?}', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
 Route::post('/play/save', 'GamesController@saveTable');
 Route::get('/play/confirm/{game_id}', 'GamesController@confirmGame');
 Route::get('/play/delete/{game_id}', 'GamesController@deleteGame');

@@ -3,8 +3,10 @@
 class GamesController extends BaseController
 {
 
-    public static function displayGames()
+    public static function displayGames($fromdate = '', $todate = '')
     {
+
+        list($fromdate, $todate) = Utils::calcDates($fromdate, $todate);
         $user_id = Auth::user()->id;
         $league_ids = Setting::where('user_id', $user_id)
             ->distinct('league_id')
@@ -18,6 +20,8 @@ class GamesController extends BaseController
             $games = null;
             $games = Game::where('user_id', $user_id)
                 ->join('matches', 'matches.id', '=', 'games.match_id')
+                ->where('date_time', '>=', $fromdate)
+                ->where('date_time', '<=', $todate)
                 ->where('league_id', $l)
                 ->where('confirmed', 0)
                 ->with('game_type')
@@ -25,7 +29,6 @@ class GamesController extends BaseController
                 ->orderBy('date_time')
                 ->orderBy('game_type_id')
                 ->get();
-//            return $games;
             $data[$league->country_alias] = $games;
             foreach ($games as $g) {
                 $c = Game::where('user_id', $user_id)
@@ -73,14 +76,10 @@ class GamesController extends BaseController
     public static function getOdds($country_alias)
     {
         $l = League::where('country_alias', $country_alias)->first();
-//        $matches = Match::where('league_id', $l->id)
-//            ->where('short_result', '-')
-//            ->lists('id');
         $matches = Game::where('user_id', Auth::user()->id)
             ->join('matches', 'matches.id', '=', 'games.match_id')
             ->where('league_id', $l->id)
             ->where('short_result', '-')
-//            ->whereIn('match_id', $matches)
             ->select('matches.id')
             ->lists('id');
         foreach ($matches as $match) {
