@@ -36,8 +36,16 @@
                     $from = $fromdate->subDay()->toDateString();
                     $from1 = $fromdate->addDay()->addDay()->toDateString();
                 ?>
+                @if ($from == date('Y-m-d', time()))
+                <a class="navbar-brand" href="/play"><span><</span></a>
+                @else
                 <a class="navbar-brand" href="/play/{{$from}}/{{$from}}"><span><</span></a>
+                @endif
+                @if ($from1 == date('Y-m-d', time()))
+                <a class="navbar-brand" href="/play"><span>></span></a>
+                @else
                 <a class="navbar-brand" href="/play/{{$from1}}/{{$from1}}"><span>></span></a>
+                @endif
                 @endif
 <!--                <a class="navbar-brand" href="/settings"><span class="{{Request::path() == 'settings' ? 'text-danger' : '';}}">Settings</span></a>-->
 <!--                <a class="navbar-brand" href="/play/odds/all">Odds</a>-->
