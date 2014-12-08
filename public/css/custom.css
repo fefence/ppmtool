@@ -43,3 +43,7 @@ th, td {
 .scoreSeparatorToggle {
     visibility: hidden;
 }
+
+.navbar-brand:hover {
+    background-color: #dddddd !important;
+}

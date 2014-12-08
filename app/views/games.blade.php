@@ -2,6 +2,9 @@
 
 @section('content')
 
+@if ($no_info)
+    <h5>No matches for today and/or no leagues selected.</h5>
+@endif
 @foreach($data as $c => $games)
 
     <table class="table">

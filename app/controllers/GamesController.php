@@ -42,7 +42,11 @@ class GamesController extends BaseController
                 }
             }
         }
-        return View::make('games')->with(['data' => $data, 'count' => $count, 'fromdate' => $fromdate, 'todate' => $todate]);
+        $no_info = false;
+        if (count($data) == 0) {
+            $no_info = true;
+        }
+        return View::make('games')->with(['data' => $data, 'count' => $count, 'fromdate' => $fromdate, 'todate' => $todate, 'no_info' => $no_info]);
     }
 
     public static function confirmGame($game_id)

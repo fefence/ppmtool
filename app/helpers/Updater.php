@@ -52,6 +52,7 @@ class Updater
 
         $next_time = Match::where('league_id', $matches->last()->league_id)
             ->where('date_time', '>', $time)
+            ->where('state', '<>', 'POSTP.')
             ->orderBy('date_time')
             ->first()
             ->date_time;
@@ -134,6 +135,7 @@ class Updater
                 }
             }
             $bsfpm = $bsf / count($next_matches);
+            $body = "";
             foreach ($next_matches as $next_match) {
                 $game = new Game;
                 $game->bsf = $bsfpm;
@@ -145,8 +147,12 @@ class Updater
                 $odds = Parser::getOdds($next_match->id)[$game_type_id];
                 if ($odds != null && $odds != -1) {
                     $game->odds = $odds;
+                    $body = $body." ".$next_match->home." - ".$next_match->away." ".GameType::find($game_type_id)->name." [".$series->length."] <br>";
                 }
                 $game->save();
+            }
+            if ($body != "") {
+                Sender::sendMail(User::find($settings->user_id), "games to confirm", $body);
             }
         }
     }

@@ -13,7 +13,8 @@
 
 Route::get('/boo', function()
 {
-    return date('Y-m-d H:i:s', time());
+    return Updater::update(8);
+//    return date('Y-m-d H:i:s', time());
 });
 Route::get('/live', 'LivescoreController@livescore');
 Route::post('/getres/{id}', "LivescoreController@getMatchCurrentRes");
