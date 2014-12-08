@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('content')
+
 @foreach($data as $c => $games)
 
     <table class="table">
@@ -37,7 +38,7 @@
                 @if ($game['match']['short_result'] != '-')
                 {{$game['match']['home_goals']}}&nbsp;:&nbsp;{{$game['match']['away_goals']}}
                 @else
-                -
+                -&nbsp;:&nbsp;-
                 @endif
                 </span>
             </div>
