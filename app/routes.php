@@ -18,13 +18,13 @@ Route::get('/boo', function()
 Route::get('/live', 'LivescoreController@livescore');
 Route::post('/getres/{id}', "LivescoreController@getMatchCurrentRes");
 
-Route::get('/play/{fromdate?}/{todate?}', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
 Route::post('/play/save', 'GamesController@saveTable');
 Route::get('/play/confirm/{game_id}', 'GamesController@confirmGame');
 Route::get('/play/delete/{game_id}', 'GamesController@deleteGame');
 Route::get('/play/odds/all', 'GamesController@getOddsAll');
 Route::get('/play/odds/{country_alias}', 'GamesController@getOdds');
 Route::get('/play/confirm/all/{country_alias}', 'GamesController@confirmAll');
+Route::get('/play/{fromdate?}/{todate?}', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
 
 Route::get('/series', 'PPMController@displaySeries');
 Route::get('/series/{id}', 'PPMController@displaySeriesGames');
