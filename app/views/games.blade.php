@@ -32,17 +32,20 @@
                 $active_livescore = false;
             }
             ?>
-            <td @if($active_livescore) class="livescoreResultTdActive" @else class="livescoreResultTdInactive" @endif>
-            <div>
-            <span @if($active_livescore) class="livescoreResultText" @endif>
-                @if ($game['match']['short_result'] != '-')
-                {{$game['match']['home_goals']}}&nbsp;:&nbsp;{{$game['match']['away_goals']}}
-                @else
-                -&nbsp;:&nbsp;-
-                @endif
-                </span>
-            </div>
+            @if (!$active_livescore &&  $game['match']['short_result'] != '-')
+            <td>
+                    <span class="score scoreFinished" id="home_goals">{{$game['match']['home_goals']}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$game['match']['away_goals']}}</span>
             </td>
+            @elseif($active_livescore)
+            <td class="livescoreResultTdActive" id="{{$game['match']['id']}}">
+                <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span>
+            </td>
+            @else
+            <td>
+                <span class="score" id="home_goals">&nbsp;</span><span class="scoreSeparator">:</span><span id='away_goals' class="score">&nbsp;</span>
+            </td>
+            @endif
+
             <td>{{$game['match']['away']}}</td>
             <td class="editable text-center" id="bsf_{{$game['id']}}">{{$game['bsf']}}</td>
             <td class="warning editable text-center" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
@@ -77,26 +80,30 @@
                 $('#profit_'+arr[0]).text(arr[5]);
             }
         });
-        $("table tr .livescoreResultTdActive div .livescoreResultText").each(function() {
+        $("table tr .livescoreResultTdActive").each(function() {
             var id =$(this).closest('tr').prop('id');
-            var td = $(this);
+            var td_span1 = $(this).find("#home_goals");
+            var td_span2 = $(this).find("#away_goals");
             $.post( "/getres/" + id, function( data ) {
-                td.html(data);
+                td_span1.html(data[0]+"");
+                td_span2.html(data[1]+"");
             });
         });
         setInterval(function() {
-            $("table tr .livescoreResultTdActive div .livescoreResultText").each(function() {
+            $("table tr .livescoreResultTdActive").each(function() {
                 var id =$(this).closest('tr').prop('id');
-                var td = $(this);
+                var td_span1 = $(this).find("#home_goals");
+                var td_span2 = $(this).find("#away_goals");
                 $.post( "/getres/" + id, function( data ) {
-                    td.html(data);
+                    td_span1.html(data[0]+"");
+                    td_span2.html(data[1]+"");
                 });
             })
 
         }, 30000);
         setInterval(function() {
-            $("table tr .livescoreResultTdActive div span span").each(function() {
-                $(this).toggleClass('livescoreIndicator');
+            $("table tr .livescoreResultTdActive #scoreSeparator").each(function() {
+                $(this).toggleClass('scoreSeparatorToggle');
             })
         }, 1000);
     });
