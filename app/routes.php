@@ -13,7 +13,8 @@
 
 Route::get('/boo', function()
 {
-     return strtolower(\Carbon\Carbon::now()->format("D, d M, H:i"));
+    return Series::calculateSeries(10, '2014-2015');
+//     return strtolower(\Carbon\Carbon::now()->format("D, d M, H:i"));
 //    return Updater::update(8);
 //    return date('Y-m-d H:i:s', time());
 });

@@ -123,7 +123,11 @@ class GamesController extends BaseController
                 GamesController::confirmGame($game->id);
             }
         }
-        return Redirect::back()->with('message', 'Odds refreshed');
+        try {
+            return Redirect::back()->with('message', 'Bet confirmed');
+        } catch (InvalidArgumentException $e) {
+            return Redirect::to(URL::to("/play"));
+        }
     }
 
     public static function saveTable()

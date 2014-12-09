@@ -42,7 +42,7 @@ class Updater
                     return $e;
                 }
             }
-
+            Sender::sendMail($nextMatches);
         }
     }
 
@@ -126,7 +126,7 @@ class Updater
                     ->first();
 //                return $not_confirmed;
                 $bsf = 0;
-                if (count($confirmed) == 0) {
+                if (count($confirmed) == 0 && $not_confirmed != null) {
                     $bsf = $not_confirmed->bsf;
                 } else {
                     foreach ($confirmed as $conf) {
@@ -135,7 +135,6 @@ class Updater
                 }
             }
             $bsfpm = $bsf / count($next_matches);
-            $body = "";
             foreach ($next_matches as $next_match) {
                 $game = new Game;
                 $game->bsf = $bsfpm;
@@ -147,12 +146,8 @@ class Updater
                 $odds = Parser::getOdds($next_match->id)[$game_type_id];
                 if ($odds != null && $odds != -1) {
                     $game->odds = $odds;
-                    $body = $body." ".$next_match->home." - ".$next_match->away." ".GameType::find($game_type_id)->name." [".$series->length."] <br>";
                 }
                 $game->save();
-            }
-            if ($body != "") {
-                Sender::sendMail(User::find($settings->user_id), "games to confirm", $body);
             }
         }
     }
