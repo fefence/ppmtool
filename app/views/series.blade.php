@@ -24,21 +24,16 @@
     <div class="tab-pane @if($i == 1) active @endif" id="{{$i}}">
         <table class="table">
             <thead>
-                <th style="width: 10%;"></th>
-                <th></th>
-                <th style="width: 15%;"></th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td>
-                <span>Top 25 series:
+            <th style="width: 6%;"></th>
+            <th>
+                <span>Top 25:
                             @foreach($stats['all'] as $l)
                                 {{$l}},&nbsp;
                             @endforeach
-                        </span></td>
-                    <td></td>
-                </tr>
+                        </span></th>
+            <th style="width: 8%"></th>
+            </thead>
+            <tbody>
                 @foreach($stats as $season => $el)
                 @if($season != 'all')
 
