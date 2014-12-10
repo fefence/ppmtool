@@ -3,7 +3,7 @@
 
 class StatsController extends \BaseController{
     public static function display($country) {
-        $all_leagues = League::all();
+        $all_leagues = League::orderBy('country')->get();
         $games = GameType::all();
         $league = League::where('country', $country)->first();
         $data = array();
