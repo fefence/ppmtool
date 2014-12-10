@@ -7,16 +7,16 @@
 @endforeach
 
 <ul class="nav nav-tabs" id="myTab" style="border: none">
-    <li class="active"><a href="#1">PPM 1X2</a></li>
-    <li><a href="#2">PPM 0-0</a></li>
-    <li><a href="#3">PPM 1-1</a></li>
-    <li><a href="#4">PPM 2-2</a></li>
-    <li><a href="#5">PPM 0-1</a></li>
-    <li><a href="#6">PPM 0-2</a></li>
-    <li><a href="#7">PPM 1-0</a></li>
-    <li><a href="#8">PPM 2-0</a></li>
-    <li><a href="#9">PPM 1-2</a></li>
-    <li><a href="#10">PPM 2-1</a></li>
+    <li class="active"><a href="#1">1X2</a></li>
+    <li><a href="#2">0-0</a></li>
+    <li><a href="#3">1-1</a></li>
+    <li><a href="#4">2-2</a></li>
+    <li><a href="#5">0-1</a></li>
+    <li><a href="#6">0-2</a></li>
+    <li><a href="#7">1-0</a></li>
+    <li><a href="#8">2-0</a></li>
+    <li><a href="#9">1-2</a></li>
+    <li><a href="#10">2-1</a></li>
 </ul>
 <div id='content' class="tab-content">
 
