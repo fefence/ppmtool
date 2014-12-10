@@ -14,13 +14,20 @@
 Route::get('/boo/{id}/{season}', function($id, $season)
 {
 //    return Parser::parseNextMatches(10);
-    return Series::calculateSeries($id, $season);
+    Series::calculateSeries($id, $season);
+    $series = Series::where('active', 1)->get();
+    foreach($series as $s) {
+        $s->active = 0;
+        $s->save();
+    }
 //     return strtolower(\Carbon\Carbon::now()->format
 //    return Updater::update(8);
 //    return date('Y-m-d H:i:s', time());
 });
 Route::get('/live', 'LivescoreController@livescore');
 Route::post('/getres/{id}', "LivescoreController@getMatchCurrentRes");
+
+Route::get('/stats/{country}', 'StatsController@display');
 
 Route::post('/play/save', 'GamesController@saveTable');
 Route::get('/play/confirm/{game_id}', 'GamesController@confirmGame');
