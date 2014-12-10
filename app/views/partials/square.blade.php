@@ -21,7 +21,7 @@
         @elseif(array_get($data, 'match')->short_result == 'D')
             {{"btn-info"}}
         @elseif(array_get($data, 'match')->short_result == '-' || array_get($data, 'match')->state == 'Canceled')
-            {{"btn-info"}}
+            {{"btn-warning"}}
         @endif
         btn-xs w25">X
     @endif
