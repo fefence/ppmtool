@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/boo', function()
+Route::get('/boo/{id}/{season}', function($id, $season)
 {
-    return Parser::parseNextMatches(10);
-//    return Series::calculateSeries(10, '2014-2015');
+//    return Parser::parseNextMatches(10);
+    return Series::calculateSeries($id, $season);
 //     return strtolower(\Carbon\Carbon::now()->format
 //    return Updater::update(8);
 //    return date('Y-m-d H:i:s', time());

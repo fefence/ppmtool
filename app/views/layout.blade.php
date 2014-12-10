@@ -46,6 +46,9 @@
                 @else
                 <a class="navbar-brand" href="/play/{{$from1}}/{{$from1}}">&nbsp;>&nbsp;</a>
                 @endif
+                @else
+                <a disabled="disabled" class="navbar-brand" href="/play">&nbsp;<&nbsp;</a>
+                <a disabled="disabled" class="navbar-brand" href="/play">&nbsp;>&nbsp;</a>
                 @endif
 <!--                <a class="navbar-brand" href="/settings"><span class="{{Request::path() == 'settings' ? 'text-danger' : '';}}">Settings</span></a>-->
 <!--                <a class="navbar-brand" href="/play/odds/all">Odds</a>-->
