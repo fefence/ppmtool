@@ -18,12 +18,15 @@
     @else
         @if(array_get($data, 'match')->short_result == 'H' || array_get($data, 'match')->short_result == 'A')
             {{"btn-info"}}
+            btn-xs w25">X
+
         @elseif(array_get($data, 'match')->short_result == 'D')
             {{"btn-info"}}
+            btn-xs w25">X
         @elseif(array_get($data, 'match')->short_result == '-' || array_get($data, 'match')->state == 'Canceled')
             {{"btn-warning"}}
+            btn-xs w25">O
         @endif
-        btn-xs w25">X
     @endif
     </a>
 @else
