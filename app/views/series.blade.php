@@ -3,7 +3,7 @@
 @section('content')
 
 @foreach($leagues as $l)
-<a href={{URL::to('/')."/stats/".$l->country}}><img src="/images/32/{{$l->country_alias}}.png"></a>
+<a href={{URL::to('/')."/stats/".$l->country}}><img src="/images/48/{{$l->country_alias}}.png"></a>
 @endforeach
 
 <ul class="nav nav-tabs" id="myTab" style="border: none">
@@ -24,14 +24,14 @@
     <div class="tab-pane @if($i == 1) active @endif" id="{{$i}}">
         <table class="table">
             <thead>
-            <th style="width: 6%;"></th>
+            <th style="width: 9%;"></th>
             <th>
                 <span>Top 25:
                             @foreach($stats['all'] as $l)
                                 {{$l}},&nbsp;
                             @endforeach
                         </span></th>
-            <th style="width: 8%"></th>
+            <th style="width: 9%"></th>
             </thead>
             <tbody>
                 @foreach($stats as $season => $el)
