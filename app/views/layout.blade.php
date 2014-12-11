@@ -59,13 +59,11 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">Action log</a></li>
-                            <li><a href="/stats/australia
-                            ">Statistics</a></li>
+
+                            <li><a href="/stats">Statistics</a></li>
                             <li><a href="/live">Livescore</a></li>
                             <li><a href="/play/odds/all">Odds</a></li>
                             <li class="divider"></li>
-<!--                            <li class="dropdown-header">Nav header</li>-->
-<!--                            <li><a href="/settings">Settings</a></li>-->
                             <li><a href="/logout">Log out</a></li>
                         </ul>
                     </li>

@@ -36,17 +36,12 @@
             <tbody>
                 @foreach($stats as $season => $el)
                 @if($season != 'all')
-
                 <tr>
                     <td>{{$season}}</td>
                     <td>
                         @foreach($el['stats'] as $s)
                         {{ $s->length}}
-                        <?php
-                        $d = ['team' => '', 'match' => $s]
-                        ?>
-                        @include('partials.square', array('data' => $d))
-    <!--                    {{$s->short_result}}-->
+                        @include('partials.square', array('match' => $s))
                         @endforeach
                     </td>
                     <td>
@@ -56,7 +51,6 @@
                     </td>
                 </tr>
                 @endif
-
                 @endforeach
             </table>
         </tbody>

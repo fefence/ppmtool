@@ -27,6 +27,7 @@ Route::get('/boo/{id}/{season}', function($id, $season)
 Route::get('/live', 'LivescoreController@livescore');
 Route::post('/getres/{id}', "LivescoreController@getMatchCurrentRes");
 
+Route::get('/stats', 'StatsController@countries');
 Route::get('/stats/{country}', 'StatsController@display');
 
 Route::post('/play/save', 'GamesController@saveTable');
