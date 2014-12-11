@@ -14,12 +14,12 @@
 Route::get('/boo/{id}/{season}', function($id, $season)
 {
 //    return Parser::parseNextMatches(10);
-    Series::calculateSeries($id, $season);
-    $series = Series::where('active', 1)->get();
-    foreach($series as $s) {
-        $s->active = 0;
-        $s->save();
-    }
+//    Series::calculateSeries($id, $season);
+//    $series = Series::where('active', 1)->get();
+//    foreach($series as $s) {
+//        $s->active = 0;
+//        $s->save();
+//    }
 //     return strtolower(\Carbon\Carbon::now()->format
 //    return Updater::update(8);
 //    return date('Y-m-d H:i:s', time());
