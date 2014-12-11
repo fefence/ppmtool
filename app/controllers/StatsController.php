@@ -2,6 +2,12 @@
 
 
 class StatsController extends \BaseController{
+
+    public static function countries(){
+        $all_leagues = League::orderBy('country')->get();
+        return View::make('stats')->with(['leagues' => $all_leagues]);
+    }
+
     public static function display($country) {
         $all_leagues = League::orderBy('country')->get();
         $games = GameType::all();
