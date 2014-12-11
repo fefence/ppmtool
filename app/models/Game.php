@@ -25,6 +25,8 @@ class Game extends Eloquent{
         $game->confirmed = 1;
         $game->save();
         $nGame->save();
+        $match = Match::find($game->match_id);
+        ActionLog::create(['user_id' => $game->user_id, 'league_id' => $match->league_id, 'type' => 'games', 'action' => 'confirm', 'description' => 'Confirm game for match '.$match->home." - ".$match->away." ".$match->date_time]);
 
     }
 
@@ -33,6 +35,8 @@ class Game extends Eloquent{
         $user = User::find($game->user_id);
         $user->account = $user->account + $game->bet;
         $user->save();
+        $match = Match::find($game->match_id);
+        ActionLog::create(['user_id' => $game->user_id, 'league_id' => $match->league_id, 'type' => 'games', 'action' => 'delete', 'description' => 'Delete game for match '.$match->home." - ".$match->away." ".$match->date_time]);
         $game->delete();
     }
 }

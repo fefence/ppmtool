@@ -30,6 +30,8 @@ Route::post('/getres/{id}', "LivescoreController@getMatchCurrentRes");
 Route::get('/stats', 'StatsController@countries');
 Route::get('/stats/{country}', 'StatsController@display');
 
+Route::get('/log', 'ActionLogController@display');
+
 Route::post('/play/save', 'GamesController@saveTable');
 Route::get('/play/confirm/{game_id}', 'GamesController@confirmGame');
 Route::get('/play/delete/{game_id}', 'GamesController@deleteGame');

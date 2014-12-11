@@ -7,6 +7,7 @@ class GamesController extends BaseController
     {
         \Carbon\Carbon::now()->toDateString();
         list($fromdate, $todate) = Utils::calcDates($fromdate, $todate);
+//        return $todate;
         $user_id = Auth::user()->id;
         $league_ids = League::all();
 //            Setting::where('user_id', $user_id)
