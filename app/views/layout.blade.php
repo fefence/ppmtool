@@ -80,5 +80,6 @@
 
 </div> <!-- /container -->
 
+@include('partials.qtip')
 </body>
 </html>
