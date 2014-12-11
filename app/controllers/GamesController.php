@@ -100,7 +100,7 @@ class GamesController extends BaseController
                 $game->save();
             }
         }
-        return Redirect::back()->with('message', 'Odds refreshed');
+        return Redirect::back()->with('message', $country_alias);
     }
 
     public static function confirmAll($country_alias)

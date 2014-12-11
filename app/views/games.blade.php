@@ -17,7 +17,11 @@
                 <th>away</th>
                 <th class="text-center" style="width: 8%;">bsf</th>
                 <th class="text-center" style="width: 8%;">bet</th>
+                @if(Session::get('message') != null && Session::get('message')==$c)
+                <th class="text-center" style="width: 8%;"><div id="flash" class="bg-success text-success"><a href="/play/odds/{{$c}}">odds</a></div></th>
+                @else
                 <th class="text-center" style="width: 8%;"><a href="/play/odds/{{$c}}">odds</a></th>
+                @endif
                 <th class="text-center" style="width: 10%;">income</th>
                 <th class="text-center" style="width: 8%;"><a href="/play/confirm/all/{{$c}}" role="button" class="btn btn-xs btn-warning" style="width: 100%">all</a></th>
             </tr>
@@ -69,6 +73,10 @@
     var asInitVals = new Array();
 
     $(document).ready(function(){
+        setTimeout(function () {
+            $('#flash').removeClass('bg-success text-success');
+        }, 1000);
+
         $(".editable").editable("/play/save", {
             height : '20',
             width : '100%',
@@ -110,5 +118,6 @@
             })
         }, 1000);
     });
+
 </script>
 @stop
