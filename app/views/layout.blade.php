@@ -55,18 +55,26 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/log">Action log</a></li>
+                    <li><a href="/log">Log</a></li>
 
-                            <li><a href="/stats">Statistics</a></li>
-                            <li><a href="/live">Livescore</a></li>
-                            <li><a href="/play/odds/all">Odds</a></li>
-                            <li class="divider"></li>
-                            <li><a href="/logout">Log out</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="/stats">Stats</a></li>
+                    <li><a href="/live">List</a></li>
+                    <li><a href="/play/odds/all">Odds</a></li>
+<!--                    <li class="divider"></li>-->
+                    <li><a href="/logout">Log out</a></li>
+
+<!--                    <li class="dropdown">-->
+<!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools<span class="caret"></span></a>-->
+<!--                        <ul class="dropdown-menu" role="menu">-->
+<!--                            <li><a href="/log">Action log</a></li>-->
+<!---->
+<!--                            <li><a href="/stats">Statistics</a></li>-->
+<!--                            <li><a href="/live">Livescore</a></li>-->
+<!--                            <li><a href="/play/odds/all">Odds</a></li>-->
+<!--                            <li class="divider"></li>-->
+<!--                            <li><a href="/logout">Log out</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
                 </ul>
                 <p class="navbar-text navbar-right">{{$global}} €</p>
                 <p class="navbar-text navbar-right">{{\Carbon\Carbon::now()->format("D, d M, H:i")}}</p>
