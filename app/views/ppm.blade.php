@@ -14,7 +14,7 @@
     <tr>
         <td><img src="/images/32/{{$c}}.png">&nbsp;{{$c}}<br/><a href="http://www.betexplorer.com/soccer/{{$d[1]['country']}}/{{$d[1]['name']}}">[be]</a>&nbsp;<a href="http://www.sportstats.com/soccer/{{$d[1]['country']}}/{{$d[1]['name']}}">[ss]</a>&nbsp;<a>[sc]</a></td>
             @for($i = 1; $i < 11; $i ++)
-                <td class="text-center">{{$d[$i]['length']}}</td>
+                <td class="text-center hasTooltip" title="{{$d[$i]['top']}}">{{$d[$i]['length']}}</td>
             @endfor
     </tr>
     @endforeach
