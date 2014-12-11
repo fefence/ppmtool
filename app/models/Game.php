@@ -26,7 +26,8 @@ class Game extends Eloquent{
         $game->save();
         $nGame->save();
         $match = Match::find($game->match_id);
-        ActionLog::create(['user_id' => $game->user_id, 'league_id' => $match->league_id, 'type' => 'games', 'action' => 'confirm', 'description' => 'Confirm game for match '.$match->home." - ".$match->away." ".$match->date_time]);
+        $game_type = GameType::find($game->game_type_id);
+        ActionLog::create(['user_id' => $game->user_id, 'league_id' => $match->league_id, 'type' => 'games', 'action' => 'confirm', 'description' => 'Confirm game for match '.$match->home." - ".$match->away." ".$match->date_time." with ".$game->bet."@".$game->odds." series for ".$game_type->name]);
 
     }
 
@@ -36,7 +37,8 @@ class Game extends Eloquent{
         $user->account = $user->account + $game->bet;
         $user->save();
         $match = Match::find($game->match_id);
-        ActionLog::create(['user_id' => $game->user_id, 'league_id' => $match->league_id, 'type' => 'games', 'action' => 'delete', 'description' => 'Delete game for match '.$match->home." - ".$match->away." ".$match->date_time]);
+        $game_type = GameType::find($game->game_type_id);
+        ActionLog::create(['user_id' => $game->user_id, 'league_id' => $match->league_id, 'type' => 'games', 'action' => 'delete', 'description' => 'Delete game for match '.$match->home." - ".$match->away." ".$match->date_time." with ".$game->bet."@".$game->odds." series for ".$game_type->name]);
         $game->delete();
     }
 }
