@@ -13,7 +13,7 @@ class SettingsController extends BaseController{
             }
             array_push($data[$d->league_id], $d->game_type_id);
         }
-        $leagues = League::all();
+        $leagues = League::orderBy('country')->get();
         $game_types = GameType::all();
 
         return View::make('settings')->with(['data' => $data, 'leagues' => $leagues, 'game_types' => $game_types]);
