@@ -16,9 +16,8 @@ class PPMController extends \BaseController{
                     ->orderBy('length', "desc")
                     ->take(25)
                     ->lists('length');
-                foreach($top_25 as $t) {
-                    $top = $top.$t.", ";
-                }
+
+
                 $data[$country][$i] = Series::where('active', 1)
                     ->where('country_alias', $country)
                     ->join('leagues', 'leagues.id', '=', 'series.league_id')
@@ -27,7 +26,31 @@ class PPMController extends \BaseController{
                 if (count($data[$country][$i]) == 0) {
                     $data[$country][$i]['length'] = 0;
                 }
+                $k = 0;
+                foreach($top_25 as $t) {
+                    $top = $top.$t.", ";
+
+                    if ($k >= 10) {
+                        $k ++;
+                        continue;
+                    }
+                    $data[$country][$i]['treshold'] = $t;
+                }
                 $data[$country][$i]['top'] = $top;
+                $current = Series::where('country_alias', $country)
+                    ->join('leagues', 'leagues.id', '=', 'series.league_id')
+                    ->join('matches', 'matches.id', '=', 'series.end_match_id')
+                    ->where('season', '2013-2014')
+                    ->where('game_type_id', $i)
+                    ->orderBy('length', "desc")
+//                    ->take(25)
+                    ->lists('length');
+                $c = '';
+                foreach($current as $t) {
+                    $c = $c.$t.", ";
+                }
+                $data[$country][$i]['curr'] = $c;
+
             }
         }
 //        return $data;
