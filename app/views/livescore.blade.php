@@ -2,13 +2,19 @@
 
 @section('content')
 <table class="table">
+    <thead>
+        <th style="width: 70px;"><a href="#" role="button" class="btn btn-default btn-xs">country</a></th>
+        <th style="width: 60px;"></th>
+        <th></th>
+        <th style="width: 50px;"></th>
+        <th></th>
+    </thead>
     <tbody>
     @foreach($matches as $d)
     <tr id="{{$d['match']->id}}">
-        <td><img src="/images/32/{{$d['league']->country_alias}}.png"></td>
-        <td>{{date('d M, H:i', strtotime($d['match']->date_time))}}</td>
-        <td>{{$d['match']->home}}</td>
-        <td>{{$d['match']->away}}</td>
+        <td style="text-align: center;"><img src="/images/32/{{$d['league']->country_alias}}.png"></td>
+        <td>{{date('H:i', strtotime($d['match']->date_time))}}</td>
+        <td style="text-align: right;">{{$d['match']->home}}</td>
         <?php
         if($d['match']->short_result == '-' && $d['match']->date_time <= date('Y-m-d H:i:s', time())) {
             $active_livescore = true;
@@ -16,17 +22,20 @@
             $active_livescore = false;
         }
         ?>
-        <td @if($active_livescore) class="livescoreResultTdActive" @else class="livescoreResultTdInactive" @endif>
-        <div>
-            <span @if($active_livescore) class="livescoreResultText" @endif>
-            @if ($d['match']->short_result != '-')
-            {{$d['match']->home_goals}} : {{$d['match']->away_goals}}
-            @else
-            -
-            @endif
-            </span>
-        </div>
+        @if (!$active_livescore &&  $d['match']->short_result != '-')
+        <td>
+            <span class="score scoreFinished" id="home_goals">{{$d['match']->home_goals}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$d['match']->away_goals}}</span>
         </td>
+        @elseif($active_livescore)
+        <td class="livescoreResultTdActive" id="$d['match']->id}}">
+            <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span>
+        </td>
+        @else
+        <td>
+            <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
+        </td>
+        @endif
+        <td style="text-align: left;">{{$d['match']->away}}</td>
     </tr>
     @endforeach
     </tbody>

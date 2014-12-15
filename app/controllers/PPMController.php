@@ -40,9 +40,9 @@ class PPMController extends \BaseController{
                 $current = Series::where('country_alias', $country)
                     ->join('leagues', 'leagues.id', '=', 'series.league_id')
                     ->join('matches', 'matches.id', '=', 'series.end_match_id')
-                    ->where('season', '2013-2014')
+                    ->where('season', '2014-2015')
                     ->where('game_type_id', $i)
-                    ->orderBy('length', "desc")
+                    ->orderBy('date_time', "asc")
 //                    ->take(25)
                     ->lists('length');
                 $c = '';
