@@ -25,5 +25,11 @@
         </tr>
     @endforeach
     </tbody>
+    <tfoot>
+    <th style="width: 12%;"></th>
+    @foreach($game_types as $game_type)
+    <th class="text-center">{{$game_type->name}}</th>
+    @endforeach
+    </tfoot>
 </table>
 @stop
