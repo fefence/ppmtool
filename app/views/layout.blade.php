@@ -55,7 +55,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/live">List</a></li>
+                    <li><a href="/list">List</a></li>
                     <li><a href="/stats">Stats</a></li>
                     <li><a href="/log">Log</a></li>
                     <li><a href="/play/odds/all">Odds</a></li>

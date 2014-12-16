@@ -5,8 +5,7 @@ class LivescoreController extends \BaseController
     public function livescore($fromdate = '', $todate = '')
     {
 
-        $fromdate = \Carbon\Carbon::now()->startOfDay();
-        $todate = \Carbon\Carbon::now()->endOfDay()->addHours(10);
+        list($fromdate, $todate) = Utils::calcDates($fromdate, $todate);
 
 
             $ms = Match::where('date_time', '>=', $fromdate)
@@ -24,6 +23,30 @@ class LivescoreController extends \BaseController
         }
 //        return $res;
         return View::make('livescore')->with(['matches' => $res]);
+    }
+
+    public function livescorebycountry($fromdate = '', $todate = '')
+    {
+
+        list($fromdate, $todate) = Utils::calcDates($fromdate, $todate);
+
+        $res = array();
+
+        $leagues = Match::where('date_time', '>=', $fromdate)
+            ->join('leagues', 'leagues.id', '=', 'matches.league_id')
+            ->where('date_time', '<=', $todate)
+            ->orderBy('country')
+            ->lists('league_id');
+        foreach($leagues as $league_id) {
+            $league = League::find($league_id);
+            $res[$league->country_alias] = Match::where('date_time', '>=', $fromdate)
+                ->where('date_time', '<=', $todate)
+                ->where('league_id', $league_id)
+                ->orderBy('date_time')
+                ->get();
+        }
+//        return $res;
+        return View::make('livescorebycountry')->with(['matches' => $res]);
     }
 
     public static function matchScore($match_id)
