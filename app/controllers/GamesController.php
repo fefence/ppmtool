@@ -101,7 +101,7 @@ class GamesController extends BaseController
                 $game->save();
             }
         }
-        return Redirect::back()->with('message', $country_alias);
+        return Redirect::to(URL::previous() . '#'. $country_alias)->with('message', $country_alias);
     }
 
     public static function confirmAll($country_alias)
@@ -125,9 +125,9 @@ class GamesController extends BaseController
             }
         }
         try {
-            return Redirect::back()->with('message', 'Bet confirmed');
+            return Redirect::to(URL::previous() . '#'. $country_alias)->with('message', 'Bet confirmed');
         } catch (InvalidArgumentException $e) {
-            return Redirect::to(URL::to("/play"));
+            return Redirect::to(URL::to("/play#".$country_alias));
         }
     }
 

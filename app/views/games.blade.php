@@ -7,6 +7,7 @@
 @endif
 @foreach($data as $c => $games)
 
+<div id="{{$c}}">
     <table class="table">
         <thead>
             <tr>
@@ -68,6 +69,7 @@
         @endforeach
         </tbody>
     </table>
+</div>
 @endforeach
 <script>
     var asInitVals = new Array();
