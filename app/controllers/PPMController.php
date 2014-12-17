@@ -36,7 +36,7 @@ class PPMController extends \BaseController{
                     }
                     $data[$country][$i]['treshold'] = $t;
                 }
-                $data[$country][$i]['top'] = $top;
+                $data[$country][$i]['top'] = substr($top, 0, strlen($top) - 2);
                 $current = Series::where('country_alias', $country)
                     ->join('leagues', 'leagues.id', '=', 'series.league_id')
                     ->join('matches', 'matches.id', '=', 'series.end_match_id')
@@ -49,7 +49,7 @@ class PPMController extends \BaseController{
                 foreach($current as $t) {
                     $c = $c.$t.", ";
                 }
-                $data[$country][$i]['curr'] = $c;
+                $data[$country][$i]['curr'] = substr($c, 0, strlen($c) - 2);
 
             }
         }
