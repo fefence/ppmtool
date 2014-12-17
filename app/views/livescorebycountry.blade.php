@@ -1,71 +1,81 @@
 @extends('layout')
 
 @section('content')
-<a href="/list" role="button" class="btn btn-default btn-xs">list</a>
+<div class="container">
+    <div class="row">
+        <p><a href="/list" role="button" class="btn btn-default">list</a></p>
+    </div>
+</div>
 @foreach($matches as $league => $matches)
-    <table class="table">
-        <thead>
-            <th><img src="/images/32/{{$league}}.png"></th>
-            <th style="width: 70px;"></th>
-            <th style="width: 60px;"></th>
-            <th></th>
-            <th style="width: 50px;"></th>
-        </thead>
-        @foreach($matches as $m)
-            <tr>
-                <td>{{date('H:i', strtotime($m->date_time))}}</td>
-                <td style="text-align: right;">{{$m->home}}</td>
-                <?php
-                if($m->short_result == '-' && $m->date_time <= date('Y-m-d H:i:s', time())) {
-                    $active_livescore = true;
-                } else {
-                    $active_livescore = false;
-                }
-                ?>
-                @if (!$active_livescore &&  $m->short_result != '-')
-                <td style="width: 50px;">
-                    <span class="score scoreFinished" id="home_goals">{{$m->home_goals}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$m->away_goals}}</span>
-                </td>
-                @elseif($active_livescore)
-                <td style="width: 50px;" class="livescoreResultTdActive" id="$d['match']->id}}">
-                    <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span>
-                </td>
-                @else
-                <td style="width: 50px;">
-                    <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
-                </td>
-                @endif
-                <td style="text-align: left;">{{$m->away}}</td>
-            </tr>
-        @endforeach
-    </table>
-
+<div class="container">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <th><img src="/images/32/{{$league}}.png"></th>
+                <th style="width: 70px;"></th>
+                <th style="width: 60px;"></th>
+                <th></th>
+            </thead>
+            @foreach($matches as $m)
+                <tr id="{{$m->id}}">
+                    <td>{{date('H:i', strtotime($m->date_time))}}</td>
+                    <td style="text-align: right;">{{$m->home}}</td>
+                    <?php
+                    if($m->short_result == '-' && $m->date_time <= date('Y-m-d H:i:s', time())) {
+                        $active_livescore = true;
+                    } else {
+                        $active_livescore = false;
+                    }
+                    ?>
+                    @if (!$active_livescore &&  $m->short_result != '-')
+                    <td style="text-align: center;">
+                        <span class="score scoreFinished" id="home_goals">{{$m->home_goals}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$m->away_goals}}</span>
+                    </td>
+                    @elseif($active_livescore)
+                    <td style="text-align: center;" class="livescoreResultTdActive" id="{{$m->id}}">
+                        <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span>
+                    </td>
+                    @else
+                    <td style="text-align: center;">
+                        <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
+                    </td>
+                    @endif
+                    <td style="text-align: left;">{{$m->away}}</td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+</div>
 @endforeach
 <script type="text/javascript">
 
     var asInitVals = new Array();
 
     $(document).ready(function () {
-        $("table tr .livescoreResultTdActive div .livescoreResultText").each(function() {
+        $("table tr .livescoreResultTdActive").each(function() {
             var id =$(this).closest('tr').prop('id');
-            var td = $(this);
+            var td_span1 = $(this).find("#home_goals");
+            var td_span2 = $(this).find("#away_goals");
             $.post( "/getres/" + id, function( data ) {
-                td.html(data);
+                td_span1.html(data[0]+"");
+                td_span2.html(data[1]+"");
             });
         });
         setInterval(function() {
-            $("table tr .livescoreResultTdActive div .livescoreResultText").each(function() {
+            $("table tr .livescoreResultTdActive").each(function() {
                 var id =$(this).closest('tr').prop('id');
-                var td = $(this);
+                var td_span1 = $(this).find("#home_goals");
+                var td_span2 = $(this).find("#away_goals");
                 $.post( "/getres/" + id, function( data ) {
-                    td.html(data);
+                    td_span1.html(data[0]+"");
+                    td_span2.html(data[1]+"");
                 });
             })
 
         }, 30000);
         setInterval(function() {
-            $("table tr .livescoreResultTdActive div span span").each(function() {
-                $(this).toggleClass('livescoreIndicator');
+            $("table tr .livescoreResultTdActive #scoreSeparator").each(function() {
+                $(this).toggleClass('scoreSeparatorToggle');
             })
         }, 1000);
     });
