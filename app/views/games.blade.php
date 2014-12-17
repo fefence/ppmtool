@@ -19,7 +19,7 @@
                 <th class="text-center" style="width: 8%;">bsf</th>
                 <th class="text-center" style="width: 8%;">bet</th>
                 @if(Session::get('message') != null && Session::get('message')==$c)
-                <th class="text-center" style="width: 8%;"><div id="flash" class="bg-success text-success"><a href="/play/odds/{{$c}}">odds</a></div></th>
+                <th id="flash" class="text-center bg-success text-success" style="width: 8%; padding: 0px;"><a href="/play/odds/{{$c}}">odds</a></th>
                 @else
                 <th class="text-center" style="width: 8%;"><a href="/play/odds/{{$c}}">odds</a></th>
                 @endif

@@ -52,14 +52,15 @@ class GamesController extends BaseController
 
     public static function confirmGame($game_id)
     {
+        $country_alias = League::find(Match::find(Game::find($game_id)->match_id)->league_id)->country_alias;
         Game::confirmGame($game_id);
-        return Redirect::back()->with('message', 'Game confirmed');
+        return Redirect::to(URL::previous() . '#'. $country_alias)->with('message', 'Game confirmed');
     }
 
     public static function deleteGame($game_id)
     {
         Game::deleteGame($game_id);
-        return Redirect::back()->with('message', 'Game confirmed');
+        return Redirect::back()->with('message', 'Game deleted');
     }
 
     public static function getOddsAll()

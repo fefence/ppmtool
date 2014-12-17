@@ -12,7 +12,7 @@
     <tbody>
     @foreach($leagues as $league)
         <tr>
-            <td><img src="/images/32/{{$league->country_alias}}.png">&nbsp;{{$league->country_alias}}<br><a href="http://www.betexplorer.com/soccer/{{$league->country}}/{{$league->name}}">[be]</a>&nbsp;<a href="http://www.sportstats.com/soccer/{{$league->country}}/{{$league->name}}">[ss]</a>&nbsp;<a>[sc]</a></a></td>
+            <td><img src="/images/32/{{$league->country_alias}}.png">&nbsp;{{$league->country_alias}}<br><a href="{{$league->be}}">[be]</a>&nbsp;<a href="{{$league->ss}}">[ss]</a>&nbsp;<a href="{{$league->sc}}">[sc]</a></a></td>
         @foreach($game_types as $game_type)
             <td class="text-center">
                 @if(array_key_exists($league->id, $data) && in_array($game_type->id, $data[$league->id]))
