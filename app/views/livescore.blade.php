@@ -1,6 +1,9 @@
 @extends('layout')
 
 @section('content')
+@if($no_info)
+<h5>No matches for today.</h5>
+@else
 <div class="container">
     <div class="row">
         <?php
@@ -52,6 +55,7 @@
         </table>
     </div>
 </div>
+@endif
 <script type="text/javascript">
 
     var asInitVals = new Array();

@@ -20,7 +20,12 @@ class LivescoreController extends \BaseController
             $res[$match->id]['match'] = $match;
             $res[$match->id]['league'] = League::find($match->league_id);
         }
-        return View::make('livescore')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'list']);
+        if (count($res) == 0) {
+            $no_info = true;
+        } else {
+            $no_info = false;
+        }
+        return View::make('livescore')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'list', 'no_info' => $no_info]);
     }
 
     public function livescorebycountry($fromdate = '', $todate = '')
@@ -43,8 +48,13 @@ class LivescoreController extends \BaseController
                 ->orderBy('date_time')
                 ->get();
         }
+        if (count($res) == 0) {
+            $no_info = true;
+        } else {
+            $no_info = false;
+        }
 //        return $res;
-        return View::make('livescorebycountry')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'listbycountry']);
+        return View::make('livescorebycountry')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'listbycountry', 'no_info' => $no_info]);
     }
 
     public static function matchScore($match_id)
