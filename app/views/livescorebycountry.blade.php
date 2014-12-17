@@ -4,8 +4,6 @@
 @if($no_info)
 <h5>No matches for today.</h5>
 @else
-<div class="container">
-    <div class="row">
         <?php
         $url = '/list';
         $from = date('Y-m-d', strtotime($fromdate));
@@ -17,11 +15,7 @@
         }
         ?>
         <p><a href="{{$url}}" role="button" class="btn btn-default">list</a></p>
-    </div>
-</div>
 @foreach($matches as $league => $matches)
-<div class="container">
-    <div class="row">
         <table class="table">
             <thead>
                 <th><img src="/images/32/{{$league}}.png"></th>
@@ -57,8 +51,6 @@
                 </tr>
             @endforeach
         </table>
-    </div>
-</div>
 @endforeach
 @endif
 <script type="text/javascript">

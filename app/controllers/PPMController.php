@@ -28,13 +28,13 @@ class PPMController extends \BaseController{
                 }
                 $k = 0;
                 foreach($top_25 as $t) {
+                    $k ++;
                     $top = $top.$t.", ";
-
                     if ($k >= 10) {
-                        $k ++;
                         continue;
+                    } else {
+                        $data[$country][$i]['treshold'] = $t;
                     }
-                    $data[$country][$i]['treshold'] = $t;
                 }
                 $data[$country][$i]['top'] = substr($top, 0, strlen($top) - 2);
                 $current = Series::where('country_alias', $country)

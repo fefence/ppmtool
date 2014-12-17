@@ -4,8 +4,6 @@
 @if($no_info)
 <h5>No matches for today.</h5>
 @else
-<div class="container">
-    <div class="row">
         <?php
             $url = '/listbycountry';
             $from = date('Y-m-d', strtotime($fromdate));
@@ -17,10 +15,6 @@
             }
         ?>
         <p><a href="{{$url}}" role="button" class="btn btn-default">country</a></p>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
         <table class="table">
             <tbody>
             @foreach($matches as $d)
@@ -53,8 +47,6 @@
             @endforeach
             </tbody>
         </table>
-    </div>
-</div>
 @endif
 <script type="text/javascript">
 
