@@ -44,7 +44,7 @@ class LivescoreController extends \BaseController
                 ->get();
         }
 //        return $res;
-        return View::make('livescorebycountry')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'list/country']);
+        return View::make('livescorebycountry')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'listbycountry']);
     }
 
     public static function matchScore($match_id)

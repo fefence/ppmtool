@@ -4,13 +4,13 @@
 <div class="container">
     <div class="row">
         <?php
-            $url = '/list/country';
+            $url = '/listbycountry';
             $from = date('Y-m-d', strtotime($fromdate));
 //            $to = date('Y-m-d', strtotime($todate));
             if ($from == date('Y-m-d', time())) {
-                $url == '/list/country';
+                $url == '/listbycountry';
             } else {
-                $url = '/list/country/'.$from.'/'.$from;
+                $url = '/listbycountry/'.$from.'/'.$from;
             }
         ?>
         <p><a href="{{$url}}" role="button" class="btn btn-default">country</a></p>

@@ -25,7 +25,7 @@ Route::get('/boo/{id}/{season}', function($id, $season)
 //    return date('Y-m-d H:i:s', time());
 });
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
-Route::get('/list/country/{fromdate?}/{todate?}', 'LivescoreController@livescorebycountry');
+Route::get('/listbycountry/{fromdate?}/{todate?}', 'LivescoreController@livescorebycountry');
 Route::post('/getres/{id}', "LivescoreController@getMatchCurrentRes");
 
 Route::get('/stats', 'StatsController@countries');
