@@ -30,7 +30,7 @@ class PPMController extends \BaseController{
                 foreach($top_25 as $t) {
                     $k ++;
                     $top = $top.$t.", ";
-                    if ($k >= 10) {
+                    if ($k >= 15) {
                         continue;
                     } else {
                         $data[$country][$i]['treshold'] = $t;
