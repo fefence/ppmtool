@@ -31,24 +31,24 @@
                 </button>
                 <a class="navbar-brand" href="/play"><span class="{{Request::path() == 'play' ? 'text-danger' : '';}}">Play</span></a>
                 <a class="navbar-brand" href="/series"><span class="{{Request::path() == 'series' ? 'text-danger' : '';}}">Series</span></a>
-                @if (isset($fromdate))
+                @if (isset($fromdate) && isset($base))
                 <?php
                     $from = $fromdate->subDay()->toDateString();
                     $from1 = $fromdate->addDay()->addDay()->toDateString();
                 ?>
                 @if ($from == date('Y-m-d', time()))
-                <a class="navbar-brand" href="/play">&nbsp;<&nbsp;</a>
+                <a class="navbar-brand" href="/{{$base}}">&nbsp;<&nbsp;</a>
                 @else
-                <a class="navbar-brand" href="/play/{{$from}}/{{$from}}">&nbsp;<&nbsp;</a>
+                <a class="navbar-brand" href="/{{$base}}/{{$from}}/{{$from}}">&nbsp;<&nbsp;</a>
                 @endif
                 @if ($from1 == date('Y-m-d', time()))
-                <a class="navbar-brand" href="/play">&nbsp;>&nbsp;</a>
+                <a class="navbar-brand" href="/{{$base}}">&nbsp;>&nbsp;</a>
                 @else
-                <a class="navbar-brand" href="/play/{{$from1}}/{{$from1}}">&nbsp;>&nbsp;</a>
+                <a class="navbar-brand" href="/{{$base}}/{{$from1}}/{{$from1}}">&nbsp;>&nbsp;</a>
                 @endif
                 @else
-                <a disabled="disabled" class="navbar-brand" href="/play">&nbsp;<&nbsp;</a>
-                <a disabled="disabled" class="navbar-brand" href="/play">&nbsp;>&nbsp;</a>
+                <a disabled="disabled" class="navbar-brand" href="#">&nbsp;<&nbsp;</a>
+                <a disabled="disabled" class="navbar-brand" href="#">&nbsp;>&nbsp;</a>
                 @endif
 <!--                <a class="navbar-brand" href="/settings"><span class="{{Request::path() == 'settings' ? 'text-danger' : '';}}">Settings</span></a>-->
 <!--                <a class="navbar-brand" href="/play/odds/all">Odds</a>-->

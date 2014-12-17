@@ -3,7 +3,17 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <p><a href="/list" role="button" class="btn btn-default">list</a></p>
+        <?php
+        $url = '/list';
+        $from = date('Y-m-d', strtotime($fromdate));
+//        $to = date('Y-m-d', strtotime($todate));
+        if ($from == date('Y-m-d', time())) {
+            $url == '/list';
+        } else {
+            $url = '/list/'.$from.'/'.$from;
+        }
+        ?>
+        <p><a href="{{$url}}" role="button" class="btn btn-default">list</a></p>
     </div>
 </div>
 @foreach($matches as $league => $matches)

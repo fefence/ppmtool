@@ -3,7 +3,17 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <p><a href="/list/country" role="button" class="btn btn-default">country</a></p>
+        <?php
+            $url = '/list/country';
+            $from = date('Y-m-d', strtotime($fromdate));
+//            $to = date('Y-m-d', strtotime($todate));
+            if ($from == date('Y-m-d', time())) {
+                $url == '/list/country';
+            } else {
+                $url = '/list/country/'.$from.'/'.$from;
+            }
+        ?>
+        <p><a href="{{$url}}" role="button" class="btn btn-default">country</a></p>
     </div>
 </div>
 <div class="container">
