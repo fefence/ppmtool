@@ -24,11 +24,11 @@
                 <th class="text-center" style="width: 8%;"><a href="/play/odds/{{$c}}">odds</a></th>
                 @endif
                 <th class="text-center" style="width: 10%;">income</th>
-                <th class="text-center" style="width: 8%;"><a href="/play/confirm/all/{{$c}}" role="button" class="btn btn-xs btn-warning" style="width: 100%">all</a></th>
+                <th class="text-center" style="width: 8%;"><a href="/play/confirm/all/{{$c}}" role="button" class="btn btn-xs @if($games['disabled'] == '') btn-warning @else btn-default @endif" style="width: 100%" {{$games['disabled']}} >all</a></th>
             </tr>
         </thead>
         <tbody>
-        @foreach($games as $game)
+        @foreach($games['games'] as $game)
         <tr id="{{$game['match']['id']}}">
             <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
             <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}&nbsp;[{{$game['current_length']}}]</a></td>
@@ -66,6 +66,7 @@
                 @endif
             </td>
         </tr>
+
         @endforeach
         </tbody>
     </table>

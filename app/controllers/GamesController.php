@@ -18,7 +18,7 @@ class GamesController extends BaseController
         $data = array();
         $count = array();
         foreach ($league_ids as $league) {
-//            $league = League::find($l);
+
             $games = null;
             $games = Game::where('user_id', $user_id)
                 ->join('matches', 'matches.id', '=', 'games.match_id')
@@ -32,7 +32,8 @@ class GamesController extends BaseController
                 ->orderBy('game_type_id')
                 ->get();
             if (count($games) > 0) {
-                $data[$league->country_alias] = $games;
+                $data[$league->country_alias]['disabled'] = 'disabled';
+                $data[$league->country_alias]['games'] = $games;
                 foreach ($games as $g) {
                     $c = Game::where('user_id', $user_id)
                         ->where('match_id', $g->match_id)
@@ -40,6 +41,9 @@ class GamesController extends BaseController
                         ->where('game_type_id', $g->game_type_id)
                         ->count();
                     $count[$g->id] = $c;
+                    if ($c == 0 || $c == '0') {
+                        $data[$league->country_alias]['disabled'] = '';
+                    }
                 }
             }
         }
@@ -47,6 +51,7 @@ class GamesController extends BaseController
         if (count($data) == 0) {
             $no_info = true;
         }
+//        return $data;
         return View::make('games')->with(['data' => $data, 'count' => $count, 'fromdate' => $fromdate, 'todate' => $todate, 'no_info' => $no_info]);
     }
 
