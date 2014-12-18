@@ -57,7 +57,7 @@
             <td>{{$game['match']['away']}}</td>
             <td class="editable text-center" id="bsf_{{$game['id']}}">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
             <td class="warning editable text-center" id="bet_{{$game['id']}}">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
-            <td class="editable text-center" id="odds_{{$game['id']}}">{{$game['odds']}}</td>
+            <td class="editable text-center" id="odds_{{$game['id']}}">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
             <td class="text-center"><span id="income_{{$game['id']}}">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
                 <a role="button" @if ($count[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/play/confirm/{{$game['id']}}" style="font-size: 130%;">+&nbsp({{ $count[$game['id']] }})</a>
@@ -85,12 +85,25 @@
             width : '100%',
             select : 'true',
             placeholder: '',
+            type: 'number',
             callback : function(value) {
                 var arr = value.split('*');
 //                alert(value);
-                $('#bsf_'+arr[0]).text(arr[1]);
-                $('#bet_'+arr[0]).text(arr[2]);
-                $('#odds_'+arr[0]).text(arr[3]);
+                if (arr[1] != 0.00) {
+                    $('#bsf_'+arr[0]).text(arr[1]);
+                } else {
+                    $('#bsf_'+arr[0]).text("");
+                }
+                if (arr[2] != 0.00){
+                    $('#bet_'+arr[0]).text(arr[2]);
+                } else{
+                    $('#bet_'+arr[0]).text("");
+                }
+                if (arr[3] != 0.00){
+                    $('#odds_'+arr[0]).text(arr[3]);
+                } else {
+                    $('#odds_'+arr[0]).text("");
+                }
                 $('#income_'+arr[0]).text(arr[4]);
                 $('#profit_'+arr[0]).text(arr[5]);
             }

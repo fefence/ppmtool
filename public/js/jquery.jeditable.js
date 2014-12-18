@@ -482,6 +482,15 @@
                     return(textarea);
                 }
             },
+            number: {
+                element : function(settings, original) {
+                    var input = $('<input type="number"/>');
+                    input.width(settings.width);
+                    input.height(settings.width);
+                    $(this).append(input);
+                    return(input);
+                }
+            },
             select: {
                element : function(settings, original) {
                     var select = $('<select />');
