@@ -12,7 +12,7 @@
         <thead>
             <tr>
                 <th class="text-center" style="width: 65px;"><img src="/images/32/{{$c}}.png"></th>
-                <th class="text-center" style="width: 10%;">game</th>
+                <th class="text-center" style="width: 10%;">type</th>
                 <th style="text-align: right;">home</th>
                 <th style="width: 50px; text-align: center"></th>
                 <th>away</th>
@@ -55,9 +55,9 @@
             @endif
 
             <td>{{$game['match']['away']}}</td>
-            <td class="editable text-center" id="bsf_{{$game['id']}}">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
+            <td class="editablecolor1 editable text-center" id="bsf_{{$game['id']}}">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
             <td class="warning editable text-center" id="bet_{{$game['id']}}">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
-            <td class="editable text-center" id="odds_{{$game['id']}}">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
+            <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
             <td class="text-center"><span id="income_{{$game['id']}}">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
                 <a role="button" @if ($count[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/play/confirm/{{$game['id']}}" style="font-size: 130%;">+&nbsp({{ $count[$game['id']] }})</a>

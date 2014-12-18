@@ -19,8 +19,8 @@
             <tbody>
             @foreach($matches as $d)
             <tr id="{{$d['match']->id}}">
-                <td style="width: 70px; text-align: center;"><img src="/images/32/{{$d['league']->country_alias}}.png"></td>
-                <td style="width: 60px;">{{date('H:i', strtotime($d['match']->date_time))}}</td>
+                <td style="width: 50px;"><img src="/images/32/{{$d['league']->country_alias}}.png"></td>
+                <td style="width: 50px;">{{date('H:i', strtotime($d['match']->date_time))}}</td>
                 <td style="text-align: right;">{{$d['match']->home}}</td>
                 <?php
                 if($d['match']->short_result == '-' && $d['match']->date_time <= date('Y-m-d H:i:s', time())) {
@@ -30,19 +30,24 @@
                 }
                 ?>
                 @if (!$active_livescore &&  $d['match']->short_result != '-')
-                <td style="width: 50px;">
+                <td style="width: 60px; text-align: center;">
                     <span class="score scoreFinished" id="home_goals">{{$d['match']->home_goals}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$d['match']->away_goals}}</span>
                 </td>
                 @elseif($active_livescore)
-                <td style="width: 50px;" class="livescoreResultTdActive" id="{{$d['match']->id}}">
+                <td style="width: 60px; text-align: center;" class="livescoreResultTdActive" id="{{$d['match']->id}}">
                     <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span>
                 </td>
                 @else
-                <td style="width: 50px;">
+                <td style="width: 60px; text-align: center;">
                     <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
                 </td>
                 @endif
-                <td style="text-align: left;">{{$d['match']->away}}</td>
+                <td>{{$d['match']->away}}</td>
+                <td>
+                    @foreach($d['settings'] as $s)
+                    <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
+                    @endforeach
+                </td>
             </tr>
             @endforeach
             </tbody>

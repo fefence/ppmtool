@@ -57,3 +57,6 @@ th, td {
     -o-transition: height 0.01s;
     transition: height 0.01s;
 }
+.editablecolor1 {
+    background-color: #f6f6f6;
+}

@@ -15,16 +15,28 @@
         }
         ?>
         <p><a href="{{$url}}" role="button" class="btn btn-default">list</a></p>
+
 @foreach($matches as $league => $matches)
+<?php
+$first = true;
+?>
         <table class="table">
-            <thead>
-                <th><img src="/images/32/{{$league}}.png"></th>
-                <th style="width: 70px;"></th>
-                <th style="width: 60px;"></th>
-                <th></th>
-            </thead>
+<!--            <thead>-->
+<!--                <th style="width: 50px;"><img src="/images/32/{{$league}}.png"></th>-->
+<!--                <th></th>-->
+<!--                <th style="width: 60px;"></th>-->
+<!--                <th></th>-->
+<!--                <th></th>-->
+<!--            </thead>-->
+
             @foreach($matches as $m)
                 <tr id="{{$m->id}}">
+                    @if (!isset($first) || $first)
+                        <th style="width: 50px; border-right: 1px solid #dddddd;" rowspan="{{count($matches)}}"><img src="/images/32/{{$league}}.png"></th>
+                    @endif
+                    <?php
+                    $first = false;
+                    ?>
                     <td>{{date('H:i', strtotime($m->date_time))}}</td>
                     <td style="text-align: right;">{{$m->home}}</td>
                     <?php
@@ -48,6 +60,11 @@
                     </td>
                     @endif
                     <td style="text-align: left;">{{$m->away}}</td>
+                    <td>
+                        @foreach($settings[$m->id] as $s)
+                        <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
+                        @endforeach
+                    </td>
                 </tr>
             @endforeach
         </table>

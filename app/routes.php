@@ -11,18 +11,15 @@
 |
 */
 
-Route::get('/boo/{id}/{season}', function($id, $season)
+Route::get('/boo', function()
 {
-//    return Parser::parseNextMatches(10);
-//    Series::calculateSeries($id, $season);
-//    $series = Series::where('active', 1)->get();
-//    foreach($series as $s) {
-//        $s->active = 0;
-//        $s->save();
+//    $matches_parsed = WinOdds::lists('match_id');
+//    $matches = Match::all();
+////        whereNotIn('id',$matches_parsed)
+////        ->get();
+//    foreach($matches as $m) {
+//        OddsParser::parseOdds($m);
 //    }
-//     return strtolower(\Carbon\Carbon::now()->format
-//    return Updater::update(8);
-//    return date('Y-m-d H:i:s', time());
 });
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
 Route::get('/listbycountry/{fromdate?}/{todate?}', 'LivescoreController@livescorebycountry');

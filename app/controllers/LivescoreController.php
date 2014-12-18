@@ -8,10 +8,10 @@ class LivescoreController extends \BaseController
         list($fromdate, $todate) = Utils::calcDates($fromdate, $todate);
 
 
-            $ms = Match::where('date_time', '>=', $fromdate)
-                ->where('date_time', '<=', $todate)
-                ->orderBy('date_time')
-                ->lists('matches.id');
+        $ms = Match::where('date_time', '>=', $fromdate)
+            ->where('date_time', '<=', $todate)
+            ->orderBy('date_time')
+            ->lists('matches.id');
 
         $res = array();
         foreach ($ms as $match_id) {
@@ -19,6 +19,12 @@ class LivescoreController extends \BaseController
             $res[$match->id] = array();
             $res[$match->id]['match'] = $match;
             $res[$match->id]['league'] = League::find($match->league_id);
+            $res[$match->id]['settings'] = Game::where('user_id', Auth::user()->id)
+                ->where('match_id', $match->id)
+                ->with('game_type')
+                ->orderBy('game_type_id')
+                ->distinct('game_type_id')
+                ->get();
         }
         if (count($res) == 0) {
             $no_info = true;
@@ -40,21 +46,34 @@ class LivescoreController extends \BaseController
             ->where('date_time', '<=', $todate)
             ->orderBy('country')
             ->lists('league_id');
-        foreach($leagues as $league_id) {
+        $settings = array();
+        foreach ($leagues as $league_id) {
             $league = League::find($league_id);
             $res[$league->country_alias] = Match::where('date_time', '>=', $fromdate)
                 ->where('date_time', '<=', $todate)
                 ->where('league_id', $league_id)
                 ->orderBy('date_time')
                 ->get();
+            foreach ($res[$league->country_alias] as $m) {
+                $sets = Game::where('user_id', Auth::user()->id)
+                    ->where('match_id', $m->id)
+                    ->with('game_type')
+                    ->orderBy('game_type_id')
+                    ->distinct('game_type_id')
+                    ->get();
+                $settings[$m->id] = $sets;
+            }
         }
         if (count($res) == 0) {
             $no_info = true;
         } else {
             $no_info = false;
         }
+//        return $settings;
+//        $settings = Setting::where('user_id', Auth::user()->id);
+//            ->where()
 //        return $res;
-        return View::make('livescorebycountry')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'listbycountry', 'no_info' => $no_info]);
+        return View::make('livescorebycountry')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'listbycountry', 'settings' => $settings, 'no_info' => $no_info]);
     }
 
     public static function matchScore($match_id)
@@ -87,30 +106,31 @@ class LivescoreController extends \BaseController
         return $html;
     }
 
-    public static function getMatchCurrentRes($id) {
+    public static function getMatchCurrentRes($id)
+    {
         $html = LivescoreController::matchScore($id);
         $dom = new DOMDocument;
         $dom->preserveWhiteSpace = FALSE;
         @$dom->loadHTML($html);
         $finder = new DomXPath($dom);
-        $classname="p1_home";
+        $classname = "p1_home";
         $h1 = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
         $home = '';
         $away = '';
         if ($h1->length > 0) {
             $home = $h1->item(0)->nodeValue;
         }
-        $classname="p2_home";
+        $classname = "p2_home";
         $h2 = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
         if ($h2->length > 0) {
             $home = $home + $h2->item(0)->nodeValue;
         }
-        $classname="p1_away";
+        $classname = "p1_away";
         $a1 = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
         if ($a1->length > 0) {
             $away = $a1->item(0)->nodeValue;
         }
-        $classname="p2_away";
+        $classname = "p2_away";
         $a2 = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
         if ($a2->length > 0) {
             $away = $away + $a2->item(0)->nodeValue;

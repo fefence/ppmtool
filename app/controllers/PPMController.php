@@ -67,6 +67,35 @@ class PPMController extends \BaseController{
             ->select(DB::raw('games.*, matches.home, matches.away, matches.date_time, matches.home_goals, matches.away_goals, matches.short_result'))
             ->orderBy('current_length', "desc")
             ->get();
-        return View::make('seriesdetails')->with(['games' => $games]);
+        if(count($games) > 0) {
+            $no_info = false;
+        } else {
+            $no_info = true;
+        }
+        $series = Series::find($series_id);
+        $ss = Series::where('game_type_id', $series->game_type_id)
+            ->where('matches.league_id', $series->league_id)
+            ->join('matches', 'matches.id', '=', 'series.end_match_id')
+            ->where('season', '2014-2015')
+            ->orderBy('date_time')
+            ->get();
+        $data['stats'] = $ss;
+        $longest = Series::where('game_type_id', $series->game_type_id)
+            ->where('matches.league_id', $series->league_id)
+            ->join('matches', 'matches.id', '=', 'series.end_match_id')
+            ->where('season', '2014-2015')
+            ->orderBy('length', "desc")
+            ->take(5)
+            ->lists('length');
+        $data['longest'] = $longest;
+        $top = Series::where('game_type_id', $series->game_type_id)
+            ->where('matches.league_id', $series->league_id)
+            ->join('matches', 'matches.id', '=', 'series.end_match_id')
+            ->orderBy('length', "desc")
+            ->take(25)
+            ->lists('length');
+        $data['all'] = $top;
+//        return $data;
+        return View::make('seriesdetails')->with(['games' => $games, 'data' => $data, 'no_info' => $no_info]);
     }
 }

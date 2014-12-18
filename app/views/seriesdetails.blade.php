@@ -1,10 +1,46 @@
 @extends('layout')
 
 @section('content')
-<table class="table table-bordered">
+<table class="table" border="1">
+    <tr>
+        <?php
+            $i = 1;
+        ?>
+        <td colspan="2">Top 25 series:
+        @foreach($data['all'] as $l)
+            {{$l}},&nbsp;
+            @if($i % 5 == 0)
+                &nbsp;
+                &nbsp;
+            @endif
+        <?php
+            $i ++;
+        ?>
+        @endforeach
+        </td>
+    </tr>
+    <tr>
+    <td>
+        @foreach($data['stats'] as $s)
+        {{ $s->length}}
+        @include('partials.square', array('match' => $s))
+        @endforeach
+    </td>
+        <td>
+            @foreach($data['longest'] as $l)
+            {{$l}},&nbsp;
+            @endforeach
+        </td>
+    </tr>
+</table>
+
+@if($no_info)
+    <h5>No games confirmed for current series.</h5>
+@else
+<table class="table">
     <thead>
     <th>date</th>
-    <th>game</th>
+    <th>type</th>
     <th>home</th>
     <th>res</th>
     <th>away</th>
@@ -42,4 +78,5 @@
     @endforeach
     </tbody>
 </table>
+@endif
 @stop
