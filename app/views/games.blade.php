@@ -55,8 +55,8 @@
             @endif
 
             <td>{{$game['match']['away']}}</td>
-            <td class="editable text-center" id="bsf_{{$game['id']}}">{{$game['bsf']}}</td>
-            <td class="warning editable text-center" id="bet_{{$game['id']}}">{{$game['bet']}}</td>
+            <td class="editable text-center" id="bsf_{{$game['id']}}">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
+            <td class="warning editable text-center" id="bet_{{$game['id']}}">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
             <td class="editable text-center" id="odds_{{$game['id']}}">{{$game['odds']}}</td>
             <td class="text-center"><span id="income_{{$game['id']}}">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
@@ -84,6 +84,7 @@
             height : '20',
             width : '100%',
             select : 'true',
+            placeholder: '',
             callback : function(value) {
                 var arr = value.split('*');
 //                alert(value);
