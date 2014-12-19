@@ -17,7 +17,7 @@ class Game extends Eloquent{
     }
 
     public static function confirmGame($game_id, $placeholder) {
-        if ($placeholder) {
+        if ($placeholder == 'true') {
             $game = Placeholder::find($game_id);
         } else {
             $game = Game::find($game_id);

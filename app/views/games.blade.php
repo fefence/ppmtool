@@ -24,7 +24,7 @@
                 <th class="text-center" style="width: 8%;"><a href="/play/odds/{{$c}}">odds</a></th>
                 @endif
                 <th class="text-center" style="width: 10%;">income</th>
-                <th class="text-center" style="width: 8%;"><a href="/play/confirmall/{{$c}}" role="button" class="btn btn-xs @if(isset($games['disabled']) && $games['disabled'] == '') btn-warning @else btn-default @endif" style="width: 100%" {{$games['disabled']}} >all</a></th>
+                <th class="text-center" style="width: 8%;"><a href="/confirmall/{{$c}}/false" role="button" class="btn btn-xs @if(isset($games['disabled']) && $games['disabled'] == '') btn-warning @else btn-default @endif" style="width: 100%" {{$games['disabled']}} >all</a></th>
             </tr>
         </thead>
         <tbody>
@@ -61,9 +61,9 @@
             <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}_game">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
             <td class="text-center"><span id="income_{{$game['id']}}_game">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}_game">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
-                <a role="button" @if ($count[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/play/confirm/{{$game['id']}}" style="font-size: 130%;">+&nbsp({{ $count[$game['id']] }})</a>
+                <a role="button" @if ($count[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/confirm/{{$game['id']}}/false" style="font-size: 130%;">+&nbsp({{ $count[$game['id']] }})</a>
                 @else
-                <a role="button" class="btn btn-default btn-xs" style="width: 100%" disabled href="/play/confirm/{{$game['id']}}/false">+&nbsp({{ $count[$game['id']] }})</a>
+                <a role="button" class="btn btn-default btn-xs" style="width: 100%" disabled href="/confirm/{{$game['id']}}/false">+&nbsp({{ $count[$game['id']] }})</a>
                 @endif
             </td>
         </tr>
@@ -103,9 +103,9 @@
             <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}_pl">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
             <td class="text-center"><span id="income_{{$game['id']}}_pl">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}_pl">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
-                <a role="button" @if ($count_pl[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/play/confirm/{{$game['id']}}/true" style="font-size: 130%;">+&nbsp({{ $count_pl[$game['id']] }})</a>
+                <a role="button" @if ($count_pl[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/confirm/{{$game['id']}}/true" style="font-size: 130%;">+&nbsp({{ $count_pl[$game['id']] }})</a>
                 @else
-                <a role="button" class="btn btn-default btn-xs" style="width: 100%" disabled href="/play/confirm/{{$game['id']}}/true">+&nbsp({{ $count_pl[$game['id']] }})</a>
+                <a role="button" class="btn btn-default btn-xs" style="width: 100%" disabled href="/confirm/{{$game['id']}}/true">+&nbsp({{ $count_pl[$game['id']] }})</a>
                 @endif
             </td>
         </tr>

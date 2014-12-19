@@ -88,7 +88,7 @@ class GamesController extends BaseController
 
     public static function confirmGame($game_id, $placeholder)
     {
-        if ($placeholder) {
+        if ($placeholder == 'true') {
             $country_alias = League::find(Match::find(Placeholder::find($game_id)->match_id)->league_id)->country_alias;
         } else {
             $country_alias = League::find(Match::find(Game::find($game_id)->match_id)->league_id)->country_alias;

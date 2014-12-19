@@ -32,7 +32,7 @@ Route::get('/stats/{country}', 'StatsController@display');
 Route::get('/log', 'ActionLogController@display');
 
 Route::post('/play/save', 'GamesController@saveTable');
-Route::get('/play/confirm/{game_id}/{placeholder}', 'GamesController@confirmGame');
+Route::get('/confirm/{game_id}/{placeholder}', 'GamesController@confirmGame');
 Route::get('/play/delete/{game_id}', 'GamesController@deleteGame');
 Route::get('/play/odds/all', 'GamesController@getOddsAll');
 Route::get('/play/odds/{country_alias}', 'GamesController@getOdds');
