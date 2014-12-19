@@ -16,8 +16,12 @@ class Game extends Eloquent{
         return ['date_time'];
     }
 
-    public static function confirmGame($game_id) {
-        $game = Game::find($game_id);
+    public static function confirmGame($game_id, $placeholder) {
+        if ($placeholder) {
+            $game = Placeholder::find($game_id);
+        } else {
+            $game = Game::find($game_id);
+        }
         $nGame = $game->replicate();
         $user = User::find($game->user_id);
         $user->account = $user->account - $game->bet;

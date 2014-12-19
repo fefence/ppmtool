@@ -17,9 +17,10 @@ class GamesController extends BaseController
 //            ->lists('league_id');
         $data = array();
         $count = array();
+        $count_pl = array();
         foreach ($league_ids as $league) {
 
-            $games = null;
+//            $games = array();
             $games = Game::where('user_id', $user_id)
                 ->join('matches', 'matches.id', '=', 'games.match_id')
                 ->where('date_time', '>=', $fromdate)
@@ -31,6 +32,35 @@ class GamesController extends BaseController
                 ->orderBy('date_time')
                 ->orderBy('game_type_id')
                 ->get();
+            $placeholders = Placeholder::where('user_id', $user_id)
+                ->join('matches', 'matches.id', '=', 'placeholders.match_id')
+                ->where('date_time', '>=', $fromdate)
+                ->where('date_time', '<=', $todate)
+                ->where('matches.league_id', $league->id)
+                ->where('confirmed', 0)
+                ->where('active', 1)
+                ->with('game_type')
+                ->select(DB::raw('placeholders.*, matches.home, matches.away, matches.date_time, matches.home_goals, matches.away_goals, matches.short_result'))
+                ->orderBy('date_time')
+                ->orderBy('game_type_id')
+                ->get();
+
+            if (count($placeholders) > 0) {
+                $data[$league->country_alias]['placeholders'] = $placeholders;
+                $data[$league->country_alias]['disabled'] = 'disabled';
+                $data[$league->country_alias]['games'] = array();
+                foreach ($placeholders as $g) {
+                    $c = Placeholder::where('user_id', $user_id)
+                        ->where('match_id', $g->match_id)
+                        ->where('confirmed', 1)
+                        ->where('game_type_id', $g->game_type_id)
+                        ->count();
+                    $count_pl[$g->id] = $c;
+                    if ($c == 0 || $c == '0') {
+                        $data[$league->country_alias]['disabled'] = '';
+                    }
+                }
+            }
             if (count($games) > 0) {
                 $data[$league->country_alias]['disabled'] = 'disabled';
                 $data[$league->country_alias]['games'] = $games;
@@ -51,14 +81,19 @@ class GamesController extends BaseController
         if (count($data) == 0) {
             $no_info = true;
         }
+//        return $count_pl;
 //        return $data;
-        return View::make('games')->with(['data' => $data, 'count' => $count, 'fromdate' => $fromdate, 'todate' => $todate, 'no_info' => $no_info, 'base' => 'play']);
+        return View::make('games')->with(['count_pl' => $count_pl, 'data' => $data, 'count' => $count, 'fromdate' => $fromdate, 'todate' => $todate, 'no_info' => $no_info, 'base' => 'play']);
     }
 
-    public static function confirmGame($game_id)
+    public static function confirmGame($game_id, $placeholder)
     {
-        $country_alias = League::find(Match::find(Game::find($game_id)->match_id)->league_id)->country_alias;
-        Game::confirmGame($game_id);
+        if ($placeholder) {
+            $country_alias = League::find(Match::find(Placeholder::find($game_id)->match_id)->league_id)->country_alias;
+        } else {
+            $country_alias = League::find(Match::find(Game::find($game_id)->match_id)->league_id)->country_alias;
+        }
+        Game::confirmGame($game_id, $placeholder);
         return Redirect::to(URL::previous() . '#'. $country_alias)->with('message', 'Game confirmed');
     }
 
@@ -144,7 +179,12 @@ class GamesController extends BaseController
         $array = explode('_', $id);
         $game_id = $array[1];
         $field = $array[0];
-        $game = Game::find($game_id);
+        $pl = $array[2];
+        if ($pl == 'pl') {
+            $game = Placeholder::find($game_id);
+        } else if ($pl == 'game'){
+            $game = Game::find($game_id);
+        }
         switch ($field) {
             case 'bet':
                 $game->bet = $value;
@@ -160,7 +200,14 @@ class GamesController extends BaseController
         $game->profit = $game->bet * $game->odds - $game->bet - $game->bsf;
         $game->save();
 
-        $tmp = Game::find($game->id);
-        return $game_id . "*" . $tmp->bsf . "*" . $tmp->bet . "*" . $tmp->odds . "*" . $tmp->income . "*" . $tmp->profit;
+        if ($pl == 'pl') {
+            $tmp = Placeholder::find($game_id);
+            return $game_id . "*" . $tmp->bsf . "*" . $tmp->bet . "*" . $tmp->odds . "*" . $tmp->income . "*" . $tmp->profit."*pl";
+
+        } else if ($pl == 'game'){
+            $tmp = Game::find($game_id);
+            return $game_id . "*" . $tmp->bsf . "*" . $tmp->bet . "*" . $tmp->odds . "*" . $tmp->income . "*" . $tmp->profit."*game";
+
+        }
     }
 } 

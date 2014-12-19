@@ -20,6 +20,12 @@ class Setting extends Eloquent{
             $game = Game::firstOrCreate(['user_id' => $user_id, 'match_id' => $m->id, 'game_type_id' => $game_type_id, 'series_id' => $series->id, 'current_length' => $series->length]);
             $game->save();
         }
+        try {
+            Placeholder::createPlaceholders($matches, $user_id, $game_type_id);
+        } catch(ErrorException $e) {
+
+        }
+
         ActionLog::create(['user_id' => $user_id, 'league_id' => $league_id, 'type' => 'settings', 'action' => 'enable', 'description' => 'Enable settings and create games']);
     }
 

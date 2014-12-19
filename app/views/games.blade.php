@@ -24,10 +24,11 @@
                 <th class="text-center" style="width: 8%;"><a href="/play/odds/{{$c}}">odds</a></th>
                 @endif
                 <th class="text-center" style="width: 10%;">income</th>
-                <th class="text-center" style="width: 8%;"><a href="/play/confirm/all/{{$c}}" role="button" class="btn btn-xs @if($games['disabled'] == '') btn-warning @else btn-default @endif" style="width: 100%" {{$games['disabled']}} >all</a></th>
+                <th class="text-center" style="width: 8%;"><a href="/play/confirmall/{{$c}}" role="button" class="btn btn-xs @if(isset($games['disabled']) && $games['disabled'] == '') btn-warning @else btn-default @endif" style="width: 100%" {{$games['disabled']}} >all</a></th>
             </tr>
         </thead>
         <tbody>
+        @if(isset($games['games']))
         @foreach($games['games'] as $game)
         <tr id="{{$game['match']['id']}}">
             <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
@@ -55,19 +56,62 @@
             @endif
 
             <td>{{$game['match']['away']}}</td>
-            <td class="editablecolor1 editable text-center" id="bsf_{{$game['id']}}">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
-            <td class="warning editable text-center" id="bet_{{$game['id']}}">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
-            <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
-            <td class="text-center"><span id="income_{{$game['id']}}">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}">{{$game['profit']}}</span>]</td>
+            <td class="editablecolor1 editable text-center" id="bsf_{{$game['id']}}_game">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
+            <td class="warning editable text-center" id="bet_{{$game['id']}}_game">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
+            <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}_game">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
+            <td class="text-center"><span id="income_{{$game['id']}}_game">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}_game">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
                 <a role="button" @if ($count[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/play/confirm/{{$game['id']}}" style="font-size: 130%;">+&nbsp({{ $count[$game['id']] }})</a>
                 @else
-                <a role="button" class="btn btn-default btn-xs" style="width: 100%" disabled href="/play/confirm/{{$game['id']}}">+&nbsp({{ $count[$game['id']] }})</a>
+                <a role="button" class="btn btn-default btn-xs" style="width: 100%" disabled href="/play/confirm/{{$game['id']}}/false">+&nbsp({{ $count[$game['id']] }})</a>
                 @endif
             </td>
         </tr>
 
         @endforeach
+        @endif
+        @if(isset($games['placeholders']))
+        @foreach($games['placeholders'] as $game)
+        <tr id="{{$game['match']['id']}}">
+            <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
+            <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}</a></td>
+            <td style="text-align: right;"><em>{{$game['match']['home']}}</em></td>
+            <?php
+            if($game['match']['short_result'] == '-' && $game['match']['date_time'] <= date('Y-m-d H:i:s', time())) {
+                $active_livescore = true;
+            } else {
+                $active_livescore = false;
+            }
+            ?>
+            @if (!$active_livescore &&  $game['match']['short_result'] != '-')
+            <td>
+                <span class="score scoreFinished" id="home_goals">{{$game['match']['home_goals']}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$game['match']['away_goals']}}</span>
+            </td>
+            @elseif($active_livescore)
+            <td class="livescoreResultTdActive" id="{{$game['match']['id']}}">
+                <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span>
+            </td>
+            @else
+            <td>
+                <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
+            </td>
+            @endif
+
+            <td><em>{{$game['match']['away']}}</em></td>
+            <td class="editablecolor1 editable text-center" id="bsf_{{$game['id']}}_pl">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
+            <td class="warning editable text-center" id="bet_{{$game['id']}}_pl">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
+            <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}_pl">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
+            <td class="text-center"><span id="income_{{$game['id']}}_pl">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}_pl">{{$game['profit']}}</span>]</td>
+            <td>@if($game['short_result'] == '-')
+                <a role="button" @if ($count_pl[$game['id']] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/play/confirm/{{$game['id']}}/true" style="font-size: 130%;">+&nbsp({{ $count_pl[$game['id']] }})</a>
+                @else
+                <a role="button" class="btn btn-default btn-xs" style="width: 100%" disabled href="/play/confirm/{{$game['id']}}/true">+&nbsp({{ $count_pl[$game['id']] }})</a>
+                @endif
+            </td>
+        </tr>
+
+        @endforeach
+        @endif
         </tbody>
     </table>
 </div>
@@ -89,23 +133,24 @@
             callback : function(value) {
                 var arr = value.split('*');
 //                alert(value);
+                var pl = arr[6];
                 if (arr[1] != 0.00) {
-                    $('#bsf_'+arr[0]).text(arr[1]);
+                    $('#bsf_'+arr[0]+'_'+pl).text(arr[1]);
                 } else {
-                    $('#bsf_'+arr[0]).text("");
+                    $('#bsf_'+arr[0]+'_'+pl).text("");
                 }
                 if (arr[2] != 0.00){
-                    $('#bet_'+arr[0]).text(arr[2]);
+                    $('#bet_'+arr[0]+'_'+pl).text(arr[2]);
                 } else{
-                    $('#bet_'+arr[0]).text("");
+                    $('#bet_'+arr[0]+'_'+pl).text("");
                 }
                 if (arr[3] != 0.00){
-                    $('#odds_'+arr[0]).text(arr[3]);
+                    $('#odds_'+arr[0]+'_'+pl).text(arr[3]);
                 } else {
-                    $('#odds_'+arr[0]).text("");
+                    $('#odds_'+arr[0]+'_'+pl).text("");
                 }
-                $('#income_'+arr[0]).text(arr[4]);
-                $('#profit_'+arr[0]).text(arr[5]);
+                $('#income_'+arr[0]+'_'+pl).text(arr[4]);
+                $('#profit_'+arr[0]+'_'+pl).text(arr[5]);
             }
         });
         $("table tr .livescoreResultTdActive").each(function() {

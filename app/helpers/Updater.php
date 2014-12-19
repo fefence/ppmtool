@@ -9,6 +9,7 @@ class Updater
 
         $matches = Parser::updateMatchesResult($m);
         if (Match::updated($matches)) {
+            Placeholder::deactivate($league_id);
             Parser::parseNextMatches($league_id);
             Parser::parseNextMatches($league_id);
             for ($i = 1; $i < 11; $i++) {
@@ -136,18 +137,31 @@ class Updater
             }
             $bsfpm = $bsf / count($next_matches);
             foreach ($next_matches as $next_match) {
-                $game = new Game;
-                $game->bsf = $bsfpm;
-                $game->match_id = $next_match->id;
-                $game->user_id = $settings->user_id;
-                $game->game_type_id = $game_type_id;
-                $game->current_length = $series->length;
-                $game->series_id = $series->id;
+                $placeholders = Placeholder::where('match_id', $next_match->id)
+                    ->where('user_id', $settings->user_id)
+                    ->where('confirmed', 1)
+                    ->get();
+                foreach($placeholders as $pl) {
+                    $game = Game::firstOrCreate(['user_id' => $settings->user_id, 'match_id' => $next_match->id, 'game_type_id' => $game_type_id, 'confirmed' => 0, 'current_length' => $series->length, 'series_id' => $series->id]);
+                    $game->bsf = $bsfpm;
+                    $game->bet = $pl->bet;
+                    $game->odds = $pl->odds;
+                    $game->income = $pl->bet * $pl->odds;
+                    $game->profit = $pl->bet * $pl->odds - $pl->bet - $game->bsf;
+                    $game->save();
+                    Game::confirmGame($game->id, false);
+                }
+                $game = Game::firstOrCreate(['user_id' => $settings->user_id, 'match_id' => $next_match->id, 'game_type_id' => $game_type_id, 'confirmed' => 0, 'current_length' => $series->length, 'series_id' => $series->id]);
                 $odds = Parser::getOdds($next_match->id)[$game_type_id];
                 if ($odds != null && $odds != -1) {
                     $game->odds = $odds;
                 }
                 $game->save();
+            }
+            try {
+                Placeholder::createPlaceholders(Updater::getNextMatches($next_matches), $settings->user_id, $game_type_id);
+            } catch(ErrorException $e) {
+
             }
         }
     }
