@@ -121,10 +121,7 @@
 
     $(document).ready(function(){
         setTimeout(function () {
-            $("#flash").fadeOut("slow", function() {
-                $(this).removeClass("bg-success text-success");
-            });
-            $("#flash").fadeIn("slow");
+            $("#flash").removeClass('bg-success text-success', 1000)
         }, 1000);
 
         $(".editable").editable("/play/save", {

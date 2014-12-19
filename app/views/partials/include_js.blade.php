@@ -5,3 +5,4 @@
 {{ HTML::script('js/jquery.dataTables.min.js') }}
 {{ HTML::script('js/jquery.jeditable.js') }}
 <!--{{--{{ HTML::script('js/chart.min.js') }}--}}-->
+{{ HTML::script('js/jquery-ui.js') }}
