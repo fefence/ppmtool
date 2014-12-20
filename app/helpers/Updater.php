@@ -143,7 +143,7 @@ class Updater
                     ->get();
                 foreach($placeholders as $pl) {
                     $game = Game::firstOrCreate(['user_id' => $settings->user_id, 'match_id' => $next_match->id, 'game_type_id' => $game_type_id, 'confirmed' => 0, 'current_length' => $series->length, 'series_id' => $series->id]);
-                    $game->bsf = $bsfpm;
+                    $game->bsf = $pl->bsf;
                     $game->bet = $pl->bet;
                     $game->odds = $pl->odds;
                     $game->income = $pl->bet * $pl->odds;
@@ -152,6 +152,7 @@ class Updater
                     Game::confirmGame($game->id, false);
                 }
                 $game = Game::firstOrCreate(['user_id' => $settings->user_id, 'match_id' => $next_match->id, 'game_type_id' => $game_type_id, 'confirmed' => 0, 'current_length' => $series->length, 'series_id' => $series->id]);
+                $game->bsf = $bsfpm;
                 $odds = Parser::getOdds($next_match->id)[$game_type_id];
                 if ($odds != null && $odds != -1) {
                     $game->odds = $odds;
