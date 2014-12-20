@@ -117,6 +117,25 @@ class GamesController extends BaseController
                 ->get();
             foreach ($games as $game) {
                 $game->odds = $odds[$game->game_type_id];
+                $game->income = $game->bet * $game->odds;
+                $game->profit = $game->bet * $game->odds - $game->bet - $game->bsf;
+                $game->save();
+            }
+        }
+        $matches = Placeholder::where('user_id', Auth::user()->id)
+            ->join('matches', 'matches.id', '=', 'placeholders.match_id')
+            ->where('short_result', '-')
+            ->select('matches.id')
+            ->lists('id');
+        foreach ($matches as $match) {
+            $odds = Parser::getOdds($match);
+            $games = Placeholder::where('match_id', $match)
+                ->where('user_id', Auth::user()->id)
+                ->get();
+            foreach ($games as $game) {
+                $game->odds = $odds[$game->game_type_id];
+                $game->income = $game->bet * $game->odds;
+                $game->profit = $game->bet * $game->odds - $game->bet - $game->bsf;
                 $game->save();
             }
         }
@@ -139,6 +158,26 @@ class GamesController extends BaseController
                 ->get();
             foreach ($games as $game) {
                 $game->odds = $odds[$game->game_type_id];
+                $game->income = $game->bet * $game->odds;
+                $game->profit = $game->bet * $game->odds - $game->bet - $game->bsf;
+                $game->save();
+            }
+        }
+        $matches = Placeholder::where('user_id', Auth::user()->id)
+            ->join('matches', 'matches.id', '=', 'placeholders.match_id')
+            ->where('matches.league_id', $l->id)
+            ->where('short_result', '-')
+            ->select('matches.id')
+            ->lists('id');
+        foreach ($matches as $match) {
+            $odds = Parser::getOdds($match);
+            $games = Placeholder::where('match_id', $match)
+                ->where('user_id', Auth::user()->id)
+                ->get();
+            foreach ($games as $game) {
+                $game->odds = $odds[$game->game_type_id];
+                $game->income = $game->bet * $game->odds;
+                $game->profit = $game->bet * $game->odds - $game->bet - $game->bsf;
                 $game->save();
             }
         }

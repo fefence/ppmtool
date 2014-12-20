@@ -139,6 +139,7 @@ class Updater
             foreach ($next_matches as $next_match) {
                 $placeholders = Placeholder::where('match_id', $next_match->id)
                     ->where('user_id', $settings->user_id)
+                    ->where('game_type_id', $game_type_id)
                     ->where('confirmed', 1)
                     ->get();
                 foreach($placeholders as $pl) {
@@ -162,7 +163,8 @@ class Updater
             try {
                 Placeholder::createPlaceholders(Updater::getNextMatches($next_matches), $settings->user_id, $game_type_id);
             } catch(ErrorException $e) {
-
+                Log::warning("error while adding placeholders");
+                Log::warning($e);
             }
         }
     }
