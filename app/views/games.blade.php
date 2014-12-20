@@ -24,7 +24,7 @@
                 <th class="text-center" style="width: 8%;"><a href="/play/odds/{{$c}}">odds</a></th>
                 @endif
                 <th class="text-center" style="width: 10%;">income</th>
-                <th class="text-center" style="width: 8%;"><a href="/confirmall/{{$c}}/false" role="button" class="btn btn-xs @if(isset($games['disabled']) && $games['disabled'] == '') btn-warning @else btn-default @endif" style="width: 100%" {{$games['disabled']}} >all</a></th>
+                <th class="text-center" style="width: 8%;"><a href="/confirmall/{{$c}}" role="button" class="btn btn-xs @if(isset($games['disabled']) && $games['disabled'] == '') btn-warning @else btn-default @endif" style="width: 100%" {{$games['disabled']}} >all</a></th>
             </tr>
         </thead>
         <tbody>

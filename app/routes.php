@@ -36,7 +36,7 @@ Route::get('/confirm/{game_id}/{placeholder}', 'GamesController@confirmGame');
 Route::get('/play/delete/{game_id}', 'GamesController@deleteGame');
 Route::get('/play/odds/all', 'GamesController@getOddsAll');
 Route::get('/play/odds/{country_alias}', 'GamesController@getOdds');
-Route::get('/play/confirmall/{country_alias}', 'GamesController@confirmAll');
+Route::get('/confirmall/{country_alias}', 'GamesController@confirmAll');
 Route::get('/play/{fromdate?}/{todate?}', ['as' => 'home', 'uses' => 'GamesController@displayGames']);
 
 Route::get('/series', 'PPMController@displaySeries');

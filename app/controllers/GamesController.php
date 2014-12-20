@@ -162,7 +162,7 @@ class GamesController extends BaseController
                 ->where('game_type_id', $game->game_type_id)
                 ->get();
             if ($game->bet > 0 && count($conf) == 0) {
-                GamesController::confirmGame($game->id);
+                GamesController::confirmGame($game->id, false);
             }
         }
         try {
