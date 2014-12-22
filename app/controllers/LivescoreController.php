@@ -59,7 +59,7 @@ class LivescoreController extends \BaseController
                     ->where('match_id', $m->id)
                     ->with('game_type')
                     ->orderBy('game_type_id')
-                    ->distinct('game_type_id')
+                    ->select(DB::raw("distinct game_type_id"))
                     ->get();
                 $settings[$m->id] = $sets;
             }

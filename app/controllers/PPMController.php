@@ -15,8 +15,21 @@ class PPMController extends \BaseController{
                     ->where('game_type_id', $i)
                     ->orderBy('length', "desc")
                     ->take(25)
-                    ->lists('length');
+                    ->get();
 
+
+                $current = Series::where('country_alias', $country)
+                    ->join('leagues', 'leagues.id', '=', 'series.league_id')
+                    ->join('matches', 'matches.id', '=', 'series.end_match_id')
+                    ->where('season', '2014-2015')
+                    ->where('game_type_id', $i)
+                    ->orderBy('date_time', "asc")
+//                    ->take(25)
+                    ->get();
+                $c = '';
+                foreach($current as $t) {
+                    $c = $c.$t->length.", ";
+                }
 
                 $data[$country][$i] = Series::where('active', 1)
                     ->where('country_alias', $country)
@@ -29,26 +42,18 @@ class PPMController extends \BaseController{
                 $k = 0;
                 foreach($top_25 as $t) {
                     $k ++;
-                    $top = $top.$t.", ";
+                    if ($current->contains($t->id)) {
+                        $top = $top."<strong>".$t->length."</strong>, ";
+                    } else {
+                        $top = $top.$t->length.", ";
+                    }
                     if ($k >= 15) {
                         continue;
                     } else {
-                        $data[$country][$i]['treshold'] = $t;
+                        $data[$country][$i]['treshold'] = $t->length;
                     }
                 }
                 $data[$country][$i]['top'] = substr($top, 0, strlen($top) - 2);
-                $current = Series::where('country_alias', $country)
-                    ->join('leagues', 'leagues.id', '=', 'series.league_id')
-                    ->join('matches', 'matches.id', '=', 'series.end_match_id')
-                    ->where('season', '2014-2015')
-                    ->where('game_type_id', $i)
-                    ->orderBy('date_time', "asc")
-//                    ->take(25)
-                    ->lists('length');
-                $c = '';
-                foreach($current as $t) {
-                    $c = $c.$t.", ";
-                }
                 $data[$country][$i]['curr'] = substr($c, 0, strlen($c) - 2);
 
             }
