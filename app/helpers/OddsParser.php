@@ -90,6 +90,7 @@ class OddsParser
         if ($odds != '' && $odds != null) {
             $win = WinOdds::firstOrCreate(['odds' => $odds, 'match_id' => $match->id, 'game_type_id' =>$game_type_id]);
             $win->save();
+            return $odds;
         }
 
     }

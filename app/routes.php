@@ -11,16 +11,17 @@
 |
 */
 
-Route::get('/boo', function()
+Route::get('/boo/{id}/{season}', function($id, $season)
 {
-    return Updater::update(4);
-//    $matches_parsed = WinOdds::lists('match_id');
-//    $matches = Match::all();
-////        whereNotIn('id',$matches_parsed)
-////        ->get();
-//    foreach($matches as $m) {
-//        OddsParser::parseOdds($m);
-//    }
+//    return Updater::update(4);
+    $matches_parsed = WinOdds::lists('match_id');
+    $matches = Match::whereNotIn('id',$matches_parsed)
+        ->where('season', $season)
+        ->where('league_id', $id)
+        ->get();
+    foreach($matches as $m) {
+        echo OddsParser::parseOdds($m);
+    }
 });
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
 Route::get('/listbycountry/{fromdate?}/{todate?}', 'LivescoreController@livescorebycountry');
