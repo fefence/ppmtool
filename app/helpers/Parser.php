@@ -100,6 +100,9 @@ class Parser
                 $match->home_goals = $res[0];
                 $match->away_goals = $res[1];
                 $match->short_result = $resultShort;
+                $reds = Parser::getRedCards($match->id);
+                $match->home_red = $reds[0];
+                $match->away_red = $reds[1];
                 if ($finished == 'Awarded') {
                     $match->state = 'Awarded';
                 }
@@ -183,5 +186,82 @@ class Parser
         return substr($headers[0], 9, 3);
     }
 
+
+    public static function getRedCards($match_id) {
+        $url = "http://d.livescore.in/x/feed/d_su_" . $match_id . "_en_4";
+        $curl = curl_init($url);
+
+        curl_setopt($curl, CURLOPT_URL, $url);
+        $header = array(
+            'Accept-Encoding:gzip,deflate,sdch',
+            "X-Fsign: SW9D1eZo",
+            'User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.142 Safari/535.19',
+        );
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.142 Safari/535.19');
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($curl, CURLOPT_REFERER, 'http://kat.ph');
+        curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate,sdch');
+        curl_setopt($curl, CURLOPT_AUTOREFERER, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+
+        $html = curl_exec($curl);
+        $dom = new DOMDocument;
+        $dom->preserveWhiteSpace = FALSE;
+        @$dom->loadHTML($html);
+
+        $home_red = 0;
+        $away_red = 0;
+        $table = $dom->getElementById("parts");
+        $rows = $table->getElementsByTagName('tr');
+        foreach($rows as $row) {
+            $cols = $row->getElementsByTagName('td');
+            if ($cols->length > 0) {
+                $home = $cols->item(0);
+                $divs = $home->getElementsByTagName('div');
+                foreach($divs as $div){
+                    $attr = $div->getAttribute('class');
+                    if ($attr == 'icon-box r-card') {
+                        $home_red ++;
+                    }
+                }
+                if ($cols->length == 2) {
+                    $away = $cols->item(1);
+                    $divs = $away->getElementsByTagName('div');
+                    foreach($divs as $div){
+                        $attr = $div->getAttribute('class');
+                        if ($attr == 'icon-box r-card') {
+                            $away_red ++;
+                        }
+                    }
+                } else if ($cols->length == 3) {
+                    $away = $cols->item(2);
+                    $divs = $away->getElementsByTagName('div');
+                    foreach($divs as $div){
+                        $attr = $div->getAttribute('class');
+                        if ($attr == 'icon-box r-card') {
+                            $away_red ++;
+
+                        }
+                    }
+                }
+            }
+//            $home_red = $home_red + count($home->getElementsByClassName('icon r-card'));
+//            $away_red = $away_red + count($away->getElementsByClassName('icon r-card'));
+//            foreach()
+
+
+        }
+//        return $html;
+        $h = '';
+        for($i = 0; $i < $home_red; $i ++) {
+            $h = $h."<img src='/images/red.jpg'>&nbsp;";
+        }
+        $a = '';
+        for($i = 0; $i < $away_red; $i ++) {
+            $a = $a."<img src='/images/red.jpg'>&nbsp;";
+        }
+        return [$home_red, $away_red];
+    }
 
 }

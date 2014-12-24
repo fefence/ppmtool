@@ -31,9 +31,6 @@
         @if(isset($games['games']))
         @foreach($games['games'] as $game)
         <tr id="{{$game['match']['id']}}">
-            <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
-            <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}</a>&nbsp;[{{$game['current_length']}}]</td>
-            <td style="text-align: right;">{{$game['match']['home']}}</td>
             <?php
             if($game['match']['short_result'] == '-' && $game['match']['date_time'] <= date('Y-m-d H:i:s', time())) {
                 $active_livescore = true;
@@ -41,6 +38,9 @@
                 $active_livescore = false;
             }
             ?>
+            <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
+            <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}</a>&nbsp;[{{$game['current_length']}}]</td>
+            <td style="text-align: right;" class="home"><span id="home_red">@for($i=0; $i<$game['match']['home_red']; $i ++)<img src="/images/red_card.gif">&nbsp;@endfor</span>&nbsp;{{$game['match']['home']}}</td>
             @if (!$active_livescore &&  $game['match']['short_result'] != '-')
             <td>
                     <span class="score scoreFinished" id="home_goals">{{$game['match']['home_goals']}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$game['match']['away_goals']}}</span>
@@ -55,7 +55,7 @@
             </td>
             @endif
 
-            <td>{{$game['match']['away']}}</td>
+            <td class="away">{{$game['match']['away']}}&nbsp;<span id="away_red">@for($i=0; $i<$game['match']['away_red']; $i ++)<img src="/images/red_card.gif">&nbsp;@endfor</span></td>
             <td class="editablecolor1 editable text-center" id="bsf_{{$game['id']}}_game">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
             <td class="warning editable text-center" id="bet_{{$game['id']}}_game">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
             <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}_game">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
@@ -157,9 +157,21 @@
             var id =$(this).closest('tr').prop('id');
             var td_span1 = $(this).find("#home_goals");
             var td_span2 = $(this).find("#away_goals");
+            var td_span3 = $("table #"+id+" .home").find("#home_red");
+            var td_span4 = $("table #"+id+" .away").find("#away_red");
             $.post( "/getres/" + id, function( data ) {
                 td_span1.html(data[0]+"");
                 td_span2.html(data[1]+"");
+                var home = '';
+                for(var i = 0; i < data[2]; i++) {
+                    home = home + '<img src="/images/red_card.gif">&nbsp;';
+                }
+                td_span3.html(home);
+                var away = '';
+                for(var i = 0; i < data[3]; i++) {
+                    away = away + '<img src="/images/red_card.gif">&nbsp;';
+                }
+                td_span4.html(away);
             });
         });
         setInterval(function() {
@@ -167,9 +179,21 @@
                 var id =$(this).closest('tr').prop('id');
                 var td_span1 = $(this).find("#home_goals");
                 var td_span2 = $(this).find("#away_goals");
+                var td_span3 = $("table #"+id+" .home").find("#home_red");
+                var td_span4 = $("table #"+id+" .away").find("#away_red");
                 $.post( "/getres/" + id, function( data ) {
                     td_span1.html(data[0]+"");
                     td_span2.html(data[1]+"");
+                    var home = '';
+                    for(var i = 0; i < data[2]; i++) {
+                        home = home + '<img src="/images/red_card.gif">&nbsp;';
+                    }
+                    td_span3.html(home);
+                    var away = '';
+                    for(var i = 0; i < data[3]; i++) {
+                        away = away + '<img src="/images/red_card.gif">&nbsp;';
+                    }
+                    td_span4.html(away);
                 });
             })
 
@@ -179,6 +203,7 @@
                 $(this).toggleClass('scoreSeparatorToggle');
             })
         }, 1000);
+
     });
 
 </script>

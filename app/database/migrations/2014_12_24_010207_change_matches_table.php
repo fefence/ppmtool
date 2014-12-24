@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeOddsTable extends Migration {
+class ChangeMatchesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,11 @@ class ChangeOddsTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('win_odds', function(Blueprint $table)
-        {
-            $table->dropColumn('id');
-            $table->dropColumn('match_id');
-//            $table->string('match_id')->unique();
-        });
+		Schema::table('matches', function(Blueprint $table)
+		{
+			$table->integer('home_red');
+			$table->integer('away_red');
+		});
 	}
 
 	/**
@@ -27,7 +26,10 @@ class ChangeOddsTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::table('matches', function(Blueprint $table)
+		{
+			//
+		});
 	}
 
 }

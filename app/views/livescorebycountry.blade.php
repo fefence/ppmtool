@@ -38,7 +38,7 @@ $first = true;
                     $first = false;
                     ?>
                     <td>{{date('H:i', strtotime($m->date_time))}}</td>
-                    <td style="text-align: right;">{{$m->home}}</td>
+                    <td style="text-align: right;" class="home"><span id="home_red"></span>&nbsp;{{$m->home}}</td>
                     <?php
                     if($m->short_result == '-' && $m->date_time <= date('Y-m-d H:i:s', time())) {
                         $active_livescore = true;
@@ -59,7 +59,7 @@ $first = true;
                         <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
                     </td>
                     @endif
-                    <td style="text-align: left;">{{$m->away}}</td>
+                    <td style="text-align: left;" class="away">{{$m->away}}&nbsp;<span id="away_red"></span></td>
                     <td>
                         @foreach($settings[$m->id] as $s)
                         <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
@@ -79,9 +79,21 @@ $first = true;
             var id =$(this).closest('tr').prop('id');
             var td_span1 = $(this).find("#home_goals");
             var td_span2 = $(this).find("#away_goals");
+            var td_span3 = $("table #"+id+" .home").find("#home_red");
+            var td_span4 = $("table #"+id+" .away").find("#away_red");
             $.post( "/getres/" + id, function( data ) {
                 td_span1.html(data[0]+"");
                 td_span2.html(data[1]+"");
+                var home = '';
+                for(var i = 0; i < data[2]; i++) {
+                    home = home + '<img src="/images/red_card.gif">&nbsp;';
+                }
+                td_span3.html(home);
+                var away = '';
+                for(var i = 0; i < data[3]; i++) {
+                    away = away + '<img src="/images/red_card.gif">&nbsp;';
+                }
+                td_span4.html(away);
             });
         });
         setInterval(function() {
@@ -89,9 +101,21 @@ $first = true;
                 var id =$(this).closest('tr').prop('id');
                 var td_span1 = $(this).find("#home_goals");
                 var td_span2 = $(this).find("#away_goals");
+                var td_span3 = $("table #"+id+" .home").find("#home_red");
+                var td_span4 = $("table #"+id+" .away").find("#away_red");
                 $.post( "/getres/" + id, function( data ) {
                     td_span1.html(data[0]+"");
                     td_span2.html(data[1]+"");
+                    var home = '';
+                    for(var i = 0; i < data[2]; i++) {
+                        home = home + '<img src="/images/red_card.gif">&nbsp;';
+                    }
+                    td_span3.html(home);
+                    var away = '';
+                    for(var i = 0; i < data[3]; i++) {
+                        away = away + '<img src="/images/red_card.gif">&nbsp;';
+                    }
+                    td_span4.html(away);
                 });
             })
 

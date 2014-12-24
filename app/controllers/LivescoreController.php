@@ -135,7 +135,8 @@ class LivescoreController extends \BaseController
         if ($a2->length > 0) {
             $away = $away + $a2->item(0)->nodeValue;
         }
-        return [$home, $away];
+        $reds = Parser::getRedCards($id);
+        return [$home, $away, $reds[0], $reds[1]];
     }
 
 

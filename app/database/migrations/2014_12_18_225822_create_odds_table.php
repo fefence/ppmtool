@@ -14,9 +14,9 @@ class CreateOddsTable extends Migration {
 	{
         Schema::create('win_odds', function(Blueprint $table)
         {
-            $table->increments('id');
             $table->string('match_id');
             $table->decimal('odds');
+            $table->integer('game_type_id');
 		});
 	}
 

@@ -402,7 +402,7 @@
         types: {
             defaults: {
                 element : function(settings, original) {
-                    var input = $('<input type="hidden"></input>');                
+                    var input = $('<input type="hidden"/>');
                     $(this).append(input);
                     return(input);
                 },
@@ -484,7 +484,7 @@
             },
             number: {
                 element : function(settings, original) {
-                    var input = $('<input type="number"/>');
+                    var input = $('<input type="number" step="0.01" pattern="[0-9]*([,\.][0-9]+)?"/>');
                     input.width(settings.width);
                     input.height(settings.width);
                     $(this).append(input);
