@@ -70,7 +70,8 @@ class GamesController extends BaseController
                         ->where('confirmed', 1)
                         ->where('game_type_id', $g->game_type_id)
                         ->count();
-                    $count[$g->id] = $c;
+                    $count[$g->id]['count'] = $c;
+                    $count[$g->id]['endseries'] = Match::endSeries([Match::find($g->match_id)], $g->game_type_id);
                     if ($c == 0 || $c == '0') {
                         $data[$league->country_alias]['disabled'] = '';
                     }
