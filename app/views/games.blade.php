@@ -40,7 +40,7 @@
             ?>
             <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
             <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}</a>&nbsp;[{{$game['current_length']}}]</td>
-            <td style="text-align: right; position: relative;" class="home"><div style="position: absolute; top: 0; right: 4%;" id="home_red">@for($i=0; $i<$game['match']['home_red']; $i ++)<img src="/images/redcard_2.png">&nbsp;@endfor</div>{{$game['match']['home']}}</td>
+            <td style="text-align: right; position: relative;" class="home redcard{{$game['match']['home_red']}} right">{{$game['match']['home']}}</td>
             @if (!$active_livescore &&  $game['match']['short_result'] != '-')
             <td>
                     <span class="score scoreFinished" id="home_goals">{{$game['match']['home_goals']}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$game['match']['away_goals']}}</span>
@@ -55,7 +55,7 @@
             </td>
             @endif
 
-            <td class="away" style="position: relative;">{{$game['match']['away']}}<div style="position: absolute; top: 0; left: 4%;" id="away_red">@for($i=0; $i<$game['match']['away_red']; $i ++)<img src="/images/redcard_2.png">&nbsp;@endfor</div></td>
+            <td class="away redcard{{$game['match']['away_red']}} left" style="position: relative;">{{$game['match']['away']}}</td>
             <td class="editablecolor1 editable text-center" id="bsf_{{$game['id']}}_game">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
             <td class="warning editable text-center" id="bet_{{$game['id']}}_game">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
             <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}_game">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>

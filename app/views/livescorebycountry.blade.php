@@ -38,7 +38,7 @@ $first = true;
                     $first = false;
                     ?>
                     <td>{{date('H:i', strtotime($m->date_time))}}</td>
-                    <td style="text-align: right;" class="home"><span id="home_red">@for($i=0; $i<$m->home_red; $i ++)<img src="/images/red_card.gif">&nbsp;@endfor</span>&nbsp;{{$m->home}}</td>
+                    <td style="text-align: right;" class="home redcard{{$m->home_red}} right">{{$m->home}}</td>
                     <?php
                     if($m->short_result == '-' && $m->date_time <= date('Y-m-d H:i:s', time())) {
                         $active_livescore = true;
@@ -59,7 +59,7 @@ $first = true;
                         <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
                     </td>
                     @endif
-                    <td style="text-align: left;" class="away">{{$m->away}}&nbsp;<span id="away_red">@for($i=0; $i<$m->away_red; $i ++)<img src="/images/red_card.gif">&nbsp;@endfor</span></td>
+                    <td style="text-align: left; position: absolute;" class="away redcard{{$m->away_red}} left">{{$m->away}}</td>
                     <td>
                         @foreach($settings[$m->id] as $s)
                         <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
@@ -86,12 +86,12 @@ $first = true;
                 td_span2.html(data[1]+"");
                 var home = '';
                 for(var i = 0; i < data[2]; i++) {
-                    home = home + '<img src="/images/red_card.gif">&nbsp;';
+                    home = home + '<img src="/images/redcard.png">&nbsp;';
                 }
                 td_span3.html(home);
                 var away = '';
                 for(var i = 0; i < data[3]; i++) {
-                    away = away + '<img src="/images/red_card.gif">&nbsp;';
+                    away = away + '<img src="/images/redcard.png">&nbsp;';
                 }
                 td_span4.html(away);
             });
@@ -108,12 +108,12 @@ $first = true;
                     td_span2.html(data[1]+"");
                     var home = '';
                     for(var i = 0; i < data[2]; i++) {
-                        home = home + '<img src="/images/red_card.gif">&nbsp;';
+                        home = home + '<img src="/images/redcard.png">&nbsp;';
                     }
                     td_span3.html(home);
                     var away = '';
                     for(var i = 0; i < data[3]; i++) {
-                        away = away + '<img src="/images/red_card.gif">&nbsp;';
+                        away = away + '<img src="/images/redcard.png">&nbsp;';
                     }
                     td_span4.html(away);
                 });

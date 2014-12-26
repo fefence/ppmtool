@@ -2,7 +2,7 @@
 
 @section('content')
 @if($no_info)
-<h5>No matches for today.</h5>
+<h5 xmlns="http://www.w3.org/1999/html">No matches for today.</h5>
 @else
         <?php
             $url = '/listbycountry';
@@ -15,13 +15,13 @@
             }
         ?>
         <p><a href="{{$url}}" role="button" class="btn btn-default">country</a></p>
-        <table class="table">
+        <table class="table" border="1">
             <tbody>
             @foreach($matches as $d)
             <tr id="{{$d['match']->id}}">
                 <td style="width: 50px;"><img src="/images/32/{{$d['league']->country_alias}}.png"></td>
                 <td style="width: 50px;">{{date('H:i', strtotime($d['match']->date_time))}}</td>
-                <td style="text-align: right;" class="home"><span id="home_red">@for($i=0; $i<$d['match']->home_red; $i ++)<img src="/images/red_card.gif">&nbsp;@endfor</span>&nbsp;{{$d['match']->home}}</td>
+                <td style="text-align: right;" class="home redcard{{$d['match']->home_red}} right">{{$d['match']->home}}</td>
                 <?php
                 if($d['match']->short_result == '-' && $d['match']->date_time <= date('Y-m-d H:i:s', time())) {
                     $active_livescore = true;
@@ -42,7 +42,7 @@
                     <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
                 </td>
                 @endif
-                <td class="away">{{$d['match']->away}}&nbsp;<span id="away_red">@for($i=0; $i<$d['match']->away_red; $i ++)<img src="/images/red_card.gif">&nbsp;@endfor</span></td>
+                <td class="away redcard{{$d['match']->away_red}} left">{{$d['match']->away}}</td>
                 <td>
                     @foreach($d['settings'] as $s)
                     <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
@@ -67,16 +67,8 @@
             $.post( "/getres/" + id, function( data ) {
                 td_span1.html(data[0]+"");
                 td_span2.html(data[1]+"");
-                var home = '';
-                for(var i = 0; i < data[2]; i++) {
-                    home = home + '<img src="/images/red_card.gif">&nbsp;';
-                }
-                td_span3.html(home);
-                var away = '';
-                for(var i = 0; i < data[3]; i++) {
-                    away = away + '<img src="/images/red_card.gif">&nbsp;';
-                }
-                td_span4.html(away);
+                td_span3.addClass('redcard' + data[2]);
+                td_span4.addClass('redcard' + data[3]);
             });
         });
         setInterval(function() {
@@ -89,16 +81,8 @@
                 $.post( "/getres/" + id, function( data ) {
                     td_span1.html(data[0]+"");
                     td_span2.html(data[1]+"");
-                    var home = '';
-                    for(var i = 0; i < data[2]; i++) {
-                        home = home + '<img src="/images/red_card.gif">&nbsp;';
-                    }
-                    td_span3.html(home);
-                    var away = '';
-                    for(var i = 0; i < data[3]; i++) {
-                        away = away + '<img src="/images/red_card.gif">&nbsp;';
-                    }
-                    td_span4.html(away);
+                    td_span3.addClass('redcard' + data[2]);
+                    td_span4.addClass('redcard' + data[3]);
                 });
             })
 

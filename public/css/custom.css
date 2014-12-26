@@ -60,3 +60,25 @@ th, td {
 .editablecolor1 {
     background-color: #f6f6f6;
 }
+.redcard1 {
+    background-image: url("../images/redcard.png");
+    background-repeat: no-repeat;
+}
+.redcard2 {
+    background-image: url("../images/redcardtwo.png");
+    background-repeat: no-repeat;
+}
+.redcard3 {
+    background-image: url("../images/redcardthree.png");
+    background-repeat: no-repeat;
+}
+.redcard4 {
+    background-image: url("../images/redcardfour.png");
+    background-repeat: no-repeat;
+}
+.left {
+    background-position: 5% 5px;
+}
+.right {
+    background-position: 95% 5px;
+}
