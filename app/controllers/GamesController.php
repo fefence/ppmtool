@@ -47,6 +47,7 @@ class GamesController extends BaseController
 
             if (count($placeholders) > 0) {
                 $data[$league->country_alias]['placeholders'] = $placeholders;
+                $data[$league->country_alias]['league'] = $league;
                 $data[$league->country_alias]['disabled'] = 'disabled';
                 $data[$league->country_alias]['games'] = array();
                 foreach ($placeholders as $g) {
@@ -63,6 +64,7 @@ class GamesController extends BaseController
             }
             if (count($games) > 0) {
                 $data[$league->country_alias]['disabled'] = 'disabled';
+                $data[$league->country_alias]['league'] = $league;
                 $data[$league->country_alias]['games'] = $games;
                 foreach ($games as $g) {
                     $c = Game::where('user_id', $user_id)

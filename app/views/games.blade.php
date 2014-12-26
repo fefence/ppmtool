@@ -11,7 +11,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="text-center" style="width: 65px;"><img src="/images/32/{{$c}}.png"></th>
+                <th class="text-center" style="width: 65px;"><a href="{{$games['league']->be}}" target="_blank"><img src="/images/32/{{$c}}.png"></a></th>
                 <th class="text-center" style="width: 10%;">type</th>
                 <th style="text-align: right;">home</th>
                 <th style="width: 50px; text-align: center"></th>
