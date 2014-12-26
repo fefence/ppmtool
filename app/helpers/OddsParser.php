@@ -83,6 +83,7 @@ class OddsParser
                 $game_type_id = 10;
             } else {
                 $odds = -1;
+                $game_type_id = 0;
             }
         } catch (ErrorException $e) {
             throw new ErrorException;
