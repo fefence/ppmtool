@@ -82,16 +82,16 @@ class OddsParser
                 $odds = $odds_arr['d']['oddsdata']["back"]['E-8-2-0-0-6']['odds'][16][0];
                 $game_type_id = 10;
             } else {
-                $odds = '';
+                $odds = -1;
             }
         } catch (ErrorException $e) {
             throw new ErrorException;
         }
-        if ($odds != '' && $odds != null) {
+//        if ($odds != '' && $odds != null) {
             $win = WinOdds::firstOrCreate(['odds' => $odds, 'match_id' => $match->id, 'game_type_id' =>$game_type_id]);
             $win->save();
             return $odds;
-        }
+//        }
 
     }
 }
