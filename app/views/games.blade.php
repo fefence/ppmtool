@@ -55,7 +55,7 @@
             </td>
             @endif
 
-            <td class="away redcard{{$game['match']['away_red']}} left" style="position: relative;">{{$game['match']['away']}}</td>
+            <td class="away redcard{{$game['match']['away_red']}} left">{{$game['match']['away']}}</td>
             <td class="editablecolor1 editable text-center" id="bsf_{{$game['id']}}_game">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
             <td class="warning editable text-center" id="bet_{{$game['id']}}_game">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
             <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}_game">@if ($game['odds'] != 0.00) {{$game['odds']}} @endif</td>
