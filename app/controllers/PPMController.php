@@ -13,6 +13,7 @@ class PPMController extends \BaseController{
                 $top_25 = Series::where('country_alias', $country)
                     ->join('leagues', 'leagues.id', '=', 'series.league_id')
                     ->where('game_type_id', $i)
+                    ->select(DB::raw('series.*'))
                     ->orderBy('length', "desc")
                     ->take(25)
                     ->get();
@@ -24,6 +25,7 @@ class PPMController extends \BaseController{
                     ->where('season', '2014-2015')
                     ->where('game_type_id', $i)
                     ->orderBy('date_time', "asc")
+                    ->select(DB::raw('series.*'))
 //                    ->take(25)
                     ->get();
                 $c = '';
@@ -35,15 +37,21 @@ class PPMController extends \BaseController{
                     ->where('country_alias', $country)
                     ->join('leagues', 'leagues.id', '=', 'series.league_id')
                     ->where('game_type_id', $i)
+                    ->select(DB::raw('series.*'))
                     ->first();
                 if (count($data[$country][$i]) == 0) {
                     $data[$country][$i]['length'] = 0;
+                    $data[$country][$i] = new Series;
                 }
                 $k = 0;
                 foreach($top_25 as $t) {
                     $k ++;
                     if ($current->contains($t->id)) {
-                        $top = $top."<strong>".$t->length."</strong>, ";
+                        if ($t->id == $data[$country][$i]->id) {
+                            $top = $top."<span class='bg-danger text-danger' style='font-weight: bold;'>".$t->length."</span>, ";
+                        } else {
+                            $top = $top."<span class='bg-info text-info' style='font-weight: bold;'>".$t->length."</span>, ";
+                        }
                     } else {
                         $top = $top.$t->length.", ";
                     }
@@ -53,7 +61,7 @@ class PPMController extends \BaseController{
                         $data[$country][$i]['treshold'] = $t->length;
                     }
                 }
-                $data[$country][$i]['top'] = substr($top, 0, strlen($top) - 2);
+                $data[$country][$i]['top'] =  substr($top, 0, strlen($top) - 2);
                 $data[$country][$i]['curr'] = substr($c, 0, strlen($c) - 2);
 
             }

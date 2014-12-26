@@ -139,5 +139,8 @@ class LivescoreController extends \BaseController
         return [$home, $away, $reds[0], $reds[1]];
     }
 
+    public static function test() {
+        return View::make('test');
+    }
 
 }

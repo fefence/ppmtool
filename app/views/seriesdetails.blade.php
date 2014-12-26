@@ -6,7 +6,7 @@
         <?php
             $i = 1;
         ?>
-        <td colspan="2">Top 25 series:
+        <td colspan="2">
         @foreach($data['all'] as $l)
             {{$l}},&nbsp;
             @if($i % 5 == 0)
