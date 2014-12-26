@@ -4,7 +4,9 @@
 class PPMController extends \BaseController{
 
     public static function displaySeries() {
-        $countries = League::orderBy('country')->lists('country_alias');
+        $countries = League::where('hidden', 0)
+            ->orderBy('country')
+            ->lists('country_alias');
         $games = GameType::all();
         $data = array();
         foreach($countries as $country) {
