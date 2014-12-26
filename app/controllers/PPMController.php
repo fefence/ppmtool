@@ -37,7 +37,7 @@ class PPMController extends \BaseController{
                     ->where('country_alias', $country)
                     ->join('leagues', 'leagues.id', '=', 'series.league_id')
                     ->where('game_type_id', $i)
-                    ->select(DB::raw('series.*'))
+                    ->select(DB::raw('series.*, be, sc, ss'))
                     ->first();
                 if (count($data[$country][$i]) == 0) {
                     $data[$country][$i]['length'] = 0;
