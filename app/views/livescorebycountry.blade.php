@@ -38,7 +38,7 @@ $first = true;
                     $first = false;
                     ?>
                     <td>{{date('H:i', strtotime($m->date_time))}}</td>
-                    <td style="text-align: right;" class="home"><span id="home_red"></span>&nbsp;{{$m->home}}</td>
+                    <td style="text-align: right;" class="home"><span id="home_red">@for($i=0; $i<$m->home_red; $i ++)<img src="/images/red_card.gif">&nbsp;@endfor</span>&nbsp;{{$m->home}}</td>
                     <?php
                     if($m->short_result == '-' && $m->date_time <= date('Y-m-d H:i:s', time())) {
                         $active_livescore = true;
@@ -59,7 +59,7 @@ $first = true;
                         <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
                     </td>
                     @endif
-                    <td style="text-align: left;" class="away">{{$m->away}}&nbsp;<span id="away_red"></span></td>
+                    <td style="text-align: left;" class="away">{{$m->away}}&nbsp;<span id="away_red">@for($i=0; $i<$m->away_red; $i ++)<img src="/images/red_card.gif">&nbsp;@endfor</span></td>
                     <td>
                         @foreach($settings[$m->id] as $s)
                         <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
