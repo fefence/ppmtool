@@ -267,7 +267,7 @@ class Parser
     public static function parseMatchesForLeagueAndSeason($league_details_id, $season) {
         //www.betexplorer.com/soccer/india/i-league-2003-2004/results/
         //leagueresults_tbody
-        $league = LeagueDetails::find($league_details_id);
+        $league = League::find($league_details_id);
         $url = "http://www.betexplorer.com/soccer/".$league->country."/".$league->name."-".$season."/results/";
         if (Parser::get_http_response_code($url) != "200") {
             $url = "http://www.betexplorer.com/soccer/".$league->country."/".$league->name."/results/";
@@ -299,25 +299,25 @@ class Parser
                 $match->away = $ha[1];
                 $ra = explode(':', $cols->item(1)->nodeValue);
                 if (count($ra) > 1) {
-                    $match->homeGoals = $ra[0];
-                    $match->awayGoals = $ra[1];
+                    $match->home_goals = $ra[0];
+                    $match->away_goals = $ra[1];
                     if ($ra[0] > $ra[1]) {
-                        $match->resultShort = 'H';
+                        $match->short_result = 'H';
                     } else if ($ra[0] < $ra[1]) {
-                        $match->resultShort = 'A';
+                        $match->short_result = 'A';
                     } else {
-                        $match->resultShort = 'D';
+                        $match->short_result = 'D';
                     }
                 } else {
                     echo $match->id."<br>";
 //                    return $match;
 //                    $match->resultShort = '';
                 }
-                $match->league_details_id = $league_details_id;
+                $match->league_id = $league_details_id;
                 $match->season = $season;
                 $match->save();
                 echo $match->id;
-                Parser::parseTimeDate($match);
+//                Parser::parseTimeDate($match);
             }
 
         }
