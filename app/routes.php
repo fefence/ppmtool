@@ -14,14 +14,16 @@
 Route::get('/boo/{id}/{season}', function($id, $season)
 {
 //    return Parser::parseMatchesForLeagueAndSeason($id, $season);
-    $matches_parsed = WinOdds::lists('match_id');
-    $matches = Match::whereNotIn('id',$matches_parsed)
-        ->where('season', $season)
-        ->where('league_id', $id)
-        ->get();
-    foreach($matches as $m) {
-        echo OddsParser::parseOdds($m);
-    }
+//    $matches_parsed = WinOdds::lists('match_id');
+//    $matches = Match::whereNotIn('id',$matches_parsed)
+//        ->where('season', $season)
+//        ->where('league_id', $id)
+//        ->get();
+//    foreach($matches as $m) {
+//        echo OddsParser::parseOdds($m);
+//    }
+//    Parser::parseNextMatches($id);
+    Series::calculateSeries($id, $season);
 });
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
 Route::get('/test', 'LivescoreController@test');
