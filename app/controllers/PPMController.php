@@ -17,7 +17,7 @@ class PPMController extends \BaseController
                 $top_25 = Series::where('country_alias', $country)
                     ->join('leagues', 'leagues.id', '=', 'series.league_id')
                     ->where('game_type_id', $i)
-                    ->select(DB::raw('series.*'))
+                    ->select(DB::raw('series.id, length'))
                     ->orderBy('length', "desc")
                     ->take(25)
                     ->get();
@@ -29,8 +29,7 @@ class PPMController extends \BaseController
                     ->where('season', '2014-2015')
                     ->where('game_type_id', $i)
                     ->orderBy('date_time', "asc")
-                    ->select(DB::raw('series.*'))
-//                    ->take(25)
+                    ->select(DB::raw('series.id, length'))
                     ->get();
                 $c = '';
                 foreach ($current as $t) {
@@ -41,7 +40,7 @@ class PPMController extends \BaseController
                     ->where('country_alias', $country)
                     ->join('leagues', 'leagues.id', '=', 'series.league_id')
                     ->where('game_type_id', $i)
-                    ->select(DB::raw('series.*, be, sc, ss'))
+                    ->select(DB::raw('series.id, length, be, sc, ss'))
                     ->first();
                 if (count($data[$country][$i]) == 0) {
                     $data[$country][$i]['length'] = 0;
@@ -76,8 +75,7 @@ class PPMController extends \BaseController
         return View::make('ppm')->with(['data' => $data, 'games' => $games]);
     }
 
-    public
-    static function displaySeriesGames($series_id)
+    public static function displaySeriesGames($series_id)
     {
         $user_id = Auth::user()->id;
         $games = Game::where('user_id', $user_id)
