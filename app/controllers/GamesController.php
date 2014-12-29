@@ -30,6 +30,7 @@ class GamesController extends BaseController
                 ->with('game_type')
                 ->select(DB::raw('games.*, matches.home, matches.away, matches.date_time, matches.home_goals, matches.away_goals, matches.short_result'))
                 ->orderBy('date_time')
+                ->orderBy('home')
                 ->orderBy('game_type_id')
                 ->get();
             $placeholders = Placeholder::where('user_id', $user_id)
@@ -42,6 +43,7 @@ class GamesController extends BaseController
                 ->with('game_type')
                 ->select(DB::raw('placeholders.*, matches.home, matches.away, matches.date_time, matches.home_goals, matches.away_goals, matches.short_result'))
                 ->orderBy('date_time')
+                ->orderBy('home')
                 ->orderBy('game_type_id')
                 ->get();
 
