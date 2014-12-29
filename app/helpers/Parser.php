@@ -12,6 +12,7 @@ class Parser
     public static function parseNextMatches($league_id)
     {
 
+        $res = array();
         $baseUrl = "http://www.betexplorer.com/soccer/";
 
         $league = League::find($league_id);
@@ -31,14 +32,20 @@ class Parser
 
         foreach ($rows as $row) {
             $cols = $row->getElementsByTagName('td');
-            if ($cols->length > 0) {
+            if ($cols->length > 1) {
                 $a = $cols->item(1)->getElementsByTagName('a');
                 foreach ($a as $link) {
                     $href = $link->getAttribute("href");
                     $arr = explode("/", $href);
                     if (count($arr) > 2) {
                         $id = $arr[count($arr) - 2];
-                        $match = Match::firstOrCreate(['id' => $id]);
+                        $match = Match::find($id);
+                        if ($match != null) {
+                            $res[$id] = array();
+                            $res[$id]['old'] = $match->date_time;
+                        } else {
+                            $match = Match::firstOrCreate(['id' => $id]);
+                        }
                         $dt = $cols->item(8)->nodeValue;
                         $dtarr = explode(' ', $dt);
                         $date = $dtarr[0];
@@ -55,12 +62,15 @@ class Parser
                         $match->date_time = $datearr[2] . '-' . $datearr[1] . '-' . $datearr[0] . " " . $time;
                         $match->season = self::$current_season;
                         $match->save();
-                        echo $match->id."<br>";
+                        if (array_key_exists($id, $res)) {
+                            $res[$id]['new'] = $match->date_time;
+                        }
                     }
                 }
 
             }
         }
+        return $res;
     }
 
     public static function updateMatchesResult($matches)

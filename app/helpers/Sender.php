@@ -37,4 +37,26 @@ class Sender
         }
 
     }
+
+    public static function sendMailResceduledMatches($res) {
+        $users = User::all();
+        $subject = 'Rescheduled matches ';
+        $leagues = array_keys($res);
+        $body = array();
+        foreach($leagues as $alias) {
+            $subject = $subject."[".$alias."] ";
+        }
+        foreach($res as $alias => $matches) {
+            foreach($matches as $id => $old_time_date) {
+                $body[$alias][$id]['match'] = Match::find($id);
+                $body[$alias][$id]['old'] = $old_time_date;
+            }
+        }
+        foreach($users as $user) {
+            Mail::send('emails.rescheduled', ['body' => $body], function ($message) use ($user, $subject) {
+                $message->to([$user->email => $user->name])
+                    ->subject($subject);
+            });
+        }
+    }
 } 

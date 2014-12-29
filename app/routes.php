@@ -13,6 +13,7 @@
 
 Route::get('/boo', function()
 {
+    return Parser::parseNextMatches(1);
 //    return Parser::parseMatchesForLeagueAndSeason($id, $season);
 //    $matches_parsed = WinOdds::lists('match_id');
 //    $matches = Match::whereNotIn('id',$matches_parsed)
