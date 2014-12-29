@@ -13,6 +13,14 @@
 
 Route::get('/boo/{id}/{season}', function($id, $season)
 {
+    $games = array();
+    $ms = array();
+    $user = User::find(2);
+    $subject = "test";
+    Mail::send('emails.confirm', ['body' => $games, 'matches' => $ms, 'link_to_group' => URL::to("/").'/play', 'confirm_link' => URL::to("/").'/play/confirm/all/'], function ($message) use ($user, $subject) {
+        $message->to([$user->email => $user->name])
+            ->subject($subject);
+    });
 //    return Parser::parseMatchesForLeagueAndSeason($id, $season);
 //    $matches_parsed = WinOdds::lists('match_id');
 //    $matches = Match::whereNotIn('id',$matches_parsed)
@@ -23,7 +31,7 @@ Route::get('/boo/{id}/{season}', function($id, $season)
 //        echo OddsParser::parseOdds($m);
 //    }
 //    Parser::parseNextMatches($id);
-    Series::calculateSeries($id, $season);
+//    Series::calculateSeries($id, $season);
 });
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
 Route::get('/test', 'LivescoreController@test');
