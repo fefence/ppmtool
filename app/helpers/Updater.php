@@ -161,7 +161,7 @@ class Updater
                 $game->save();
             }
             try {
-                Placeholder::createPlaceholders(Updater::getNextMatches($next_matches), $settings->user_id, $game_type_id);
+                Placeholder::createPlaceholders($next_matches, $settings->user_id, $game_type_id);
             } catch(ErrorException $e) {
                 Log::warning("error while adding placeholders");
                 Log::warning($e);
