@@ -11,18 +11,18 @@
 |
 */
 
-Route::get('/boo', function()
+Route::get('/boo/{id}/{season}', function($id, $season)
 {
-    return Parser::parseNextMatches(1);
+//    return Parser::parseNextMatches(1);
 //    return Parser::parseMatchesForLeagueAndSeason($id, $season);
-//    $matches_parsed = WinOdds::lists('match_id');
-//    $matches = Match::whereNotIn('id',$matches_parsed)
-//        ->where('season', $season)
-//        ->where('league_id', $id)
-//        ->get();
-//    foreach($matches as $m) {
-//        echo OddsParser::parseOdds($m);
-//    }
+    $matches_parsed = WinOdds::lists('match_id');
+    $matches = Match::whereNotIn('id',$matches_parsed)
+        ->where('season', $season)
+        ->where('league_id', $id)
+        ->get();
+    foreach($matches as $m) {
+        echo OddsParser::parseOdds($m);
+    }
 //    Parser::parseNextMatches($id);
 //    Series::calculateSeries($id, $season);
 });

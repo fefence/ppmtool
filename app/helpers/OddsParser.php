@@ -18,6 +18,8 @@ class OddsParser
         $matches2 = array();
         preg_match('/.dat\', (?P<json>.*)\)/', $json_data, $matches2);
         $odds_arr = json_decode($matches2['json'], true);
+        $odds = -1;
+        $game_type_id = 0;
         try {
             if (Match::endSeries([$match], 1)) {
                 $url = "http://www.betexplorer.com/gres/ajax-matchodds.php?t=n&e=" . $match->id . "&b=1x2";
@@ -86,7 +88,7 @@ class OddsParser
                 $game_type_id = 0;
             }
         } catch (ErrorException $e) {
-            throw new ErrorException;
+//            throw new ErrorException;
         }
 //        if ($odds != '' && $odds != null) {
             $win = WinOdds::firstOrCreate(['odds' => $odds, 'match_id' => $match->id, 'game_type_id' =>$game_type_id]);
