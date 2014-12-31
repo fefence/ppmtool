@@ -8,10 +8,10 @@ class PPMController extends \BaseController
     {
         $countries = League::where('hidden', 0)
             ->orderBy('country')
-            ->lists('country_alias');
+            ->lists('id', 'country_alias');
         $games = GameType::all();
         $data = array();
-        foreach ($countries as $country) {
+        foreach ($countries as $country => $league_id) {
             for ($i = 1; $i < 11; $i++) {
                 $top = '';
                 $top_25 = Series::where('country_alias', $country)
@@ -42,8 +42,11 @@ class PPMController extends \BaseController
                     ->where('game_type_id', $i)
                     ->select(DB::raw('series.id, length, be, sc, ss'))
                     ->first();
+
                 if (count($data[$country][$i]) == 0) {
                     $data[$country][$i]['length'] = 0;
+                    $data[$country][$i]['odds'] = 0;
+                    $data[$country][$i]['c_odds'] = 0;
                     $data[$country][$i] = new Series;
                 }
                 $k = 0;
@@ -68,6 +71,16 @@ class PPMController extends \BaseController
                 }
                 $data[$country][$i]['top'] = substr($top, 0, strlen($top) - 2) . "</span>";
                 $data[$country][$i]['curr'] = substr($c, 0, strlen($c) - 2);
+                $data[$country][$i]['odds'] = round(WinOdds::join('matches', 'win_odds.match_id', '=', 'matches.id')
+                    ->where('league_id', $league_id)
+                    ->where('game_type_id', $i)
+                    ->select(DB::raw("AVG(odds) as odds"))
+                    ->first()->odds, 2, PHP_ROUND_HALF_UP);
+                $data[$country][$i]['c_odds'] = WinOdds::join('matches', 'win_odds.match_id', '=', 'matches.id')
+                    ->where('league_id', $league_id)
+                    ->where('game_type_id', $i)
+                    ->select(DB::raw("count(*) as c"))
+                    ->first()->c;
 
             }
         }
