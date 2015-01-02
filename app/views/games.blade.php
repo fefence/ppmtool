@@ -58,7 +58,11 @@
             <td class="away redcard{{$game['match']['away_red']}} left">{{$game['match']['away']}}</td>
             <td class="editablecolor1 editable text-center" id="bsf_{{$game['id']}}_game">@if($game['bsf'] != 0.00) {{$game['bsf']}}@endif</td>
             <td class="warning editable text-center" id="bet_{{$game['id']}}_game">@if($game['bet'] != 0.00) {{$game['bet']}}@endif</td>
-            <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}_game" @if ($game['odds'] == 0.00 || $game['odds'] == -1.00) class = "bg-danger text-danger" style="width: 8%; padding: 0px;> @else {{$game['odds']}} @endif</td>
+            @if ($game['odds'] == 0.00 || $game['odds'] == -1.00)
+            <td class="editable text-center bg-danger text-danger" id="odds_{{$game['id']}}_game"></td>
+            @else
+            <td class="editablecolor1 editable text-center" id="odds_{{$game['id']}}_game">{{$game['odds']}}</td>
+            @endif
             <td class="text-center"><span id="income_{{$game['id']}}_game">{{$game['income']}}</span><br>[<span id="profit_{{$game['id']}}_game">{{$game['profit']}}</span>]</td>
             <td>@if($game['short_result'] == '-')
                 <a role="button" @if ($count[$game['id']]['count'] != 0) class="btn btn-default btn-xs" @else class="btn btn-primary btn-xs" @endif style="width: 100%" href="/confirm/{{$game['id']}}/false" style="font-size: 130%;">+&nbsp({{ $count[$game['id']]['count'] }})</a>

@@ -3,39 +3,41 @@
 @section('content')
 <table class="table" border="1">
     <tr>
-        <?php
-            $i = 1;
-        ?>
-        <td colspan="2">
-        @foreach($data['all'] as $l)
-            {{$l}},&nbsp;
-            @if($i % 5 == 0)
-                &nbsp;
-                &nbsp;
-            @endif
-        <?php
-            $i ++;
-        ?>
-        @endforeach
-        </td>
-    </tr>
-    <tr>
-    <td>
-        @foreach($data['stats'] as $s)
-        {{ $s->length}}
-        @include('partials.square', array('match' => $s))
-        @endforeach
-    </td>
-        <td>
+        <td style="width: 90px; text-align: center;"><span class="text-danger" style="font-weight: bold;">{{$data['avg_odds']}}</span> ({{$data['avg_count']}})</td>
+        <td style="width: 150px; text-align: center;">
             @foreach($data['longest'] as $l)
             {{$l}},&nbsp;
+            @endforeach
+        </td>
+        <td>
+            @foreach($data['stats'] as $s)
+            {{ $s->length}}
+            @include('partials.square', array('match' => $s))
+            @endforeach
+        </td>
+
+    </tr>
+    <tr>
+        <?php
+        $i = 1;
+        ?>
+        <td colspan="3">
+            @foreach($data['all'] as $l)
+            {{$l}},&nbsp;
+            @if($i % 5 == 0)
+            &nbsp;
+            &nbsp;
+            @endif
+            <?php
+            $i++;
+            ?>
             @endforeach
         </td>
     </tr>
 </table>
 
 @if($no_info)
-    <h5>No games confirmed for current series.</h5>
+<h5>No games confirmed for current series.</h5>
 @else
 <table class="table">
     <thead>
@@ -65,13 +67,15 @@
         </td>
         <td>{{$game['match']['away']}}</td>
         <td>{{$game['bsf']}}</span></td>
-        <td>{{$game['bet']}}</td>
+        <td class="bg-warning">{{$game['bet']}}</td>
         <td>{{$game['odds']}}</td>
         <td>{{$game['income']}} [{{$game['profit']}}]</td>
         <td>@if($game['short_result'] == '-')
-            <a role="button" class="btn btn-danger btn-xs" style="width: 50px" href="/play/delete/{{$game['id']}}" style="font-size: 130%;">-</a>
+            <a role="button" class="btn btn-danger btn-xs" style="width: 50px" href="/play/delete/{{$game['id']}}"
+               style="font-size: 130%;">-</a>
             @else
-            <a role="button" class="btn btn-default btn-xs" style="width: 50px" disabled href="/play/delete/{{$game['id']}}">-</a>
+            <a role="button" class="btn btn-default btn-xs" style="width: 50px" disabled
+               href="/play/delete/{{$game['id']}}">-</a>
             @endif
         </td>
     </tr>

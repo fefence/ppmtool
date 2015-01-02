@@ -127,7 +127,17 @@ class PPMController extends \BaseController
             ->take(25)
             ->lists('length');
         $data['all'] = $top;
+        $data['avg_odds'] = round(WinOdds::join('matches', 'win_odds.match_id', '=', 'matches.id')
+            ->where('league_id', $series->league_id)
+            ->where('game_type_id', $series->game_type_id)
+            ->select(DB::raw("AVG(odds) as odds"))
+            ->first()->odds, 2, PHP_ROUND_HALF_UP);;
 //        return $data;
+        $data['avg_count'] = WinOdds::join('matches', 'win_odds.match_id', '=', 'matches.id')
+            ->where('league_id', $series->league_id)
+            ->where('game_type_id', $series->game_type_id)
+            ->select(DB::raw("count(*) as c"))
+            ->first()->c;
         return View::make('seriesdetails')->with(['games' => $games, 'data' => $data, 'no_info' => $no_info]);
     }
 }
