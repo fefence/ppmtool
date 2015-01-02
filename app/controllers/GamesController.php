@@ -99,7 +99,7 @@ class GamesController extends BaseController
             $country_alias = League::find(Match::find(Game::find($game_id)->match_id)->league_id)->country_alias;
         }
         Game::confirmGame($game_id, $placeholder);
-        return Redirect::to(URL::previous() . '#'. $country_alias)->with('message', 'Game confirmed');
+        return Redirect::to(URL::previous() . '#' . $country_alias)->with('message', 'Game confirmed');
     }
 
     public static function deleteGame($game_id)
@@ -186,7 +186,7 @@ class GamesController extends BaseController
                 $game->save();
             }
         }
-        return Redirect::to(URL::previous() . '#'. $country_alias)->with('message', $country_alias);
+        return Redirect::to(URL::previous() . '#' . $country_alias)->with('message', $country_alias);
     }
 
     public static function confirmAll($country_alias)
@@ -210,9 +210,9 @@ class GamesController extends BaseController
             }
         }
         try {
-            return Redirect::to(URL::previous() . '#'. $country_alias)->with('message', 'Bet confirmed');
+            return Redirect::to(URL::previous() . '#' . $country_alias)->with('message', 'Bet confirmed');
         } catch (InvalidArgumentException $e) {
-            return Redirect::to(URL::to("/play#".$country_alias));
+            return Redirect::to(URL::to("/play#" . $country_alias));
         }
     }
 
@@ -226,7 +226,7 @@ class GamesController extends BaseController
         $pl = $array[2];
         if ($pl == 'pl') {
             $game = Placeholder::find($game_id);
-        } else if ($pl == 'game'){
+        } else if ($pl == 'game') {
             $game = Game::find($game_id);
         }
         switch ($field) {
@@ -246,12 +246,28 @@ class GamesController extends BaseController
 
         if ($pl == 'pl') {
             $tmp = Placeholder::find($game_id);
-            return $game_id . "*" . $tmp->bsf . "*" . $tmp->bet . "*" . $tmp->odds . "*" . $tmp->income . "*" . $tmp->profit."*pl";
+            return $game_id . "*" . $tmp->bsf . "*" . $tmp->bet . "*" . $tmp->odds . "*" . $tmp->income . "*" . $tmp->profit . "*pl";
 
-        } else if ($pl == 'game'){
+        } else if ($pl == 'game') {
             $tmp = Game::find($game_id);
-            return $game_id . "*" . $tmp->bsf . "*" . $tmp->bet . "*" . $tmp->odds . "*" . $tmp->income . "*" . $tmp->profit."*game";
+            return $game_id . "*" . $tmp->bsf . "*" . $tmp->bet . "*" . $tmp->odds . "*" . $tmp->income . "*" . $tmp->profit . "*game";
 
         }
+    }
+
+    public static function refund($match_id)
+    {
+        $user = Auth::user();
+        $games = Game::where('user_id', $user->id)
+            ->where('match_id', $match_id)
+            ->where('confirmed', 1)
+            ->get();
+        foreach ($games as $game) {
+            $user->account = $user->account + $game->bet;
+            $game->bet = 0;
+            $game->save();
+        }
+        $user->save();
+        return Redirect::back();
     }
 } 

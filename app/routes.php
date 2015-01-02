@@ -31,6 +31,8 @@ Route::get('/test', 'LivescoreController@test');
 Route::get('/listbycountry/{fromdate?}/{todate?}', 'LivescoreController@livescorebycountry');
 Route::post('/getres/{id}', "LivescoreController@getMatchCurrentRes");
 
+Route::get('/refund/{match_id}', 'GamesController@refund');
+
 Route::get('/stats', 'StatsController@countries');
 Route::get('/stats/{country}', 'StatsController@display');
 

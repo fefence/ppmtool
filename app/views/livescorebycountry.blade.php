@@ -59,12 +59,14 @@ $first = true;
                         <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
                     </td>
                     @endif
-                    <td style="text-align: left; position: absolute;" class="away redcard{{$m->away_red}} left">{{$m->away}}</td>
+                    <td style="text-align: left;" class="away redcard{{$m->away_red}} left">{{$m->away}}</td>
                     <td>
                         @foreach($settings[$m->id] as $s)
                         <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
                         @endforeach
                     </td>
+                    <td><a href="/refund/{{$m->id}}" role="button" class="btn btn-xs btn-warning">refund</td>
+
                 </tr>
             @endforeach
         </table>

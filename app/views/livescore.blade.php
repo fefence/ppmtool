@@ -7,7 +7,6 @@
         <?php
             $url = '/listbycountry';
             $from = date('Y-m-d', strtotime($fromdate));
-//            $to = date('Y-m-d', strtotime($todate));
             if ($from == date('Y-m-d', time())) {
                 $url == '/listbycountry';
             } else {
@@ -15,7 +14,7 @@
             }
         ?>
         <p><a href="{{$url}}" role="button" class="btn btn-default">country</a></p>
-        <table class="table" border="1">
+        <table class="table">
             <tbody>
             @foreach($matches as $d)
             <tr id="{{$d['match']->id}}">
@@ -48,6 +47,7 @@
                     <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
                     @endforeach
                 </td>
+                <td><a href="/refund/{{$d['match']->id}}" role="button" class="btn btn-xs btn-warning">refund</td>
             </tr>
             @endforeach
             </tbody>
