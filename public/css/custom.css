@@ -40,17 +40,20 @@ th, td {
     visibility: hidden;
 }
 .navbar-brand {
-    margin-right: 14px !important;
     /*padding-right: 8px !important;*/
     /*padding-left: 8px !important;*/
     /*border: 1px solid;*/
 }
+@media (max-width: 768px) {
+    .navbar > .container .navbar-brand ,
+    .navbar > .container-fluid .navbar-brand {
+        margin: 0px !important;
+    }
+}
 @media (min-width: 768px) {
-    /*.navbar > .container .navbar-brand ,*/
-    /*.navbar > .container-fluid .navbar-brand,*/
-    .navbar > .container .navbar-brand-first,
-    .navbar > .container-fluid .navbar-brand-first {
-        margin-left: -15px !important;
+    .navbar > .container .navbar-brand ,
+    .navbar > .container-fluid .navbar-brand {
+        margin-right: 14px !important;
     }
 }
 .navbar-brand:hover {
