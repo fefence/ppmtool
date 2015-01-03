@@ -30,6 +30,7 @@ class LivescoreController extends \BaseController
                 ->get();
             $res[$match->id]['refund'] = Game::where('user_id', Auth::user()->id)
                 ->where('match_id', $match->id)
+                ->where('confirmed', 1)
                 ->sum('bet');
         }
         if (count($res) == 0) {
@@ -72,6 +73,7 @@ class LivescoreController extends \BaseController
 
                 $settings[$m->id]['refund'] = Game::where('user_id', Auth::user()->id)
                     ->where('match_id', $m->id)
+                    ->where('confirmed', 1)
                     ->sum('bet');
             }
         }
