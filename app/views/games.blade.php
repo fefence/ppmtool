@@ -171,21 +171,13 @@
             var id =$(this).closest('tr').prop('id');
             var td_span1 = $(this).find("#home_goals");
             var td_span2 = $(this).find("#away_goals");
-            var td_span3 = $("table #"+id+" .home").find("#home_red");
-            var td_span4 = $("table #"+id+" .away").find("#away_red");
+            var td_span3 = $("table #"+id+" .home");
+            var td_span4 = $("table #"+id+" .away");
             $.post( "/getres/" + id, function( data ) {
                 td_span1.html(data[0]+"");
                 td_span2.html(data[1]+"");
-                var home = '';
-                for(var i = 0; i < data[2]; i++) {
-                    home = home + '<img src="/images/redCard.png">&nbsp;';
-                }
-                td_span3.html(home);
-                var away = '';
-                for(var i = 0; i < data[3]; i++) {
-                    away = away + '<img src="/images/redCard.png">&nbsp;';
-                }
-                td_span4.html(away);
+                td_span3.addClass('redcard' + data[2]);
+                td_span4.addClass('redcard' + data[3]);
             });
         });
         setInterval(function() {
@@ -193,21 +185,13 @@
                 var id =$(this).closest('tr').prop('id');
                 var td_span1 = $(this).find("#home_goals");
                 var td_span2 = $(this).find("#away_goals");
-                var td_span3 = $("table #"+id+" .home").find("#home_red");
-                var td_span4 = $("table #"+id+" .away").find("#away_red");
+                var td_span3 = $("table #"+id+" .home");
+                var td_span4 = $("table #"+id+" .away");
                 $.post( "/getres/" + id, function( data ) {
                     td_span1.html(data[0]+"");
                     td_span2.html(data[1]+"");
-                    var home = '';
-                    for(var i = 0; i < data[2]; i++) {
-                        home = home + '<img src="/images/redCard.png">&nbsp;';
-                    }
-                    td_span3.html(home);
-                    var away = '';
-                    for(var i = 0; i < data[3]; i++) {
-                        away = away + '<img src="/images/redCard.png">&nbsp;';
-                    }
-                    td_span4.html(away);
+                    td_span3.addClass('redcard' + data[2]);
+                    td_span4.addClass('redcard' + data[3]);
                 });
             })
 

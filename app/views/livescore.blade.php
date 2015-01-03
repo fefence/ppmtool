@@ -62,8 +62,8 @@
             var id =$(this).closest('tr').prop('id');
             var td_span1 = $(this).find("#home_goals");
             var td_span2 = $(this).find("#away_goals");
-            var td_span3 = $("table #"+id+" .home").find("#home_red");
-            var td_span4 = $("table #"+id+" .away").find("#away_red");
+            var td_span3 = $("table #"+id+" .home");
+            var td_span4 = $("table #"+id+" .away")
             $.post( "/getres/" + id, function( data ) {
                 td_span1.html(data[0]+"");
                 td_span2.html(data[1]+"");
@@ -76,8 +76,8 @@
                 var id =$(this).closest('tr').prop('id');
                 var td_span1 = $(this).find("#home_goals");
                 var td_span2 = $(this).find("#away_goals");
-                var td_span3 = $("table #"+id+" .home").find("#home_red");
-                var td_span4 = $("table #"+id+" .away").find("#away_red");
+                var td_span3 = $("table #"+id+" .home");
+                var td_span4 = $("table #"+id+" .away");
                 $.post( "/getres/" + id, function( data ) {
                     td_span1.html(data[0]+"");
                     td_span2.html(data[1]+"");
