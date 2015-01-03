@@ -61,11 +61,11 @@ $first = true;
                     @endif
                     <td style="text-align: left;" class="away redcard{{$m->away_red}} left">{{$m->away}}</td>
                     <td>
-                        @foreach($settings[$m->id] as $s)
+                        @foreach($settings[$m->id]['settings'] as $s)
                         <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
                         @endforeach
                     </td>
-                    <td><a href="/refund/{{$m->id}}" role="button" class="btn btn-xs btn-warning">refund</td>
+                    <td>@if(count($settings[$m->id]['settings'])>0)<a href="/refund/{{$m->id}}" role="button" class="btn btn-xs btn-warning" @if($settings[$m->id]['refund'] <= 0) disabled @endif>refund</a>@endif</td>
 
                 </tr>
             @endforeach

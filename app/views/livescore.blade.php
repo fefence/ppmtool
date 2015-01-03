@@ -47,7 +47,7 @@
                     <a href="#" role="button" class="btn btn-info btn-xs">{{$s->game_type->name}}</a>
                     @endforeach
                 </td>
-                <td><a href="/refund/{{$d['match']->id}}" role="button" class="btn btn-xs btn-warning">refund</td>
+                <td>@if(count($d['settings'])>0)<a href="/refund/{{$d['match']->id}}" role="button" class="btn btn-xs btn-warning" @if($d['refund'] <= 0) disabled @endif>refund</a>@endif</td>
             </tr>
             @endforeach
             </tbody>

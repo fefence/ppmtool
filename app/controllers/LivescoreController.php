@@ -28,6 +28,9 @@ class LivescoreController extends \BaseController
                 ->orderBy('game_type_id')
                 ->select(DB::raw("distinct game_type_id"))
                 ->get();
+            $res[$match->id]['refund'] = Game::where('user_id', Auth::user()->id)
+                ->where('match_id', $match->id)
+                ->sum('bet');
         }
         if (count($res) == 0) {
             $no_info = true;
@@ -46,6 +49,7 @@ class LivescoreController extends \BaseController
 
         $leagues = Match::where('date_time', '>=', $fromdate)
             ->join('leagues', 'leagues.id', '=', 'matches.league_id')
+            ->where('hidden', 0)
             ->where('date_time', '<=', $todate)
             ->orderBy('country')
             ->lists('league_id');
@@ -64,7 +68,11 @@ class LivescoreController extends \BaseController
                     ->orderBy('game_type_id')
                     ->select(DB::raw("distinct game_type_id"))
                     ->get();
-                $settings[$m->id] = $sets;
+                $settings[$m->id]['settings'] = $sets;
+
+                $settings[$m->id]['refund'] = Game::where('user_id', Auth::user()->id)
+                    ->where('match_id', $m->id)
+                    ->sum('bet');
             }
         }
         if (count($res) == 0) {
