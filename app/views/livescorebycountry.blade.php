@@ -65,7 +65,7 @@ $first = true;
                         <a href="/play/{{date('Y-m-d', strtotime($m->date_time))}}/{{date('Y-m-d', strtotime($m->date_time))}}/#{{$league}}" role="button" class="btn btn-info btn-xs hasTooltip" title="{{$s->s}}">{{$s->game_type->name}}</a>
                         @endforeach
                     </td>
-                    <td>@if(count($settings[$m->id]['settings'])>0)<a href="/refund/{{$m->id}}" role="button" class="btn btn-xs btn-warning" @if($settings[$m->id]['refund'] <= 0) disabled @endif>refund</a>@endif</td>
+                    <td>@if(count($settings[$m->id]['settings'])>0 && $m->short_result != '-' && $m->home_goals == 0 && $m->away_goals == 0)<a href="/refund/{{$m->id}}" role="button" class="btn btn-xs btn-warning" @if($settings[$m->id]['refund'] <= 0) disabled @endif>refund</a>@endif</td>
 
                 </tr>
             @endforeach
