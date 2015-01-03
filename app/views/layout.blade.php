@@ -31,6 +31,7 @@
                 </button>
                 <a class="navbar-brand" href="/play"><span class="{{Request::path() == 'play' ? 'text-danger' : '';}}">Play</span></a>
                 <a class="navbar-brand" href="/series"><span class="{{Request::path() == 'series' ? 'text-danger' : '';}}">Series</span></a>
+<!--                <li><a href="/list">List</a></li>-->
                 @if (isset($fromdate) && isset($base))
                 <?php
                     $from = $fromdate->subDay()->toDateString();
@@ -50,12 +51,12 @@
                 <a disabled="disabled" class="navbar-brand" href="#">&nbsp;<&nbsp;</a>
                 <a disabled="disabled" class="navbar-brand" href="#">&nbsp;>&nbsp;</a>
                 @endif
-<!--                <a class="navbar-brand" href="/settings"><span class="{{Request::path() == 'settings' ? 'text-danger' : '';}}">Settings</span></a>-->
+                <a class="navbar-brand" href="/list"><span class="{{Request::path() == 'list' ? 'text-danger' : '';}}">List</span></a>
+                <!--                <a class="navbar-brand" href="/settings"><span class="{{Request::path() == 'settings' ? 'text-danger' : '';}}">Settings</span></a>-->
 <!--                <a class="navbar-brand" href="/play/odds/all">Odds</a>-->
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/list">List</a></li>
                     <li><a href="/stats">Stats</a></li>
                     <li><a href="/log">Log</a></li>
                     <li><a href="/play/odds/all">Odds</a></li>
