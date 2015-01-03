@@ -9,8 +9,11 @@ class LivescoreController extends \BaseController
 
 
         $ms = Match::where('date_time', '>=', $fromdate)
+            ->join('leagues', 'leagues.id', '=', 'matches.league_id')
+            ->where('hidden', 0)
             ->where('date_time', '<=', $todate)
             ->orderBy('date_time')
+            ->select(DB::raw('matches.id'))
             ->lists('matches.id');
 
         $res = array();
