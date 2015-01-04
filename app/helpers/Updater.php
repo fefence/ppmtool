@@ -36,9 +36,9 @@ class Updater
                     self::updateGamesNotEndSeries($league_id, $i, $matches, $nextMatches, $series);
                 }
                 try {
+                    Match::saveMatches($matches);
                     $newSeries->save();
                     $series->save();
-                    Match::saveMatches($matches);
                 } catch (ErrorException $e) {
                     return $e;
                 }

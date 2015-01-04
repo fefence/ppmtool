@@ -117,7 +117,7 @@ class Parser
                     $match->state = 'Awarded';
                 }
             }
-
+//            $match->save();
         }
         return $matches;
     }

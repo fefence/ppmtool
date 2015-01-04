@@ -11,20 +11,8 @@
 |
 */
 
-Route::get('/boo/{id}/{season}', function($id, $season)
-{
-//    return Parser::parseNextMatches(1);
-//    return Parser::parseMatchesForLeagueAndSeason($id, $season);
-    $matches_parsed = WinOdds::lists('match_id');
-    $matches = Match::whereNotIn('id',$matches_parsed)
-        ->where('season', $season)
-        ->where('league_id', $id)
-        ->get();
-    foreach($matches as $m) {
-        echo OddsParser::parseOdds($m);
-    }
-//    Parser::parseNextMatches($id);
-//    Series::calculateSeries($id, $season);
+Route::get('/boo', function () {
+    
 });
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
 Route::get('/test', 'LivescoreController@test');
@@ -55,11 +43,11 @@ Route::get('/settings/enable/{league_id}/{game_type_id}', 'SettingsController@en
 
 Route::get('/login', 'SessionsController@create');
 Route::get('/logout', 'SessionsController@destroy');
-Route::resource('sessions', 'SessionsController', ['only'  => ['create', 'store', 'destroy']]);
+Route::resource('sessions', 'SessionsController', ['only' => ['create', 'store', 'destroy']]);
 
-Route::get('/', function(){
+Route::get('/', function () {
     return Redirect::route('home');
 });
-Route::get('/home', function(){
+Route::get('/home', function () {
     return Redirect::route('home');
 });
