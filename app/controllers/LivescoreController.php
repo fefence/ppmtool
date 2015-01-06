@@ -151,7 +151,8 @@ class LivescoreController extends \BaseController
             $away = $away + $a2->item(0)->nodeValue;
         }
         $reds = Parser::getRedCards($id);
-        return [$home, $away, $reds[0], $reds[1]];
+        $stage = Parser::getMatchMinute($id);
+        return [$home, $away, $reds[0], $reds[1], $stage[0], $stage[1]];
     }
 
     public static function test() {

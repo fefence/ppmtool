@@ -39,10 +39,10 @@ th, td {
 .scoreSeparatorToggle {
     visibility: hidden;
 }
-.navbar-brand {
-    /*padding-right: 8px !important;*/
-    /*padding-left: 8px !important;*/
-    /*border: 1px solid;*/
+.time {
+    margin: 2px 0px -10px 0px;
+    font-weight: bold;
+    font-size: 11px;
 }
 @media (max-width: 768px) {
     .navbar > .container .navbar-brand ,

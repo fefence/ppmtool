@@ -8,13 +8,13 @@
 @foreach($data as $c => $games)
 
 <div id="{{$c}}">
-    <table class="table">
+    <table class="table" border="0">
         <thead>
             <tr>
                 <th class="text-center" style="width: 65px;"><a href="{{$games['league']->be}}" target="_blank"><img src="/images/32/{{$c}}.png"></a></th>
                 <th class="text-center" style="width: 10%;">type</th>
                 <th style="text-align: right;">home</th>
-                <th style="width: 50px; text-align: center"></th>
+                <th style="width: 55px; text-align: center"></th>
                 <th>away</th>
                 <th class="text-center" style="width: 8%;">bsf</th>
                 <th class="text-center" style="width: 8%;">bet</th>
@@ -47,7 +47,7 @@
             </td>
             @elseif($active_livescore)
             <td class="livescoreResultTdActive" id="{{$game['match']['id']}}">
-                <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span>
+                <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span><p class="time"></p>
             </td>
             @else
             <td>
@@ -173,11 +173,13 @@
             var td_span2 = $(this).find("#away_goals");
             var td_span3 = $("table #"+id+" .home");
             var td_span4 = $("table #"+id+" .away");
+            var td_span5 = $("table #"+id+" .time");
             $.post( "/getres/" + id, function( data ) {
                 td_span1.html(data[0]+"");
                 td_span2.html(data[1]+"");
                 td_span3.addClass('redcard' + data[2]);
                 td_span4.addClass('redcard' + data[3]);
+                td_span5.html(data[4] + " " + data[5] + "'");
             });
         });
         setInterval(function() {
@@ -187,11 +189,13 @@
                 var td_span2 = $(this).find("#away_goals");
                 var td_span3 = $("table #"+id+" .home");
                 var td_span4 = $("table #"+id+" .away");
+                var td_span5 = $("table #"+id+" .time");
                 $.post( "/getres/" + id, function( data ) {
                     td_span1.html(data[0]+"");
                     td_span2.html(data[1]+"");
                     td_span3.addClass('redcard' + data[2]);
                     td_span4.addClass('redcard' + data[3]);
+                    td_span5.html(data[4] + " " + data[5] + "'");
                 });
             })
 

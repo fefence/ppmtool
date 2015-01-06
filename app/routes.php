@@ -12,7 +12,7 @@
 */
 
 Route::get('/boo', function () {
-    
+    return Parser::getMatchMinute("YHtw5tYG");
 });
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
 Route::get('/test', 'LivescoreController@test');

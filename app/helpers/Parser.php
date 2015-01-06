@@ -334,4 +334,29 @@ class Parser
         return "finished";
     }
 
+    public static function getMatchMinute($id) {
+        //event_stages:
+        // 12 -> first half
+        // 38 -> HT
+        // 13 -> second half
+        $url = "http://www.betexplorer.com/gres/live-results.php";
+        $json_data = file_get_contents($url);
+//        $arr = array();
+        $arr = json_decode($json_data, true);
+        $st = '';
+        $min = $arr['events'][$id]['minute'];
+        $stage = $arr['events'][$id]["event_stage_id"];
+        switch ($stage) {
+            case 12 :
+                $st = '1H';
+                break;
+            case 38:
+                $st = 'HT';
+                break;
+            case 13:
+                $st = '2H';
+                break;
+        }
+        return [$st, $min];
+    }
 }

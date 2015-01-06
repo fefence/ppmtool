@@ -52,7 +52,7 @@ $first = true;
                     </td>
                     @elseif($active_livescore)
                     <td style="text-align: center;" class="livescoreResultTdActive" id="{{$m->id}}">
-                        <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span>
+                        <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span><p class="time"></p>
                     </td>
                     @else
                     <td style="text-align: center;">
@@ -83,11 +83,13 @@ $first = true;
             var td_span2 = $(this).find("#away_goals");
             var td_span3 = $("table #"+id+" .home");
             var td_span4 = $("table #"+id+" .away");
+            var td_span5 = $("table #"+id+" .time");
             $.post( "/getres/" + id, function( data ) {
                 td_span1.html(data[0]+"");
                 td_span2.html(data[1]+"");
                 td_span3.addClass('redcard' + data[2]);
                 td_span4.addClass('redcard' + data[3]);
+                td_span5.html(data[4] + " " + data[5] + "'");
             });
         });
         setInterval(function() {
@@ -97,11 +99,13 @@ $first = true;
                 var td_span2 = $(this).find("#away_goals");
                 var td_span3 = $("table #"+id+" .home");
                 var td_span4 = $("table #"+id+" .away");
+                var td_span5 = $("table #"+id+" .time");
                 $.post( "/getres/" + id, function( data ) {
                     td_span1.html(data[0]+"");
                     td_span2.html(data[1]+"");
                     td_span3.addClass('redcard' + data[2]);
                     td_span4.addClass('redcard' + data[3]);
+                    td_span5.html(data[4] + " " + data[5] + "'");
                 });
             })
 
