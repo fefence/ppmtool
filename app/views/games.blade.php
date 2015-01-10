@@ -3,29 +3,29 @@
 @section('content')
 
 @if ($no_info)
-    <h5>No matches for today and/or no leagues selected.</h5>
+<h5>No matches for today and/or no leagues selected.</h5>
 @endif
 @foreach($data as $c => $games)
 
 <div id="{{$c}}">
     <table class="table" border="0">
         <thead>
-            <tr>
-                <th class="text-center" style="width: 65px;"><a href="{{$games['league']->be}}" target="_blank"><img src="/images/32/{{$c}}.png"></a></th>
-                <th class="text-center" style="width: 10%;">type</th>
-                <th style="text-align: right;">home</th>
-                <th style="width: 55px; text-align: center"></th>
-                <th>away</th>
-                <th class="text-center" style="width: 8%;">bsf</th>
-                <th class="text-center" style="width: 8%;">bet</th>
-                @if(Session::get('message') != null && Session::get('message')==$c)
-                <th id="flash" class="text-center bg-success text-success" style="width: 8%; padding: 0px;"><a href="/play/odds/{{$c}}">odds</a></th>
-                @else
-                <th class="text-center" style="width: 8%;"><a href="/play/odds/{{$c}}">odds</a></th>
-                @endif
-                <th class="text-center" style="width: 10%;">income</th>
-                <th class="text-center" style="width: 8%;"><a href="/confirmall/{{$c}}" role="button" class="btn btn-xs @if(isset($games['disabled']) && $games['disabled'] == '') btn-warning @else btn-default @endif" style="width: 100%" {{$games['disabled']}} >all</a></th>
-            </tr>
+        <tr>
+            <th class="text-center" style="width: 65px;"><a href="{{$games['league']->be}}" target="_blank"><img src="/images/32/{{$c}}.png"></a></th>
+            <th class="text-center" style="width: 10%;">type</th>
+            <th style="text-align: right;">home</th>
+            <th style="width: 55px; text-align: center"></th>
+            <th>away</th>
+            <th class="text-center" style="width: 8%;">bsf</th>
+            <th class="text-center" style="width: 8%;">bet</th>
+            @if(Session::get('message') != null && Session::get('message')==$c)
+            <th id="flash" class="text-center bg-success text-success" style="width: 8%; padding: 0px;"><a href="/play/odds/{{$c}}">odds</a></th>
+            @else
+            <th class="text-center" style="width: 8%;"><a href="/play/odds/{{$c}}">odds</a></th>
+            @endif
+            <th class="text-center" style="width: 10%;">income</th>
+            <th class="text-center" style="width: 8%;"><a href="/confirmall/{{$c}}" role="button" class="btn btn-xs @if(isset($games['disabled']) && $games['disabled'] == '') btn-warning @else btn-default @endif" style="width: 100%" {{$games['disabled']}} >all</a></th>
+        </tr>
         </thead>
         <tbody>
         @if(isset($games['games']))
@@ -43,7 +43,7 @@
             <td style="text-align: right; position: relative;" class="home redcard{{$game['match']['home_red']}} right">{{$game['match']['home']}}</td>
             @if (!$active_livescore &&  $game['match']['short_result'] != '-')
             <td>
-                    <span class="score scoreFinished" id="home_goals">{{$game['match']['home_goals']}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$game['match']['away_goals']}}</span>
+                <span class="score scoreFinished" id="home_goals">{{$game['match']['home_goals']}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$game['match']['away_goals']}}</span>
             </td>
             @elseif($active_livescore)
             <td class="livescoreResultTdActive" id="{{$game['match']['id']}}">

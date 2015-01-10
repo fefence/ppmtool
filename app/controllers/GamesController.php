@@ -270,4 +270,24 @@ class GamesController extends BaseController
         $user->save();
         return Redirect::back();
     }
+
+    public static function active_series() {
+        $games = Game::where('user_id', Auth::user()->id)
+            ->join('matches', 'matches.id', '=', 'games.match_id')
+            ->join('leagues', 'leagues.id', '=', 'matches.league_id')
+            ->join('game_types', 'game_types.id', '=', 'games.game_type_id')
+            ->where('short_result', '-')
+            ->groupBy('league_id', 'game_type_id')
+            ->select(DB::raw('country_alias, game_types.name, series_id, sum(bsf) as sum, games.id'))
+            ->get();
+        $count = array();
+        foreach($games as $game) {
+            $count[$game->id] = Game::where('user_id', Auth::user()->id)
+                ->where('series_id', $game->series_id)
+                ->where('confirmed', 1)
+                ->count();
+        }
+        return View::make('activeseries')->with(['games' => $games, 'count' => $count]);
+    }
+
 } 

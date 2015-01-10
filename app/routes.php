@@ -16,6 +16,7 @@ Route::get('/boo/{id}', function ($id) {
     Updater::update($id);
     return time() - $time." sec.";
 });
+Route::get('/active', 'GamesController@active_series');
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
 Route::get('/test', 'LivescoreController@test');
 Route::get('/listbycountry/{fromdate?}/{todate?}', 'LivescoreController@livescorebycountry');
