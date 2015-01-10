@@ -3,6 +3,8 @@
 @section('content')
 <table class="table" border="1">
     <tr>
+        <td style="width: 48px; text-align: center;"><img src="/images/32/{{$data['league']->country_alias}}.png"></td>
+        <td style="width: 48px; text-align: center;">{{$data['game_type']->name}}</td>
         <td style="width: 90px; text-align: center;"><span class="text-danger" style="font-weight: bold;">{{$data['avg_odds']}}</span> ({{$data['avg_count']}})</td>
         <td style="width: 150px; text-align: center;">
             @foreach($data['longest'] as $l)
@@ -21,7 +23,7 @@
         <?php
         $i = 1;
         ?>
-        <td colspan="3">
+        <td colspan="5">
             @foreach($data['all'] as $l)
             {{$l}},&nbsp;
             @if($i % 5 == 0)

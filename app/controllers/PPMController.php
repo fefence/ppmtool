@@ -119,6 +119,8 @@ class PPMController extends \BaseController
             ->orderBy('length', "desc")
             ->take(5)
             ->lists('length');
+        $data['league'] = League::find($series->league_id);
+        $data['game_type'] = GameType::find($series->game_type_id);
         $data['longest'] = $longest;
         $top = Series::where('game_type_id', $series->game_type_id)
             ->where('matches.league_id', $series->league_id)
