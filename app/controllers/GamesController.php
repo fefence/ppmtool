@@ -260,6 +260,7 @@ class GamesController extends BaseController
         $user = Auth::user();
         $games = Game::where('user_id', $user->id)
             ->where('match_id', $match_id)
+            ->where('game_type_id', '<>', 2)
             ->where('confirmed', 1)
             ->get();
         foreach ($games as $game) {
