@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/boo', function () {
-    
+Route::get('/boo/{id}', function ($id) {
+    $time = time();
+    Updater::update($id);
+    return time() - $time." sec.";
 });
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
 Route::get('/test', 'LivescoreController@test');

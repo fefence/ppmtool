@@ -13,36 +13,38 @@ class Updater
             Parser::parseNextMatches($league_id);
             Parser::parseNextMatches($league_id);
             for ($i = 1; $i < 11; $i++) {
-                $series = Series::where('league_id', $league_id)
-                    ->where('active', 1)
-                    ->where('game_type_id', $i)
-                    ->first();
-                $nextMatches = self::getNextMatches($matches);
-//                return $matches;
-                if (Match::endSeries($matches, $i)) {
-                    $series->active = 0;
-                    $newSeries = new Series;
-                    $newSeries->league_id = $series->league_id;
-                    $newSeries->length = 0;
-                    $newSeries->start_match_id = $nextMatches->last()->id;
-                    $newSeries->end_match_id = $nextMatches->last()->id;
-                    $newSeries->game_type_id = $i;
-                    $newSeries->active = 1;
-                    self::updateGamesEndSeries($league_id, $i, $matches);
-                } else {
-                    $series->length = $series->length + count($matches);
-                    $series->end_match_id = $nextMatches->last()->id;
-                    $newSeries = $series;
-                    self::updateGamesNotEndSeries($league_id, $i, $matches, $nextMatches, $series);
-                }
                 try {
-                    Match::saveMatches($matches);
-                    $newSeries->save();
-                    $series->save();
+
+                    $series = Series::where('league_id', $league_id)
+                        ->where('active', 1)
+                        ->where('game_type_id', $i)
+                        ->first();
+                    $nextMatches = self::getNextMatches($matches);
+//                return $matches;
+                    if (Match::endSeries($matches, $i)) {
+                        $series->active = 0;
+                        $newSeries = new Series;
+                        $newSeries->league_id = $series->league_id;
+                        $newSeries->length = 0;
+                        $newSeries->start_match_id = $nextMatches->last()->id;
+                        $newSeries->end_match_id = $nextMatches->last()->id;
+                        $newSeries->game_type_id = $i;
+                        $newSeries->active = 1;
+                        self::updateGamesEndSeries($league_id, $i, $matches);
+                    } else {
+                        $series->length = $series->length + count($matches);
+                        $series->end_match_id = $nextMatches->last()->id;
+                        $newSeries = $series;
+                        self::updateGamesNotEndSeries($league_id, $i, $matches, $nextMatches, $series);
+                    }
+
                 } catch (ErrorException $e) {
                     return $e;
                 }
+                $newSeries->save();
+                $series->save();
             }
+            Match::saveMatches($matches);
             Sender::sendMail($nextMatches);
         }
     }
@@ -142,7 +144,7 @@ class Updater
                     ->where('game_type_id', $game_type_id)
                     ->where('confirmed', 1)
                     ->get();
-                foreach($placeholders as $pl) {
+                foreach ($placeholders as $pl) {
                     $game = Game::firstOrCreate(['user_id' => $settings->user_id, 'match_id' => $next_match->id, 'game_type_id' => $game_type_id, 'confirmed' => 0, 'current_length' => $series->length, 'series_id' => $series->id]);
                     $game->bsf = $pl->bsf;
                     $game->bet = $pl->bet;
@@ -162,7 +164,7 @@ class Updater
             }
             try {
                 Placeholder::createPlaceholders($next_matches, $settings->user_id, $game_type_id);
-            } catch(ErrorException $e) {
+            } catch (ErrorException $e) {
                 Log::warning("error while adding placeholders");
                 Log::warning($e);
             }
