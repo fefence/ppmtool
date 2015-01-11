@@ -6,15 +6,15 @@ if($match->short_result == '-' && $match->date_time <= date('Y-m-d H:i:s', time(
 }
 ?>
 @if (!$active_livescore &&  $match->short_result != '-')
-<td>
+<td @if(isset($style)) {{$style}} @endif>
     <span class="score scoreFinished" id="home_goals">{{$match->home_goals}}</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreFinished">{{$match->away_goals}}</span>
 </td>
 @elseif($active_livescore)
-<td class="livescoreResultTdActive" id="{{$match->id}}">
+<td @if(isset($style)) {{$style}} @endif class="livescoreResultTdActive" id="{{$match->id}}">
     <span class="score scoreRunning" id="home_goals">&nbsp;</span><span class="scoreSeparator" id="scoreSeparator">:</span><span id='away_goals' class="score scoreRunning">&nbsp;</span><p class="time"></p>
 </td>
 @else
-<td>
+<td @if(isset($style)) {{$style}} @endif>
     <span class="score scoreNotStarted" id="home_goals">-</span><span class="scoreSeparator">:</span><span id='away_goals' class="score scoreNotStarted">-</span>
 </td>
 @endif

@@ -34,7 +34,7 @@
 <!--                <li><a href="/list">List</a></li>-->
                 @if (isset($fromdate) && isset($base))
                 <?php
-                    $from = $fromdate->subDay()->toDateString();
+                    $from = $fromdate->toDateString();
                     $from1 = $fromdate->addDay()->addDay()->toDateString();
                 ?>
                 @if ($from == date('Y-m-d', time()))
@@ -48,8 +48,8 @@
                 <a class="navbar-brand" href="/{{$base}}/{{$from1}}/{{$from1}}">&nbsp;>&nbsp;</a>
                 @endif
                 @else
-                <a disabled="disabled" class="navbar-brand" href="#">&nbsp;<&nbsp;</a>
-                <a disabled="disabled" class="navbar-brand" href="#">&nbsp;>&nbsp;</a>
+<!--                <a class="navbar-brand disabled" href="#">&nbsp;<&nbsp;</a>-->
+<!--                <a class="navbar-brand disabled" href="#">&nbsp;>&nbsp;</a>-->
                 @endif
                 <a class="navbar-brand" href="/list"><span class="{{Request::path() == 'list' ? 'text-danger' : '';}}">List</span></a>
                 <!--                <a class="navbar-brand" href="/settings"><span class="{{Request::path() == 'settings' ? 'text-danger' : '';}}">Settings</span></a>-->
