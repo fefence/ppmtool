@@ -128,9 +128,8 @@ class Updater
                     ->where('match_id', $match->id)
                     ->first();
 //                return $not_confirmed;
-                $bsf = 0;
                 if (count($confirmed) == 0 && $not_confirmed != null) {
-                    $bsf = $not_confirmed->bsf;
+                    $bsf = $bsf + $not_confirmed->bsf;
                 } else {
                     foreach ($confirmed as $conf) {
                         $bsf = $bsf + $conf->bet + $conf->bsf;
