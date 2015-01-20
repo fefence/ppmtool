@@ -2,7 +2,7 @@
 
 @section('content')
 @if($no_info)
-<h5 xmlns="http://www.w3.org/1999/html">No matches for today.</h5>
+<h5>No matches for today.</h5>
 @else
         <?php
             $url = '/listbycountry';

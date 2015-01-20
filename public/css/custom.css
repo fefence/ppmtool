@@ -59,6 +59,13 @@ th, td {
 .navbar-brand:hover {
     background-color: #eeeeee !important;
 }
+.navbar-disabled {
+    pointer-events: none !important;
+    font-weight: lighter !important;
+    font-style: italic;
+    font-
+    text-decoration: line-through;
+}
 .bold-text {
     font-weight: bold;
     font-size: 110%;
@@ -70,6 +77,10 @@ th, td {
     -ms-transition: height 0.01s;
     -o-transition: height 0.01s;
     transition: height 0.01s;
+}
+.border-bottom-overnight {
+    border-bottom: 2px dashed !important;
+    border-bottom-color: inherit !important;
 }
 .editablecolor1 {
     background-color: #f6f6f6;
