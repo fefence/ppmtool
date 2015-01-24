@@ -37,7 +37,7 @@ $first = true;
                     <?php
                     $first = false;
                     ?>
-                    <td>{{date('H:i', strtotime($m->date_time))}}</td>
+                    <td>{{date('H:i', strtotime($m->date_time) - 3600)}}</td>
                     <td style="text-align: right;" class="home redcard{{$m->home_red}} right">{{$m->home}}</td>
                     @include('partials.live', ['match' => $m, 'style' => 'style="text-align: center;"'])
                     <td style="text-align: left;" class="away redcard{{$m->away_red}} left">{{$m->away}}</td>

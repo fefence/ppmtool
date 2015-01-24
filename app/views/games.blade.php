@@ -31,7 +31,7 @@
         @if(isset($games['games']))
         @foreach($games['games'] as $game)
         <tr id="{{$game['match']['id']}}">
-            <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
+            <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']) - 3600)}}</td>
             <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}</a>&nbsp;[{{$game['current_length']}}]</td>
             <td style="text-align: right; position: relative;" class="home redcard{{$game['match']['home_red']}} right">{{$game['match']['home']}}</td>
             @include('partials.live', ['match' => $game['match']])
@@ -59,7 +59,7 @@
         @if(isset($games['placeholders']))
         @foreach($games['placeholders'] as $game)
         <tr id="{{$game['match']['id']}}">
-            <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
+            <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']) - 3600)}}</td>
             <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}</a></td>
             <td style="text-align: right;"><em>{{$game['match']['home']}}</em></td>
             <?php
