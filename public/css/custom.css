@@ -78,8 +78,8 @@ th, td {
     transition: height 0.01s;
 }
 .border-bottom-overnight {
-    border-bottom: 2px dashed !important;
-    border-bottom-color: inherit !important;
+    border-top: 2px dashed !important;
+    border-top-color: inherit !important;
 }
 .editablecolor1 {
     background-color: #f6f6f6;
