@@ -20,7 +20,7 @@
             @foreach($matches as $d)
             <tr id="{{$d['match']->id}}" @if($m != null && date('Y-m-d', strtotime($m->date_time)) != date('Y-m-d', strtotime($d['match']->date_time))) class="border-bottom-overnight" @endif>
                 <td style="width: 50px;"><img src="/images/32/{{$d['league']->country_alias}}.png"></td>
-                <td style="width: 50px;">{{date('H:i', strtotime($d['match']->date_time) - 3600)}}</td>
+                <td style="width: 50px;">{{date('H:i', strtotime($d['match']->date_time))}}</td>
                 <td style="text-align: right;" class="home redcard{{$d['match']->home_red}} right">{{$d['match']->home}}</td>
                 @include('partials.live', ['match' => $d['match'], 'style' => 'style = "width: 60px; text-align: center;"'])
                 <td class="away redcard{{$d['match']->away_red}} left">{{$d['match']->away}}</td>
