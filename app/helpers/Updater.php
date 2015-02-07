@@ -169,4 +169,18 @@ class Updater
             }
         }
     }
+
+    public static function getNextMatchesForLeague($league_id) {
+        $time = Match::where('league_id', $league_id)
+            ->where('short_result', '-')
+            ->orderBy('date_time', 'asc')
+            ->first()
+            ->date_time;
+
+
+        $next_matches = Match::where('league_id', $league_id)
+            ->where('date_time', $time)
+            ->get();
+        return $next_matches;
+    }
 } 

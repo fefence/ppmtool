@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/boo/{id}', function ($id) {
-    $time = time();
-    Updater::update($id);
-    return time() - $time." sec.";
+Route::get('/boo', function () {
+    $command = new UpdateTimes;
+    return $command->fire();
 });
 Route::get('/active', 'GamesController@active_series');
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');

@@ -1,4 +1,4 @@
-@if(!isset($classes) || $classes == '') 
+@if(!isset($classes) || $classes == '')
     <?php $classes = "qtip-light qtip-shadow qtip-rounded"; ?>
 @endif
 

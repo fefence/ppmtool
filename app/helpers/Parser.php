@@ -231,7 +231,7 @@ class Parser
                 $divs = $home->getElementsByTagName('div');
                 foreach($divs as $div){
                     $attr = $div->getAttribute('class');
-                    if ($attr == 'icon-box r-card') {
+                    if ($attr == 'icon-box r-card' || $attr == 'icon-box yr-card') {
                         $home_red ++;
                     }
                 }
@@ -240,7 +240,7 @@ class Parser
                     $divs = $away->getElementsByTagName('div');
                     foreach($divs as $div){
                         $attr = $div->getAttribute('class');
-                        if ($attr == 'icon-box r-card') {
+                        if ($attr == 'icon-box r-card' || $attr == 'icon-box yr-card') {
                             $away_red ++;
                         }
                     }
@@ -249,7 +249,7 @@ class Parser
                     $divs = $away->getElementsByTagName('div');
                     foreach($divs as $div){
                         $attr = $div->getAttribute('class');
-                        if ($attr == 'icon-box r-card') {
+                        if ($attr == 'icon-box r-card' || $attr == 'icon-box yr-card') {
                             $away_red ++;
 
                         }
