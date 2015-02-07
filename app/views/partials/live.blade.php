@@ -34,6 +34,8 @@ if($match->short_result == '-' && $match->date_time <= date('Y-m-d H:i:s', time(
             td_span4.addClass('redcard' + data[3]);
             if(data[5] != 0 || data[5] != '0') {
                 td_span5.html(data[4] + " " + data[5] + "'");
+            } else if (data[4] == 'HT' || data[4] == 'FT'){
+                td_span5.html(data[4]);
             } else {
                 td_span5.html("");
             }
