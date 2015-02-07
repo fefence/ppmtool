@@ -55,23 +55,29 @@ class UpdateTimes extends Command
                 foreach ($next_before as $b) {
                     foreach ($users as $user) {
                         foreach ($game_types as $game_type) {
-                            $series = Series::where('end_match_id', $b->id)
-                                ->where('game_type_id', $game_type)
-                                ->get();
+                            $series = Series::where('league_id', $b->league_id)
+                                ->where('game_type_id', $game_type->id)
+                                ->where('active', 1)
+                                ->first();
+                            $series->end_match_id = $b->id;
+                            $series->save();
                             $games = Game::where('match_id', $b->id)
                                 ->where('user_id', $user->id)
                                 ->where('game_type_id', $game_type->id)
                                 ->get();
                             $bsf = 0;
 //                            return $bsf;
+
+                            $series->end_match_id = $next_after->last()->id;
+                            $series->save();
                             if ($games != null && count($games) > 0) {
-                                foreach ($games as $game) {
-                                    $bsf = $bsf + $game->bsf;
-                                    $game->delete();
+                                foreach ($games as $g) {
+                                    $bsf = $bsf + $g->bsf;
+                                    $g->delete();
                                 }
                                 foreach ($next_after as $next) {
                                     $game = Game::firstOrCreate(['user_id' => $user->id, 'match_id' => $next->id, 'game_type_id' => $game_type->id, 'confirmed' => 0, 'current_length' => $series->length, 'series_id' => $series->id]);
-                                    $game->bsf = $bsf / count($next_after);
+                                    $game->bsf = $bsf;
                                     $odds = Parser::getOdds($next->id)[$game_type->id];
                                     if ($odds != null && $odds != -1) {
                                         $game->odds = $odds;
