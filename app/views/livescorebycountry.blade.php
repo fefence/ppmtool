@@ -32,7 +32,7 @@ $first = true;
             @foreach($matches as $m)
                 <tr id="{{$m->id}}">
                     @if (!isset($first) || $first)
-                        <th style="width: 50px; border-right: 1px solid #dddddd;" rowspan="{{count($matches)}}"><img src="/images/32/{{$league}}.png"></th>
+                        <th style="width: 50px; border-right: 1px solid #dddddd;" rowspan="{{count($matches)}}"><a href="{{$league_links[$league]}}" target="_blank"><img src="/images/32/{{$league}}.png"></a></th>
                     @endif
                     <?php
                     $first = false;

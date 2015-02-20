@@ -48,6 +48,7 @@ class LivescoreController extends \BaseController
         list($fromdate, $todate) = Utils::calcDates($fromdate, $todate);
 
         $res = array();
+        $league_links = array();
 
         $leagues = Match::where('date_time', '>=', $fromdate)
             ->join('leagues', 'leagues.id', '=', 'matches.league_id')
@@ -58,6 +59,8 @@ class LivescoreController extends \BaseController
         $settings = array();
         foreach ($leagues as $league_id) {
             $league = League::find($league_id);
+            $league_links[$league->country_alias] = $league->be;
+
             $res[$league->country_alias] = Match::where('date_time', '>=', $fromdate)
                 ->where('date_time', '<=', $todate)
                 ->where('league_id', $league_id)
@@ -88,7 +91,7 @@ class LivescoreController extends \BaseController
 //        $settings = Setting::where('user_id', Auth::user()->id);
 //            ->where()
 //        return $res;
-        return View::make('livescorebycountry')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'listbycountry', 'settings' => $settings, 'no_info' => $no_info]);
+        return View::make('livescorebycountry')->with(['matches' => $res, 'fromdate' => $fromdate, 'todate' => $todate, 'base' => 'listbycountry', 'settings' => $settings, 'no_info' => $no_info, 'league_links' => $league_links]);
     }
 
     public static function matchScore($match_id)

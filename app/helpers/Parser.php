@@ -357,6 +357,9 @@ class Parser
             case 13:
                 $st = '2H';
                 break;
+            case 3:
+                $st = 'FT';
+                break;
         }
         return [$st, $min];
     }
