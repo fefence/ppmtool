@@ -32,7 +32,7 @@
         @foreach($games['games'] as $game)
         <tr id="{{$game['match']['id']}}">
             <td class="text-center">{{date('d M', strtotime($game['match']['date_time']))}}<br>{{date('H:i', strtotime($game['match']['date_time']))}}</td>
-            <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}</a>&nbsp;[{{$game['current_length']}}]</td>
+            <td class="text-center"><a href="/series/{{$game['series_id']}}">{{$game['game_type']['name']}}</a></td>
             <td style="text-align: right; position: relative;" class="home redcard{{$game['match']['home_red']}} right">{{$game['match']['home']}}</td>
             @include('partials.live', ['match' => $game['match']])
             <td class="away redcard{{$game['match']['away_red']}} left">{{$game['match']['away']}}</td>

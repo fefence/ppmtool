@@ -32,7 +32,7 @@ class StatsController extends \BaseController{
                     ->join('matches', 'matches.id', '=', 'series.end_match_id')
                     ->where('season', $season)
                     ->orderBy('length', "desc")
-                    ->take(5)
+                    ->take(10)
                     ->lists('length');
                 $data[$g->id][$season]['longest'] = $longest;
             }

@@ -12,7 +12,6 @@
 */
 
 Route::get('/boo', function () {
-    return Series::calculateSeries(4, '2014-2015');
 });
 Route::get('/active', 'GamesController@active_series');
 Route::get('/list/{fromdate?}/{todate?}', 'LivescoreController@livescore');
