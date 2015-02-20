@@ -106,3 +106,7 @@ th, td {
 .right {
     background-position: 95% 5px;
 }
+.qtip-custom {
+    font-size: 13px !important;
+    line-height: 18px !important;
+}

@@ -1,5 +1,5 @@
 @if(!isset($classes) || $classes == '')
-    <?php $classes = "qtip-light qtip-shadow qtip-rounded"; ?>
+    <?php $classes = "qtip-light qtip-shadow qtip-rounded qtip-custom"; ?>
 @endif
 
 <script type="text/javascript">
@@ -8,6 +8,7 @@
         $(this).qtip({
             content: {
                 text: $(this).attr('title'),
+                title: $(this).attr('custom'),
                 button: true
             },
         style: {
