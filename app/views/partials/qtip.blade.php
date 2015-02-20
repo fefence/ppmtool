@@ -7,7 +7,8 @@
     $('.hasTooltip').each(function() { // Notice the .each() loop, discussed below
         $(this).qtip({
             content: {
-                text: $(this).attr('title')
+                text: $(this).attr('title'),
+                button: true
             },
         style: {
             classes: "<?=$classes?>"
