@@ -8,9 +8,13 @@
         <td style="width: 90px; text-align: center;"><span class="text-danger" style="font-weight: bold;">{{$data['avg_odds']}}</span> ({{$data['avg_count']}})</td>
         <td style="width: 170px; text-align: center;">
             @for($i = 0; $i < 4; $i ++)
-                {{$data['longest'][$i]}},&nbsp;
+                @if(isset($data['longest'][$i]))
+                    {{$data['longest'][$i]}},&nbsp;
+                @endif
             @endfor
+            @if(isset($data['longest'][4]))
             {{$data['longest'][4]}}
+            @endif
         </td>
         <td>
             @foreach($data['stats'] as $s)
