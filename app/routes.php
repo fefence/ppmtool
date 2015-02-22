@@ -45,6 +45,11 @@ Route::get('/login', 'SessionsController@create');
 Route::get('/logout', 'SessionsController@destroy');
 Route::resource('sessions', 'SessionsController', ['only' => ['create', 'store', 'destroy']]);
 
+Route::get('/calculator', 'CalculatorController@countries');
+Route::get('/calculator/{league_id}/{type}/odds', 'CalculatorController@getOdds');
+Route::get('/calculator/{country}', 'CalculatorController@country');
+Route::post('/calculator/calculate', 'CalculatorController@calculate');
+
 Route::get('/', function () {
     return Redirect::route('home');
 });

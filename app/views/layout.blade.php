@@ -61,6 +61,7 @@
                     <li><a href="/stats">Stats</a></li>
                     <li><a href="/log">Log</a></li>
                     <li><a href="/play/odds/all">Odds</a></li>
+                    <li><a href="/calculator">Calc</a></li>
 <!--                    <li class="divider"></li>-->
                     <li><a href="/logout">Log out</a></li>
 
