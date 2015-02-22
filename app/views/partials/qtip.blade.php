@@ -8,8 +8,7 @@
         $(this).qtip({
             content: {
                 text: $(this).attr('title'),
-                title: $(this).attr('custom'),
-                button: true
+                title: $(this).attr('custom')
             },
         style: {
             classes: "<?=$classes?>"
