@@ -131,7 +131,7 @@ class Parser
         $url = $baseUrl . $league->country . "/" . $league->name . "/" . $match->id;
         $data = file_get_contents($url);
         $matches = array();
-        preg_match('/xhash":"(?P<hash>[a-z0-9-A-Z]+)","/', $data, $matches);
+        preg_match('/xhash":"(?P<hash>[a-z0-9-A-Z%]+)","/', $data, $matches);
         $hash = $matches['hash'];
         $parse_url = "http://fb.oddsportal.com/feed/match/1-1-" . $match->id . "-8-2-" . $hash . ".dat";
         $json_data = file_get_contents($parse_url);

@@ -1,30 +1,24 @@
 @extends('layout')
 
 @section('content')
+
+       <table class="table" style="margin-bottom: 10px;">
+           <tr>
+                <td align="center">
     @foreach($game_types as $game_type)
-        <a href="/calculator/{{$country}}/{{$game_type->id}}/odds" role="button" class="btn btn-info btn-xs @if(Session::get('game') == $game_type->name) active @endif">{{$game_type->name}}</a>
+                <a href="/calculator/{{$country}}/{{$game_type->id}}/odds" role="button" class="btn btn-info btn-xs @if(Session::get('game') == $game_type->name) active @endif">{{$game_type->name}}</a>&nbsp;
     @endforeach
+                </td>
+           </tr>
+       </table>
     <table class="table">
-        <thead>
-        <tr>
-            <th>date</th>
-            <th>type</th>
-            <th>home</th>
-            <th>away</th>
-            <th>bsf</th>
-            <th>bet</th>
-            <th>odds</th>
-            <th>income</th>
-        </tr>
-        </thead>
         <?php
         $i = 0;
         ?>
         @foreach($matches as $match)
 
             <tr id="{{$i}}">
-                <td class="text-center">{{date('d M', strtotime($match->date_time))}}<br>{{date('H:i', strtotime($match->date_time))}}</td>
-                <td>{{Session::get('game')}}</td>
+                <td class="text-center" style="width: 100px;">{{date('d M', strtotime($match->date_time))}}<br>{{date('H:i', strtotime($match->date_time))}}</td>
                 <td>{{$match->home}}</td>
                 <td>{{$match->away}}</td>
                 <td id="{{$i.'_bsf'}}" class="editablecolor1 editable text-center">{{Session::get($i."_bsf")}}</td>
