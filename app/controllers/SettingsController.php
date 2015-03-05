@@ -13,7 +13,7 @@ class SettingsController extends BaseController{
             }
             array_push($data[$d->league_id], $d->game_type_id);
         }
-        $leagues = League::where('hidden', 0)
+        $leagues = League::where($user_id, 0)
             ->orderBy('country')
             ->get();
         $game_types = GameType::all();
