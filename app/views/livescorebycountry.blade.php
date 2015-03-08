@@ -47,7 +47,7 @@ $first = true;
                         @endforeach
 
                         @foreach($settings[$m->id]['placeholders'] as $pl)
-                        <a href="/play/{{date('Y-m-d', strtotime($m->date_time))}}/{{date('Y-m-d', strtotime($m->date_time))}}/#{{$m->country_alias}}" role="button" class="btn btn-default btn-xs hasTooltip" title="{{$pl->s}} @ {{$pl->odds}}"  @if($pl->s == 0) disabled @endif>{{$s->game_type->name}}</a>
+                        <a href="/play/{{date('Y-m-d', strtotime($m->date_time))}}/{{date('Y-m-d', strtotime($m->date_time))}}/#{{$m->country_alias}}" role="button" class="btn btn-default btn-xs hasTooltip" title="{{$pl->s}} @ {{$pl->odds}}"  @if($pl->s == 0) disabled @endif>{{$pl->game_type->name}}</a>
                         @endforeach
                     </td>
                     <td>@if(count($settings[$m->id]['settings'])>0 && $m->short_result != '-' && $m->home_goals == 0 && $m->away_goals == 0)<a href="/refund/{{$m->id}}" role="button" class="btn btn-xs btn-warning" @if($settings[$m->id]['refund'] <= 0) disabled @endif>refund</a>@endif</td>
