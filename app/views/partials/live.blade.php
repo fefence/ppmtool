@@ -65,9 +65,16 @@ if($match->short_result == '-' && $match->date_time <= date('Y-m-d H:i:s', time(
         })
 
     }, 30000);
-    setInterval(function() {
-        $("table tr #scoreSeparator").each(function() {
-            $(this).toggleClass('scoreSeparatorToggle');
-        })
-    }, 1000);
+    function blinker() {
+        $("table tr #scoreSeparator").fadeOut(500);
+        $("table tr #scoreSeparator").fadeIn(500);
+    }
+
+    setInterval(blinker, 1000);
+//    setInterval(function() {
+//        $("table tr #scoreSeparator").each(function() {
+//            $(this).toggleClass('scoreSeparatorToggle');
+//        })
+//    }, 2000);
+
 </script>
