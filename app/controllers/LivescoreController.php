@@ -26,13 +26,22 @@ class LivescoreController extends \BaseController
                 ->where('match_id', $match->id)
                 ->with('game_type')
                 ->orderBy('game_type_id')
-                ->select(DB::raw("case when confirmed = 1 then bet END as s, game_type_id"))
+                ->select(DB::raw("case when confirmed = 1 then bet END as s, odds, game_type_id"))
                 ->groupBy('game_type_id')
                 ->get();
             $res[$match->id]['refund'] = Game::where('user_id', Auth::user()->id)
                 ->where('match_id', $match->id)
                 ->where('confirmed', 1)
                 ->sum('bet');
+            $res[$match->id]['placeholders'] = Placeholder::where('user_id', Auth::user()->id)
+                ->where('match_id', $match->id)
+                ->where('active', 1)
+                ->with('game_type')
+                ->where('confirmed', 1)
+                ->orderBy('game_type_id')
+                ->select(DB::raw("bet as s, odds, game_type_id"))
+                ->groupBy('game_type_id')
+                ->get();
         }
         if (count($res) == 0) {
             $no_info = true;
@@ -71,7 +80,7 @@ class LivescoreController extends \BaseController
                     ->where('match_id', $m->id)
                     ->with('game_type')
                     ->orderBy('game_type_id')
-                    ->select(DB::raw("case when confirmed = 1 then bet END as s, game_type_id"))
+                    ->select(DB::raw("case when confirmed = 1 then bet END as s, odds, game_type_id"))
                     ->groupBy('game_type_id')
                     ->get();
                 $settings[$m->id]['settings'] = $sets;
@@ -80,6 +89,15 @@ class LivescoreController extends \BaseController
                     ->where('match_id', $m->id)
                     ->where('confirmed', 1)
                     ->sum('bet');
+                $settings[$m->id]['placeholders'] = Placeholder::where('user_id', Auth::user()->id)
+                    ->where('match_id', $m->id)
+                    ->where('active', 1)
+                    ->with('game_type')
+                    ->where('confirmed', 1)
+                    ->orderBy('game_type_id')
+                    ->select(DB::raw("bet as s, odds, game_type_id"))
+                    ->groupBy('game_type_id')
+                    ->get();
             }
         }
         if (count($res) == 0) {
