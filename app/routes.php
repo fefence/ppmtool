@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/boo/{league_id}', function () {
+Route::get('/boo/{league_id}', function ($league_id) {
 	return Series::calculateSeries($league_id, '2014-2015');
 });
 Route::get('/active', 'GamesController@active_series');
